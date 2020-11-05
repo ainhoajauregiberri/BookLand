@@ -1,7 +1,7 @@
 package personas;
 import java.sql.Date;
 
-public abstract class Persona {
+public class Persona {
 	
 	private int codPers;
 	private String nombre;
