@@ -172,7 +172,7 @@ public static void main (String [ ] args) {
 	 
     GestionBD bd1=new GestionBD("usuarios.db");
     bd1.createDB();
-     bd1.insertarDatosPersona(1, "Ainhoa", "ainhoa10", "kaixokaixo", "2000-07-10", "chica");
+    bd1.insertarDatosPersona(1, "Ainhoa", "ainhoa10", "kaixokaixo", "2000-07-10", "chica");
 	 }
 
 }
