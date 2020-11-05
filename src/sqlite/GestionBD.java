@@ -136,6 +136,7 @@ public class GestionBD {
 			
 			pstmt.setDate(5, fecNac);
 			pstmt.setString(6, sexo);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,16 +166,13 @@ public class GestionBD {
 	 
 	 //PONER TODOS!! ANIMO GIRLS. 
 	//ACUERDENSE DE QUE TODAS LAS FECHAS DEBEN LLAMAR A LA FUNCION STRING2DATE
-//SEGUN LA CLASE LA FECHA TENDRÁ UN FORMATO DIFERENTE
-
+//SEGUN LA CLASE LA FECHA TENDRÁ UN FORMATO DIFERENTEs
 
 public static void main (String [ ] args) {
 	 
     GestionBD bd1=new GestionBD("usuarios.db");
-    bd1.establecerConexion();
     bd1.createDB();
-    bd1.insertarDatosPersona(1, "Ainhoa", "ainhoa10", "kaixokaixo", "2000-07-10", "chica");
-
+     bd1.insertarDatosPersona(1, "Ainhoa", "ainhoa10", "kaixokaixo", "2000-07-10", "chica");
 	 }
 
 }
