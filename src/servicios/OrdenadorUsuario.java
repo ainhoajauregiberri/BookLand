@@ -8,8 +8,8 @@ public class OrdenadorUsuario {
 
 	private Usuario usuario;
 	private Ordenador ordenador;
-	private Date FecIni;
-	private Date FecFin;
+	private Date fecIni;
+	private Date fecFin;
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -23,22 +23,22 @@ public class OrdenadorUsuario {
 		this.ordenador = ordenador;
 	}
 	public Date getFecIni() {
-		return FecIni;
+		return fecIni;
 	}
 	public void setFecIni(Date fecIni) {
-		FecIni = fecIni;
+		fecIni = fecIni;
 	}
 	public Date getFecFin() {
-		return FecFin;
+		return fecFin;
 	}
 	public void setFecFin(Date fecFin) {
-		FecFin = fecFin;
+		fecFin = fecFin;
 	}
 	public OrdenadorUsuario(Usuario usuario, Ordenador ordenador, Date fecIni, Date fecFin) {
 		this.usuario = usuario;
 		this.ordenador = ordenador;
-		FecIni = fecIni;
-		FecFin = fecFin;
+		fecIni = fecIni;
+		fecFin = fecFin;
 	}
 	
 	

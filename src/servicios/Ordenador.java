@@ -2,13 +2,13 @@ package servicios;
 
 public class Ordenador {
 	
-	public int numOrdenador;
+	public int codOrdenador;
 	public boolean disponibleOrdenador;
 	public int getNumOrdenador() {
-		return numOrdenador;
+		return codOrdenador;
 	}
 	public void setNumOrdenador(int numOrdenador) {
-		this.numOrdenador = numOrdenador;
+		this.codOrdenador = numOrdenador;
 	}
 	public boolean isDisponibleOrdenador() {
 		return disponibleOrdenador;
@@ -17,7 +17,7 @@ public class Ordenador {
 		this.disponibleOrdenador = disponibleOrdenador;
 	}
 	public Ordenador(int numOrdenador, boolean disponibleOrdenador) {
-		this.numOrdenador = numOrdenador;
+		this.codOrdenador = numOrdenador;
 		this.disponibleOrdenador = disponibleOrdenador;
 	}
 	

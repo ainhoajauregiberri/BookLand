@@ -9,8 +9,8 @@ public class ProductoUsuario {
 
 	private Usuario usuario;
 	private Producto producto;
-	private Date FecIni;
-	private Date FecFin;
+	private Date fecIni;
+	private Date fecFin;
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -24,22 +24,22 @@ public class ProductoUsuario {
 		this.producto = producto;
 	}
 	public Date getFecIni() {
-		return FecIni;
+		return fecIni;
 	}
 	public void setFecIni(Date fecIni) {
-		FecIni = fecIni;
+		fecIni = fecIni;
 	}
 	public Date getFecFin() {
-		return FecFin;
+		return fecFin;
 	}
 	public void setFecFin(Date fecFin) {
-		FecFin = fecFin;
+		fecFin = fecFin;
 	}
 	public ProductoUsuario(Usuario usuario, Producto producto, Date fecIni, Date fecFin) {
 		this.usuario = usuario;
 		this.producto = producto;
-		FecIni = fecIni;
-		FecFin = fecFin;
+		fecIni = fecIni;
+		fecFin = fecFin;
 	}
 
 	

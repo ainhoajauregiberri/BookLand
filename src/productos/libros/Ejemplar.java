@@ -5,9 +5,11 @@ import servicios.ProductoUsuario;
 public class Ejemplar extends Libro {
 	
 	private Editorial editorial;
+	private Libro libro;
 	private int edicion;
 	private Idioma idioma;
 	private int numPag;
+	
 	public Editorial getEditorial() {
 		return editorial;
 	}
@@ -16,6 +18,12 @@ public class Ejemplar extends Libro {
 	}
 	public int getEdicion() {
 		return edicion;
+	}
+	public void setLibro(Libro libro) {
+		this.libro = libro;
+	}
+	public Libro getLibro() {
+		return libro;
 	}
 	public void setEdicion(int edicion) {
 		this.edicion = edicion;

@@ -2,18 +2,18 @@ package productos.libros;
 
 public class Autor {
 	
-	private String nombre;
+	private String nomAutor;
 
 	public Autor(String nombre) {
-		this.nombre = nombre;
+		this.nomAutor = nombre;
 	}
 
 	public String getNombre() {
-		return nombre;
+		return nomAutor;
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nomAutor = nombre;
 	}
 	
 	

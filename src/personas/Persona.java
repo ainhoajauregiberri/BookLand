@@ -3,7 +3,6 @@ import java.sql.Date;
 
 public class Persona {
 	
-	private int codPers;
 	private String nombre;
 	private String usuario;
 	private String contrasenya;
