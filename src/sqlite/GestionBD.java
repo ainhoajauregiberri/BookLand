@@ -117,7 +117,6 @@ public class GestionBD {
 	 public void insertarDatosPersona(int codPers, String nombre, String usuario, String contrasenya, String StringfecNac, String sexo){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
-		 java.util.Date fecNac=null;
 		 
 		 String sql = "INSERT INTO Persona(codPers, nombre, usuario, contrasenya, fecNac, sexo) VALUES(?,?,?,?,?,?)";
 		 
@@ -134,10 +133,10 @@ public class GestionBD {
 			pstmt.setString(3, usuario);
 			pstmt.setString(4, contrasenya);
 			
-			fecNac =  (Date) string2Date("yyyy-MM-dd", StringfecNac);
+			java.util.Date fecNac = string2Date("yyyy-MM-dd", StringfecNac);
 			
 			
-			pstmt.set(5, fecNac);
+			pstmt.setString(5, fecNac.toString());
 			pstmt.setString(6, sexo);
 			
 		} catch (SQLException e) {
@@ -199,9 +198,9 @@ public class GestionBD {
 		 try {
 			pstmt.setInt(1, codPers);
 			
-			Date fecAlta = (java.sql.Date) string2Date("yyyy-MM-dd", stringFecAlta);
+			java.util.Date fecAlta = string2Date("yyyy-MM-dd", stringFecAlta);
 			
-			pstmt.setDate(2, fecAlta);
+			pstmt.setString(2, fecAlta.toString());
 			pstmt.setDouble(3, dinero);
 			
 		} catch (SQLException e) {
@@ -266,10 +265,10 @@ public class GestionBD {
 			pstmt.setInt(1, codPers);
 			pstmt.setInt(2, codPro);
 			
-			Date fecIni = (java.sql.Date) string2Date("yyyy-MM-dd", StringFecIni);
-			Date fecFin = (java.sql.Date) string2Date("yyyy-MM-dd", StringFecFin);
-			pstmt.setDate(3, fecIni);
-			pstmt.setDate(4, fecFin);
+			java.util.Date fecIni = string2Date("yyyy-MM-dd", StringFecIni);
+			java.util.Date fecFin = string2Date("yyyy-MM-dd", StringFecFin);
+			pstmt.setString(3, fecIni.toString());
+			pstmt.setString(4, fecFin.toString());
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -560,10 +559,10 @@ public class GestionBD {
 			pstmt.setInt(1, codPers);
 			pstmt.setInt(2,codOrdenador);
 			
-			Date fecIni = (java.sql.Date) string2Date("yyyy-MM-dd HH:mm:ss", StringFecIni);
-			Date fecFin = (java.sql.Date) string2Date("yyyy-MM-dd HH:mm:ss", StringFecFin);
-			pstmt.setDate(3, fecIni);
-			pstmt.setDate(4, fecFin);
+			java.util.Date fecIni = string2Date("yyyy-MM-dd HH:mm:ss", StringFecIni);
+			java.util.Date fecFin = string2Date("yyyy-MM-dd HH:mm:ss", StringFecFin);
+			pstmt.setString(3, fecIni.toString());
+			pstmt.setString(4, fecFin.toString());
 			
 			
 		} catch (SQLException e) {
@@ -596,8 +595,8 @@ public class GestionBD {
 		 try {
 			pstmt.setInt(1, codCuen);
 			
-			Date fecCuen = (java.sql.Date) string2Date("yyyy-MM-dd HH:mm:ss", StringFecCuen);
-			pstmt.setDate(2,fecCuen);
+			java.util.Date fecCuen = string2Date("yyyy-MM-dd HH:mm:ss", StringFecCuen);
+			pstmt.setString(2,fecCuen.toString());
 			pstmt.setInt(3, aforo);
 			pstmt.setString(4, nombre);
 			pstmt.setString(5, descripcion);
@@ -724,6 +723,8 @@ public class GestionBD {
 		    
 	 }
 	 
+	 
+	 
 	 public void cerrarConexion(Connection conn) {
 		 if(conn!=null) {
 			 try {
@@ -738,29 +739,6 @@ public class GestionBD {
 public static void main (String [ ] args) {
 	
 	GestionBD bd1=new GestionBD("BookLand.db");
-	
-	bd1.insertarDatosPersona(1, "Ainhoa", "ainhoa10", "kaixo1234", "2000-07-10", "chica");
-    bd1.insertarDatosPersona(2, "Lorea", "lorea10", "kaixo1234", "2000-03-13", "chica");
-    bd1.insertarDatosPersona(3, "Naroa", "naroa10", "kaixo1234", "2000-02-11", "chica");
-    bd1.insertarDatosPersona(4, "Julen", "julen10", "kaixo1234", "2002-08-10", "chico");
-    bd1.insertarDatosPersona(5, "Jon", "jon10", "kaixo1234", "2000-07-15", "chico");
-    bd1.insertarDatosPersona(6, "Alvaro", "alvaro10", "kaixo1234", "1990-01-20", "chico");
-    bd1.insertarDatosPersona(7, "Mikel", "mikel10", "kaixo1234", "1967-02-30", "chico");
-    bd1.insertarDatosPersona(8, "Victor", "victor10", "kaixo1234", "1987-08-10", "chico");
-    bd1.insertarDatosPersona(9, "Ruben", "ruben10", "kaixo1234", "1980-09-10", "chico");
-    bd1.insertarDatosPersona(10, "Gorka", "gorka10", "kaixo1234", "2004-12-12", "chico");
-    bd1.insertarDatosPersona(11, "Nora", "nora10", "kaixo1234", "2006-11-01", "chica");
-    bd1.insertarDatosPersona(12, "Leire", "leire10", "kaixo1234", "1981-05-06", "chica");
-    bd1.insertarDatosPersona(13, "Pablo", "pablo10", "kaixo1234", "1945-06-10", "chico");
-    bd1.insertarDatosPersona(14, "Xanti", "xanti10", "kaixo1234", "1974-09-07", "chico");
-    bd1.insertarDatosPersona(15, "Markel", "markel10", "kaixo1234", "1974-09-07", "chico");
-    bd1.insertarDatosPersona(16, "Unai", "unai10", "kaixo1234", "1974-09-07", "chico");
-    bd1.insertarDatosPersona(17, "Aitor", "aitor10", "kaixo1234", "1974-09-07", "chico");
-    bd1.insertarDatosPersona(18, "Asier", "asier10", "kaixo1234", "1974-09-07", "chico");
-    bd1.insertarDatosPersona(19, "Andrea", "andrea10", "kaixo1234", "1974-09-07", "chica");
-    bd1.insertarDatosPersona(20, "Maria", "maria10", "kaixo1234", "1974-09-07", "chica");
-	
-	
 	
 
  
