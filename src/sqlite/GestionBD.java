@@ -678,7 +678,7 @@ public class GestionBD {
 		 cerrarConexion(conn);
 	 }
 	 
-	 public void Videojuego(int codPro){
+	 public void insertarDatosVideojuego(int codPro){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
 		 
@@ -739,7 +739,18 @@ public class GestionBD {
 public static void main (String [ ] args) {
 	
 	GestionBD bd1=new GestionBD("BookLand.db");
-	
+	bd1.createDB();
+
+	bd1.crearModificarBorrarTabla("CREATE TABLE IF NOT EXISTS Persona (\n"
+	    +"codPers integer NOT NULL,\n"
+	    		+"nombre text NOT NULL,\n"
+	    		+"usuario text NOT NULL,\n"
+	    		+"contrasenya text NOT NULL,\n"
+	    		+"fecNac DATETIME NOT NULL,\n"
+	    		+"sexo text NOT NULL\n"
+	    		+"PRIMARY KEY(codPers),\n"
+	    		+ ");");
+
 
  
 }
