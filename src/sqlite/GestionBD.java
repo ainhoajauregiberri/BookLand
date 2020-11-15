@@ -803,6 +803,8 @@ public class GestionBD {
 
 public static void main (String [ ] args) {
 	
+	GestionBD bd1=new GestionBD("BookLand.db");
+	bd1.createDB();
 
 }
 

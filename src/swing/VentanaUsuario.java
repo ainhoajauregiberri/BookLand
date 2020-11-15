@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaUsuario extends JFrame {
 
@@ -34,46 +36,95 @@ public class VentanaUsuario extends JFrame {
 	 */
 	public VentanaUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 319);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton btnproductosPrestados = new JButton("Productos prestados");
-		btnproductosPrestados.setBounds(39, 53, 173, 29);
+		btnproductosPrestados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProductosPrestados productosPrestados =new ProductosPrestados();
+				productosPrestados.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnproductosPrestados.setBounds(39, 53, 183, 29);
 		contentPane.add(btnproductosPrestados);
 		
 		JButton btnBuscarLibros = new JButton("Buscar libros");
-		btnBuscarLibros.setBounds(39, 94, 173, 29);
+		btnBuscarLibros.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarLibros buscarLibros=new BuscarLibros();
+				buscarLibros.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnBuscarLibros.setBounds(39, 94, 183, 29);
 		contentPane.add(btnBuscarLibros);
 		
 		JButton btnBuscarCD = new JButton("Buscar CD");
-		btnBuscarCD.setBounds(39, 135, 173, 29);
+		btnBuscarCD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarCD buscarCD=new BuscarCD();
+				buscarCD.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnBuscarCD.setBounds(39, 135, 183, 29);
 		contentPane.add(btnBuscarCD);
 		
-		JButton btnBuscarPelicula = new JButton("Buscar película");
-		btnBuscarPelicula.setBounds(39, 176, 173, 29);
+		JButton btnBuscarPelicula = new JButton("Buscar pelicula");
+		btnBuscarPelicula.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarPelicula buscarPelicula=new BuscarPelicula();
+				buscarPelicula.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnBuscarPelicula.setBounds(39, 176, 183, 29);
 		contentPane.add(btnBuscarPelicula);
 		
 		JButton btnBuscarVideojuego = new JButton("Buscar videojuego");
-		btnBuscarVideojuego.setBounds(39, 217, 173, 29);
+		btnBuscarVideojuego.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarVideojuego buscarVideojuego=new BuscarVideojuego();
+				buscarVideojuego.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnBuscarVideojuego.setBounds(39, 217, 183, 29);
 		contentPane.add(btnBuscarVideojuego);
 		
-		JButton btnOrdendor = new JButton("Ordenador");
-		btnOrdendor.setBounds(269, 53, 147, 29);
-		contentPane.add(btnOrdendor);
+		JButton btnOrdenador = new JButton("Ordenador");
+		btnOrdenador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OrdenadorJ ordenadorJ=new OrdenadorJ();
+				ordenadorJ.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnOrdenador.setBounds(269, 53, 147, 29);
+		contentPane.add(btnOrdenador);
 		
-		JButton btnContacuentos = new JButton("Contacuentos");
-		btnContacuentos.setBounds(269, 94, 147, 29);
-		contentPane.add(btnContacuentos);
+		JButton btnCuentacuentos = new JButton("Cuentacuentos");
+		btnCuentacuentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CuentacuentosJ cuentacuentosJ=new CuentacuentosJ();
+				cuentacuentosJ.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		btnCuentacuentos.setBounds(269, 94, 147, 29);
+		contentPane.add(btnCuentacuentos);
 		
 		JLabel lblProductos = new JLabel("Productos");
-		lblProductos.setBounds(93, 25, 82, 16);
+		lblProductos.setBounds(97, 21, 82, 16);
 		contentPane.add(lblProductos);
 		
 		JLabel lblServicios = new JLabel("Servicios");
-		lblServicios.setBounds(309, 25, 61, 16);
+		lblServicios.setBounds(310, 21, 73, 16);
 		contentPane.add(lblServicios);
 	}
 }
