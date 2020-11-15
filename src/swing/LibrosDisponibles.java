@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import productos.libros.Autor;
+import productos.libros.Ejemplar;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -13,10 +18,13 @@ import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class LibrosDisponibles extends JFrame {
+public class LibrosDisponibles extends JFrame implements IListasProductos {
 
 	private JPanel contentPane;
 	private JList list;
+	private DefaultListModel<String>dfmEjemplares;
+	private static String titulo;
+
 
 	/**
 	 * Launch the application.
@@ -25,7 +33,7 @@ public class LibrosDisponibles extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LibrosDisponibles frame = new LibrosDisponibles();
+					LibrosDisponibles frame = new LibrosDisponibles(LibrosDisponibles.titulo);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,6 +52,14 @@ public class LibrosDisponibles extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		dfmEjemplares=new DefaultListModel<String>();
+		list = new JList();
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(62, 93, 325, 138);
+		contentPane.add(scrollPane);
+		scrollPane.setViewportView(list);
+		cargarListaEjemplares(titulo);
+		
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
@@ -60,12 +76,12 @@ public class LibrosDisponibles extends JFrame {
 		lblEjemplaresDisponibles.setBounds(142, 50, 155, 16);
 		contentPane.add(lblEjemplaresDisponibles);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(62, 93, 325, 138);
-		contentPane.add(scrollPane);
 		
-		list = new JList();
-		scrollPane.setViewportView(list);
+		
+	}
+	public void cargarListaEjemplares(String titulo) {
+		dfmEjemplares=IListasProductos.cargarListaEjemplares(titulo);
+		this.list.setModel(dfmEjemplares);
 	}
 
 }

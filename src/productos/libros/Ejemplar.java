@@ -4,12 +4,19 @@ import servicios.ProductoUsuario;
 
 public class Ejemplar extends Libro {
 	
+	private int codEjem;
 	private Editorial editorial;
 	private Libro libro;
 	private int edicion;
 	private Idioma idioma;
 	private int numPag;
 	
+	public int getCodEjem() {
+		return codEjem;
+	}
+	public void setCodEjem(int codEjem) {
+		this.codEjem = codEjem;
+	}
 	public Editorial getEditorial() {
 		return editorial;
 	}
@@ -40,9 +47,10 @@ public class Ejemplar extends Libro {
 	public void setNumPag(int numPag) {
 		this.numPag = numPag;
 	}
-	public Ejemplar(boolean disponible, String tiutlo, Autor autor, Genero genero, ProductoUsuario usuario,
+	public Ejemplar(int codEjem,boolean disponible, String tiutlo, Autor autor, Genero genero, ProductoUsuario usuario,
 			int edadRecLibro, Editorial editorial, int edicion, Idioma idioma, int numPag) {
 		super(disponible, tiutlo, autor, genero, usuario, edadRecLibro);
+		this.codEjem=codEjem;
 		this.editorial = editorial;
 		this.edicion = edicion;
 		this.idioma = idioma;

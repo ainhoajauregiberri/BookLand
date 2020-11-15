@@ -5,7 +5,7 @@ import productos.libros.Genero;
 
 public abstract class Producto {
 	private boolean disponible;
-	private String tiutlo;
+	private String titulo;
 	private Autor autor;
 	private Genero genero;
 	private ProductoUsuario usuario;
@@ -14,7 +14,7 @@ public abstract class Producto {
 	public Producto(boolean disponible, String tiutlo, Autor autor, Genero genero, ProductoUsuario usuario) {
 		super();
 		this.disponible = disponible;
-		this.tiutlo = tiutlo;
+		this.titulo = tiutlo;
 		this.autor = autor;
 		this.genero = genero;
 		this.usuario = usuario;
@@ -30,11 +30,11 @@ public abstract class Producto {
 	}
 
 	public String getTiutlo() {
-		return tiutlo;
+		return titulo;
 	}
 
 	public void setTiutlo(String tiutlo) {
-		this.tiutlo = tiutlo;
+		this.titulo = tiutlo;
 	}
 
 	public Autor getAutor() {

@@ -16,7 +16,9 @@ import java.util.HashMap;
 import personas.Persona;
 import personas.Usuario;
 import productos.libros.Autor;
+import productos.libros.Ejemplar;
 import productos.libros.Genero;
+import servicios.ProductoUsuario;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -34,6 +36,7 @@ public class GestionBD {
 	private ArrayList<String>titulos;
 	private ArrayList<String>titulosPorGenero;
 	private ArrayList<String>titulosPorAutor;
+	private ArrayList<String>ejemplares;
 	
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
@@ -45,6 +48,7 @@ public class GestionBD {
 		this.titulos=new ArrayList<String>();
 		this.titulosPorGenero=new ArrayList<String>();
 		this.titulosPorAutor=new ArrayList<String>();
+		this.ejemplares=new ArrayList<String>();
 	}
 
 	public String getNombreFichero() {
@@ -199,6 +203,8 @@ public class GestionBD {
 		return codPers;
 	 }
 	 
+	
+	 
 	 public ArrayList<String> obtenerTitulos() {
 		 establecerConexion();
 		 Statement stmt=null;
@@ -285,6 +291,10 @@ public class GestionBD {
 		 cerrarConexion(conn);
 		 return titulosPorAutor;
 	 }
+	 
+	 //public void prestarLibro(Ejemplar ejemplar, Usuario usuario) {
+		// insertarDatosProductoUsuario(obtenerCodigoDePersona(usuario.getUsuario()), ejemplar.getCodEjem(), utilDate.getTime(), StringFecFin, prestado);
+	 //}
 	 
 	 public boolean comprobarUsuarioAdminitrador(int codPers) {
 		 establecerConexion();
@@ -374,6 +384,35 @@ public class GestionBD {
 		 return autores;
 	 }
 	 
+	 public ArrayList<String> obtenerEjemplares(String titulo){
+		 establecerConexion();
+		 PreparedStatement pstmt=null;
+		 String sql="SELECT codEjem, titulo FROM Ejemplar JOIN (SELECT codPro,titulo FROM Producto WHERE titulo=?)A ON A.codPro=Ejemplar.codPro";
+		 try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.setString(1, titulo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				ejemplares.add(rs.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return ejemplares;
+	 }
+	 
 	 public int codigoMaximo() {
 		 int max=0;
 		 establecerConexion();
@@ -407,6 +446,18 @@ public class GestionBD {
 		 String sql="SELECT FROM Persona WHERE usuario=?";
 		 try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, usuario);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			ResultSet rs=pstmt.executeQuery();
+			if(rs.next()) {
+				existe=true;
+			}else {
+				existe=false;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -553,11 +604,11 @@ public class GestionBD {
 		 cerrarConexion(conn);
 		 System.out.println("Se ha ejecutado la acción en la tabla Producto");
 	 }
-	 public void insertarDatosProductoUsuario(int codPers, int codPro,String StringFecIni, String StringFecFin, boolean prestado){
+	 public void insertarDatosProductoUsuario(int codPers, int codEjem,String StringFecIni, String StringFecFin, boolean prestado){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
 		 
-		 String sql = "INSERT INTO ProductoUsuario(codPers, codPro, fecIni,fecFin, prestado) VALUES(?,?,?,?,?)";
+		 String sql = "INSERT INTO ProductoUsuario(codPers, codEjem, fecIni,fecFin, prestado) VALUES(?,?,?,?,?)";
 		 
 		 try {
 			pstmt = conn.prepareStatement(sql);
@@ -568,7 +619,7 @@ public class GestionBD {
 		 
 		 try {
 			pstmt.setInt(1, codPers);
-			pstmt.setInt(2, codPro);
+			pstmt.setInt(2, codEjem);
 			
 			java.util.Date fecIni = string2Date("yyyy-MM-dd", StringFecIni);
 			pstmt.setString(3, fecIni.toString());
@@ -794,11 +845,11 @@ public class GestionBD {
 		 System.out.println("Se ha ejecutado la acción en la tabla Idioma");
 	 }
 	 
-	 public void insertarDatosEjemplar(int codLibro, int codEditorial, int edicion, int codIdioma, int numPag){
+	 public void insertarDatosEjemplar(int codEjem,int codPro, int codEditorial, int edicion, int codIdioma, int numPag, boolean prestado){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
 		 
-		 String sql = "INSERT INTO Ejemplar(codLibro, codEditorial, edicion, codIdioma, numpag) VALUES(?,?,?,?,?)";
+		 String sql = "INSERT INTO Ejemplar(codEjem,codPro, codEditorial, edicion, codIdioma, numpag, prestado) VALUES(?,?,?,?,?,?,?)";
 		 
 		 try {
 			pstmt = conn.prepareStatement(sql);
@@ -808,11 +859,13 @@ public class GestionBD {
 		}
 		 
 		 try {
-			pstmt.setInt(1, codLibro);
-			pstmt.setInt(2, codEditorial);
-			pstmt.setInt(3, edicion);
-			pstmt.setInt(4, codIdioma);
-			pstmt.setInt(5, numPag);
+			pstmt.setInt(1, codEjem);
+			pstmt.setInt(2, codPro);
+			pstmt.setInt(3, codEditorial);
+			pstmt.setInt(4, edicion);
+			pstmt.setInt(5, codIdioma);
+			pstmt.setInt(6, numPag);
+			pstmt.setBoolean(7, prestado);
 			
 			
 		} catch (SQLException e) {
@@ -1072,6 +1125,8 @@ public static void main (String [ ] args) {
 	GestionBD bd1=new GestionBD("BookLand.db");
 	
 
+	
+	
 }
 
 }

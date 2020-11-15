@@ -65,5 +65,17 @@ public interface IListasProductos {
 		return nombreTitulosPorAutor;
 	}
 	
+	public static DefaultListModel<String>cargarListaEjemplares(String titulo){
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<String>ejemplares=bd.obtenerEjemplares(titulo);
+		DefaultListModel<String>titulosEjemplares=new DefaultListModel<String>();
+			for(int i=0;i<ejemplares.size();i++){
+				String tituloEjemplar=ejemplares.get(i);
+				titulosEjemplares.addElement(tituloEjemplar);
+			}
+		
+		return titulosEjemplares;
+	}
+	
 	
 }
