@@ -23,7 +23,7 @@ public class PrestarLibro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnInicio = new JButton("Inicio");
+		JButton btnInicio = new JButton("Volver");
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdministrador v = new VentanaAdministrador();

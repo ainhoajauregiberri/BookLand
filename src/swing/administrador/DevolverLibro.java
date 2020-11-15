@@ -24,8 +24,8 @@ public class DevolverLibro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton button = new JButton("Inicio");
-		button.setBounds(15, 16, 71, 29);
+		JButton button = new JButton("Volver");
+		button.setBounds(15, 16, 87, 29);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdministrador v = new VentanaAdministrador();
@@ -50,7 +50,7 @@ public class DevolverLibro extends JFrame {
 		getContentPane().add(lblDevolverLibro);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(87, 90, 249, 93);
+		scrollPane.setBounds(39, 90, 357, 93);
 		getContentPane().add(scrollPane);
 		
 		JList list = new JList();

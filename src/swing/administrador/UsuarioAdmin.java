@@ -30,7 +30,7 @@ public class UsuarioAdmin extends JFrame {
 		
 		
 		
-		JButton button = new JButton("Inicio");
+		JButton button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdministrador ventanaAdministrador=new VentanaAdministrador();
@@ -39,7 +39,7 @@ public class UsuarioAdmin extends JFrame {
 			}
 		});
 		
-		button.setBounds(15, 16, 71, 29);
+		button.setBounds(15, 16, 90, 29);
 		getContentPane().add(button);
 		
 		JLabel lblUsuario = new JLabel("Usuario");

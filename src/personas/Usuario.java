@@ -8,14 +8,14 @@ import sqlite.GestionBD;
 
 public class Usuario extends Persona {
 	
-	private Date fecAlta;
+	private String fecAlta;
 	private double dinero;
 	
-	public Date getFecAlta() {
+	public String getFecAlta() {
 		return fecAlta;
 	}
-	public void setFecAlta(Date fecAlta) {
-		fecAlta = fecAlta;
+	public void setFecAlta(String fecAlta) {
+		this.fecAlta = fecAlta;
 	}
 	public double getDinero() {
 		return dinero;
@@ -23,10 +23,9 @@ public class Usuario extends Persona {
 	public void setDinero(double dinero) {
 		this.dinero = dinero;
 	}
-	public Usuario(String nombre, String usuario, String contrasenya, Date fecNac, String sexo, Date fecAlta,
-			ArrayList<ProductoUsuario> productos, double dinero) {
+	public Usuario(String nombre, String usuario, String contrasenya, String fecNac, String sexo, String fecAlta, double dinero) {
 		super(nombre, usuario, contrasenya, fecNac, sexo);
-		fecAlta = fecAlta;
+		this.fecAlta = fecAlta;
 		this.dinero = dinero;
 	}
 	
