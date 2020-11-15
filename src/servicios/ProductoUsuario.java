@@ -11,7 +11,7 @@ public class ProductoUsuario {
 	private Producto producto;
 	private String fecIni;
 	private String fecFin;
-	private boolean prestar;
+	private boolean prestado;
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -38,18 +38,18 @@ public class ProductoUsuario {
 		this.fecFin = fecFin;
 	}
 	
-	public boolean isPrestar() {
-		return prestar;
+	public boolean isPrestado() {
+		return prestado;
 	}
-	public void setPrestar(boolean prestar) {
-		this.prestar = prestar;
+	public void setPrestado(boolean prestado) {
+		this.prestado = prestado;
 	}
-	public ProductoUsuario(Usuario usuario, Producto producto, String fecIni, String fecFin) {
+	public ProductoUsuario(Usuario usuario, Producto producto, String fecIni, String fecFin, boolean prestado) {
 		this.usuario = usuario;
 		this.producto = producto;
 		this.fecIni = fecIni;
 		this.fecFin = fecFin;
-		this.prestar = prestar;
+		this.prestado = prestado;
 	}
 
 	

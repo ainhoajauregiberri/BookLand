@@ -16,6 +16,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
+
+import productos.libros.Autor;
+import productos.libros.Genero;
+
+import javax.swing.event.ListSelectionEvent;
 
 public class BuscarLibros extends JFrame implements IListasProductos{
 	private JPanel contentPane;
@@ -73,6 +79,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 				}
 				if(opcionFiltro.equals("Titulo")) {
 					cargarListaTitulos();
+					dfm.clear();
 				}
 			}
 		});
@@ -82,6 +89,14 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 		getContentPane().add(comboBox);
 		
 		JButton button_1 = new JButton("Buscar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String titulo=(String) listTitulos.getSelectedValue();
+				LibrosDisponibles v=new LibrosDisponibles(titulo);
+				v.setVisible(true);
+				BuscarLibros.this.dispose();
+			}
+		});
 		button_1.setBounds(158, 250, 115, 29);
 		getContentPane().add(button_1);
 		
@@ -101,6 +116,19 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 		contentPane.add(scrollPane_1);
 		
 		listFiltros = new JList();
+		listFiltros.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				Object ob=listFiltros.getSelectedValue();
+				if(ob instanceof Genero) {
+					Genero genero=(Genero) ob;
+					cargarListaTitulosPorGenero((Genero) ob);
+				}
+				if(ob instanceof Autor) {
+					Autor autor=(Autor) ob;
+					cargarListaTitulosPorAutor((Autor) ob);
+				}
+			}
+		});
 		scrollPane_1.setViewportView(listFiltros);
 	}
 	public void  cargarListaGenero() {
@@ -115,6 +143,16 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 	
 	public void cargarListaTitulos() {
 		dfmTitulos=IListasProductos.cargarListaTitulos();
+		listTitulos.setModel(dfmTitulos);
+	}
+	
+	public void cargarListaTitulosPorGenero(Genero genero) {
+		dfmTitulos=IListasProductos.cargarListaTitulosPorGenero(genero);
+		listTitulos.setModel(dfmTitulos);
+	}
+	
+	public void cargarListaTitulosPorAutor(Autor autor) {
+		dfmTitulos=IListasProductos.cargarListaTitulosPorAutor(autor);
 		listTitulos.setModel(dfmTitulos);
 	}
 }

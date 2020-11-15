@@ -43,5 +43,27 @@ public interface IListasProductos {
 		return nombreTitulos;
 	}
 	
+	public static DefaultListModel<String> cargarListaTitulosPorGenero(Genero genero) {
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<String>titulosPorGenero=bd.obtenerTitulosPorGenero(genero);
+		DefaultListModel<String>nombreTitulosPorGenero=new DefaultListModel<String>();
+		for(int i=0;i<titulosPorGenero.size();i++){
+			String titulo=titulosPorGenero.get(i);
+			nombreTitulosPorGenero.addElement(titulo);
+		}
+		return nombreTitulosPorGenero;
+	}
+	
+	public static DefaultListModel<String> cargarListaTitulosPorAutor(Autor autor) {
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<String>titulosPorAutor=bd.obtenerTitulosPorAutor(autor);
+		DefaultListModel<String>nombreTitulosPorAutor=new DefaultListModel<String>();
+		for(int i=0;i<titulosPorAutor.size();i++){
+			String titulo=titulosPorAutor.get(i);
+			nombreTitulosPorAutor.addElement(titulo);
+		}
+		return nombreTitulosPorAutor;
+	}
+	
 	
 }
