@@ -6,11 +6,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import personas.Usuario;
+
 import java.awt.event.ActionListener;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class UsuarioAdmin extends JFrame {
@@ -43,17 +46,36 @@ public class UsuarioAdmin extends JFrame {
 		lblUsuario.setBounds(31, 95, 121, 20);
 		getContentPane().add(lblUsuario);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(172, 58, 200, 110);
+		getContentPane().add(scrollPane);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
+	
+		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (prestar==true) {
-					PrestarLibro prestarLibro=new PrestarLibro(Usuario usuarioSeleccionado);
+				Usuario usuarioSeleccionado = (Usuario) list.getSelectedValue();
+				if (prestar) {
+					boolean puedePrestar = puedePrestar(usuarioSeleccionado);
+					if (puedePrestar){
+					PrestarLibro prestarLibro=new PrestarLibro(usuarioSeleccionado);
 					prestarLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
+					}else{
+						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario tiene una multa, no puede prestar libros");
+					}
 				}else{
-					DevolverLibro devolverLibro=new DevolverLibro(Usuario usuarioSeleccionado);
+					boolean puedeDevolver = puedeDevolver (usuarioSeleccionado);
+					if (puedeDevolver){
+					DevolverLibro devolverLibro=new DevolverLibro(usuarioSeleccionado);
 					devolverLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
+					}else{
+						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario no tiene ningún libro que devolver");
+					}
 					
 				}
 			}
@@ -61,16 +83,7 @@ public class UsuarioAdmin extends JFrame {
 		btnEntrar.setBounds(148, 199, 115, 29);
 		getContentPane().add(btnEntrar);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(172, 58, 200, 110);
-		getContentPane().add(scrollPane);
 		
-		JList list = new JList();
-		scrollPane.setViewportView(list);
-		
-		JLabel label = new JLabel("");
-		label.setBounds(172, 25, 69, 20);
-		getContentPane().add(label);
 	}
 
 }
