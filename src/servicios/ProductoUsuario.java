@@ -9,8 +9,10 @@ public class ProductoUsuario {
 
 	private Usuario usuario;
 	private Producto producto;
-	private Date fecIni;
-	private Date fecFin;
+	private String fecIni;
+	private String fecFin;
+	private boolean prestar;
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -23,23 +25,31 @@ public class ProductoUsuario {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-	public Date getFecIni() {
+	public String getFecIni() {
 		return fecIni;
 	}
-	public void setFecIni(Date fecIni) {
-		fecIni = fecIni;
+	public void setFecIni(String fecIni) {
+		this.fecIni = fecIni;
 	}
-	public Date getFecFin() {
+	public String getFecFin() {
 		return fecFin;
 	}
-	public void setFecFin(Date fecFin) {
-		fecFin = fecFin;
+	public void setFecFin(String fecFin) {
+		this.fecFin = fecFin;
 	}
-	public ProductoUsuario(Usuario usuario, Producto producto, Date fecIni, Date fecFin) {
+	
+	public boolean isPrestar() {
+		return prestar;
+	}
+	public void setPrestar(boolean prestar) {
+		this.prestar = prestar;
+	}
+	public ProductoUsuario(Usuario usuario, Producto producto, String fecIni, String fecFin) {
 		this.usuario = usuario;
 		this.producto = producto;
-		fecIni = fecIni;
-		fecFin = fecFin;
+		this.fecIni = fecIni;
+		this.fecFin = fecFin;
+		this.prestar = prestar;
 	}
 
 	
