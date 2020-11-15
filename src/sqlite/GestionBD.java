@@ -9,11 +9,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import personas.Persona;
 import personas.Usuario;
+import productos.libros.Autor;
+import productos.libros.Genero;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -25,11 +28,19 @@ public class GestionBD {
 	private String url="jdbc:sqlite:" + nombreFichero;
 	private Connection conn;
 	private SimpleDateFormat formatoFec;
+	private HashMap<String,Persona>personas;
+	private ArrayList<Genero>generos;
+	private ArrayList<Autor>autores;
+	ArrayList<String>titulos;
 	
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
 		this.url = "jdbc:sqlite:" + nombreFichero;
 		this.conn = null;
+		this.personas=new HashMap<String,Persona>();
+		this.generos=new ArrayList<Genero>();
+		this.autores=new ArrayList<Autor>();
+		this.titulos=new ArrayList<String>();
 	}
 
 	public String getNombreFichero() {
@@ -123,7 +134,6 @@ public class GestionBD {
 	 }
 	 
 	 public HashMap<String,Persona> seleccionarDatosPersona() {
-		 HashMap<String,Persona>usuarios=null;
 		 establecerConexion();
 		 Statement stmt = null;
 		 String sql="SELECT codPers, nombre, usuario, contrasenya, fecNac, sexo FROM Persona";
@@ -136,18 +146,170 @@ public class GestionBD {
 		 try {
 			ResultSet rs=stmt.executeQuery(sql);
 			while(rs.next()) {
-				String str = rs.getString(5);
-				java.sql.Date sqlDate = java.sql.Date.valueOf(rs.getString(5));
-				Persona p=new Persona(rs.getString(2),rs.getString(3),rs.getString(4),sqlDate,rs.getString(6));
-				usuarios.put(rs.getString(3), p);
+				
+				Persona p=new Persona(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+				System.out.println(p.toString());
+				personas.put(rs.getString(3), p);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 cerrarConexion(conn);
 		 
 		 
-		 return usuarios;
+		 return personas;
+	 }
+	 
+	 public int obtenerCodigoDePersona(String usuario) {
+		 establecerConexion();
+		 String sql="SELECT codPers FROM Persona WHERE usuario=?";
+		 PreparedStatement pstmt=null;
+		 ResultSet rs=null;
+		 int codPers = 0;
+		 try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.setString(1, usuario);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			rs=pstmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			 codPers=rs.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		return codPers;
+	 }
+	 
+	 public ArrayList<String> obtenerTitulos() {
+		 establecerConexion();
+		 Statement stmt=null;
+		 ResultSet rs=null;
+		 String sql="SELECT titulo FROM Producto WHERE codPro IN(SELECT codPro FROM CD)";
+		 try {
+			stmt=conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			rs=stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			while(rs.next()) {
+				 titulos.add(rs.getString(1));
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return titulos;
+	 }
+	 
+	 public boolean comprobarUsuarioAdminitrador(int codPers) {
+		 establecerConexion();
+		 Statement stmt=null;
+		 boolean esUsuario=false;
+		 String sql="SELECT codPers FROM Usuario";
+		 try {
+			stmt=conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 ResultSet rs;
+		try {
+			rs = stmt.executeQuery(sql);
+			 while(rs.next()) {
+				 if(rs.getInt(1)==codPers) {
+					 esUsuario=true;
+				 }
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 cerrarConexion(conn);
+		 return esUsuario;
+	 }
+	 
+	 public ArrayList<Genero> devolverGeneros(){
+		 establecerConexion();
+		 Statement stmt=null;
+		 ResultSet rs=null;
+		 String sql="SELECT codGenero,nomGenero FROM Genero";
+		 try {
+			stmt=conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			rs=stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			while(rs.next()) {
+				 Genero genero=new Genero(rs.getString(2));
+				 generos.add(genero);
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return generos;
+	 }
+	 
+	 public ArrayList<Autor> devolverAutores(){
+		 establecerConexion();
+		 Statement stmt=null;
+		 ResultSet rs=null;
+		 String sql="SELECT codAutor,nomAutor FROM Autor";
+		 try {
+			stmt=conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			rs=stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			while(rs.next()) {
+				 Autor autor=new Autor(rs.getString(2));
+				 autores.add(autor);
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return autores;
 	 }
 	 
 	 public void insertarDatosPersona(int codPers, String nombre, String usuario, String contrasenya, String StringfecNac, String sexo){

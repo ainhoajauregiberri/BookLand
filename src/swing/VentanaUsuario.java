@@ -50,7 +50,7 @@ public class VentanaUsuario extends JFrame {
 				VentanaUsuario.this.dispose();
 			}
 		});
-		btnproductosPrestados.setBounds(39, 53, 183, 29);
+		btnproductosPrestados.setBounds(146, 53, 183, 29);
 		contentPane.add(btnproductosPrestados);
 		
 		JButton btnBuscarLibros = new JButton("Buscar libros");
@@ -61,70 +61,13 @@ public class VentanaUsuario extends JFrame {
 				VentanaUsuario.this.dispose();
 			}
 		});
-		btnBuscarLibros.setBounds(39, 94, 183, 29);
+		btnBuscarLibros.setBounds(146, 95, 183, 29);
 		contentPane.add(btnBuscarLibros);
 		
-		JButton btnBuscarCD = new JButton("Buscar CD");
-		btnBuscarCD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BuscarCD buscarCD=new BuscarCD();
-				buscarCD.setVisible(true);
-				VentanaUsuario.this.dispose();
-			}
-		});
-		btnBuscarCD.setBounds(39, 135, 183, 29);
-		contentPane.add(btnBuscarCD);
-		
-		JButton btnBuscarPelicula = new JButton("Buscar pelicula");
-		btnBuscarPelicula.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BuscarPelicula buscarPelicula=new BuscarPelicula();
-				buscarPelicula.setVisible(true);
-				VentanaUsuario.this.dispose();
-			}
-		});
-		btnBuscarPelicula.setBounds(39, 176, 183, 29);
-		contentPane.add(btnBuscarPelicula);
-		
-		JButton btnBuscarVideojuego = new JButton("Buscar videojuego");
-		btnBuscarVideojuego.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BuscarVideojuego buscarVideojuego=new BuscarVideojuego();
-				buscarVideojuego.setVisible(true);
-				VentanaUsuario.this.dispose();
-			}
-		});
-		btnBuscarVideojuego.setBounds(39, 217, 183, 29);
-		contentPane.add(btnBuscarVideojuego);
-		
-		JButton btnOrdenador = new JButton("Ordenador");
-		btnOrdenador.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OrdenadorJ ordenadorJ=new OrdenadorJ();
-				ordenadorJ.setVisible(true);
-				VentanaUsuario.this.dispose();
-			}
-		});
-		btnOrdenador.setBounds(269, 53, 147, 29);
-		contentPane.add(btnOrdenador);
-		
-		JButton btnCuentacuentos = new JButton("Cuentacuentos");
-		btnCuentacuentos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CuentacuentosJ cuentacuentosJ=new CuentacuentosJ();
-				cuentacuentosJ.setVisible(true);
-				VentanaUsuario.this.dispose();
-			}
-		});
-		btnCuentacuentos.setBounds(269, 94, 147, 29);
-		contentPane.add(btnCuentacuentos);
 		
 		JLabel lblProductos = new JLabel("Productos");
-		lblProductos.setBounds(97, 21, 82, 16);
+		lblProductos.setBounds(206, 24, 82, 16);
 		contentPane.add(lblProductos);
 		
-		JLabel lblServicios = new JLabel("Servicios");
-		lblServicios.setBounds(310, 21, 73, 16);
-		contentPane.add(lblServicios);
 	}
 }
