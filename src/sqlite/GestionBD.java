@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import personas.Persona;
 import personas.Usuario;
+import productos.Producto;
 import productos.libros.Autor;
 import productos.libros.Ejemplar;
 import productos.libros.Genero;
@@ -37,6 +38,7 @@ public class GestionBD {
 	private ArrayList<String>titulosPorGenero;
 	private ArrayList<String>titulosPorAutor;
 	private ArrayList<String>ejemplares;
+	private ArrayList<String> productosUsuario;
 	
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
@@ -49,6 +51,7 @@ public class GestionBD {
 		this.titulosPorGenero=new ArrayList<String>();
 		this.titulosPorAutor=new ArrayList<String>();
 		this.ejemplares=new ArrayList<String>();
+		this.productosUsuario=new ArrayList<String>();
 	}
 
 	public String getNombreFichero() {
@@ -437,6 +440,35 @@ public class GestionBD {
 		 
 		 cerrarConexion(conn);
 		 return max;
+	 }
+	 
+	 public ArrayList<String> obtenerProductosUsuario(Persona persona){
+		establecerConexion();
+		PreparedStatement pstmt=null;
+		String sql="SELECT titulo FROM Producto WHERE codPro IN(SELECT codPro FROM ProductoUsuario WHERE (codPers=? and prestado IS TRUE))";
+		try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				productosUsuario.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cerrarConexion(conn);
+		 return productosUsuario;
 	 }
 	 
 	 public boolean existeUsuario(String usuario) {

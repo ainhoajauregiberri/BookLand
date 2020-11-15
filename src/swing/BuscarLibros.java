@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 
+import personas.Persona;
+import personas.Usuario;
 import productos.libros.Autor;
 import productos.libros.Genero;
 
@@ -29,6 +31,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 	private DefaultListModel dfm;
 	private JList listFiltros;
 	private JList listTitulos;
+	private static Persona persona;
 
 	/**
 	 * Launch the application.
@@ -37,7 +40,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProductosPrestados frame = new ProductosPrestados();
+					ProductosPrestados frame = new ProductosPrestados(BuscarLibros.persona);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +48,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 			}
 		});
 	}
-	public BuscarLibros() {
+	public BuscarLibros(Persona persona) {
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 319);
@@ -53,13 +56,14 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.persona=persona;
 		dfm=new DefaultListModel<Object>();
 		dfmTitulos=new DefaultListModel<String>();
 		
 		JButton button = new JButton("Inicio");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaUsuario v = new VentanaUsuario();
+				VentanaUsuario v = new VentanaUsuario(BuscarLibros.persona);
 				v.setVisible(true);
 				BuscarLibros.this.dispose();
 			}
@@ -92,7 +96,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String titulo=(String) listTitulos.getSelectedValue();
-				LibrosDisponibles v=new LibrosDisponibles(titulo);
+				LibrosDisponibles v=new LibrosDisponibles(titulo,BuscarLibros.persona);
 				v.setVisible(true);
 				BuscarLibros.this.dispose();
 			}

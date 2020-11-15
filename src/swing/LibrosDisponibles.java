@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
+import personas.Usuario;
 import productos.libros.Autor;
 import productos.libros.Ejemplar;
 
@@ -24,6 +26,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 	private JList list;
 	private DefaultListModel<String>dfmEjemplares;
 	private static String titulo;
+	private static Persona persona;
 
 
 	/**
@@ -33,7 +36,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LibrosDisponibles frame = new LibrosDisponibles(LibrosDisponibles.titulo);
+					LibrosDisponibles frame = new LibrosDisponibles(LibrosDisponibles.titulo,LibrosDisponibles.persona);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +48,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 	/**
 	 * Create the frame.
 	 */
-	public LibrosDisponibles(String titulo) {
+	public LibrosDisponibles(String titulo,Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -59,12 +62,13 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 		contentPane.add(scrollPane);
 		scrollPane.setViewportView(list);
 		cargarListaEjemplares(titulo);
+		this.persona=persona;
 		
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarLibros v=new BuscarLibros();
+				BuscarLibros v=new BuscarLibros(LibrosDisponibles.persona);
 				v.setVisible(true);
 				LibrosDisponibles.this.dispose();
 			}

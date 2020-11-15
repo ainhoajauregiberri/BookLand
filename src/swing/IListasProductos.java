@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
+import personas.Persona;
+import personas.Usuario;
 import productos.libros.Autor;
 import productos.libros.Genero;
 import sqlite.GestionBD;
@@ -75,6 +77,19 @@ public interface IListasProductos {
 			}
 		
 		return titulosEjemplares;
+	}
+	
+	public static DefaultListModel<String>cargarListaProductos(Persona persona){
+		GestionBD bd=new GestionBD("BookLand.db");
+		System.out.println("He entrado en la interfaz");
+		ArrayList<String>productos=bd.obtenerProductosUsuario(persona);
+		DefaultListModel<String>titulosProductos=new DefaultListModel<String>();
+			for(int i=0;i<productos.size();i++){
+				String tituloEjemplar=productos.get(i);
+				titulosProductos.addElement(tituloEjemplar);
+			}
+		
+		return titulosProductos;
 	}
 	
 	

@@ -90,7 +90,7 @@ public class Acceso extends JFrame {
 					int codPers=bd.obtenerCodigoDePersona(usuario);
 					if(bd.comprobarUsuarioAdminitrador(codPers)) {
 						if(persona.getContrasenya().equals(contrasenya)) {
-							VentanaUsuario ventanaUsuario=new VentanaUsuario();
+							VentanaUsuario ventanaUsuario=new VentanaUsuario(persona);
 							ventanaUsuario.setVisible(true);
 							Acceso.this.dispose();
 							

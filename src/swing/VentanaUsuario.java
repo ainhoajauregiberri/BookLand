@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import personas.Persona;
+import personas.Usuario;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
@@ -14,6 +18,7 @@ import java.awt.event.ActionEvent;
 public class VentanaUsuario extends JFrame {
 
 	private JPanel contentPane;
+	private static Persona persona;
 
 	/**
 	 * Launch the application.
@@ -22,7 +27,7 @@ public class VentanaUsuario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaUsuario frame = new VentanaUsuario();
+					VentanaUsuario frame = new VentanaUsuario(VentanaUsuario.persona);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,18 +39,19 @@ public class VentanaUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaUsuario() {
+	public VentanaUsuario(Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 319);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.persona=persona;
 		
 		JButton btnproductosPrestados = new JButton("Productos prestados");
 		btnproductosPrestados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProductosPrestados productosPrestados =new ProductosPrestados();
+				ProductosPrestados productosPrestados =new ProductosPrestados(VentanaUsuario.persona);
 				productosPrestados.setVisible(true);
 				VentanaUsuario.this.dispose();
 			}
@@ -56,7 +62,7 @@ public class VentanaUsuario extends JFrame {
 		JButton btnBuscarLibros = new JButton("Buscar libros");
 		btnBuscarLibros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarLibros buscarLibros=new BuscarLibros();
+				BuscarLibros buscarLibros=new BuscarLibros(VentanaUsuario.persona);
 				buscarLibros.setVisible(true);
 				VentanaUsuario.this.dispose();
 			}
