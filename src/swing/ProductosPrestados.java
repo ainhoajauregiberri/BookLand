@@ -18,13 +18,14 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 
 public class ProductosPrestados extends JFrame {
 	private JPanel contentPane;
 	private DefaultListModel dfmTitulos;
-	private JList list;
 	private static Persona persona;
+	private JList list;
 
 	/**
 	 * Launch the application.
@@ -54,10 +55,12 @@ public class ProductosPrestados extends JFrame {
 		JButton btnProlongar = new JButton("Prolongar");
 		btnProlongar.setBounds(160, 213, 117, 29);
 		getContentPane().add(btnProlongar);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(62, 105, 329, 96);
+		contentPane.add(scrollPane);
 		
 		list = new JList();
-		list.setBounds(92, 91, 260, 111);
-		contentPane.add(list);
+		scrollPane.setViewportView(list);
 		cargarListaProductos(persona);
 		
 		JLabel lblProductosPrestados = new JLabel("Productos prestados");
@@ -75,9 +78,11 @@ public class ProductosPrestados extends JFrame {
 		button.setBounds(15, 16, 78, 29);
 		getContentPane().add(button);
 		
+		
+		
 	}
 	public void cargarListaProductos(Persona persona) {
 		dfmTitulos=IListasProductos.cargarListaProductos(persona);
-		list.setModel(dfmTitulos);
+		this.list.setModel(dfmTitulos);
 	}
 }

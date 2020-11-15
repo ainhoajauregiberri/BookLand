@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 import sqlite.GestionBD;
+import swing.administrador.VentanaAdministrador;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -99,7 +100,7 @@ public class Acceso extends JFrame {
 						}
 						
 					}else {
-						
+						VentanaAdministrador ventanaAdministrador=new VentanaAdministrador(persona);
 					}
 				}else {
 				JOptionPane.showMessageDialog(Acceso.this, "Usuario incorrecto");

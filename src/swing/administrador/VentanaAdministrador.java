@@ -3,13 +3,34 @@ package swing.administrador;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import personas.Persona;
+import swing.ProductosPrestados;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
 public class VentanaAdministrador extends JFrame{
 	private JPanel contentPane;
-	public VentanaAdministrador() {
+	private static Persona persona;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ProductosPrestados frame = new ProductosPrestados(VentanaAdministrador.persona);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public VentanaAdministrador(Persona persona) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 252);
@@ -17,12 +38,13 @@ public class VentanaAdministrador extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.persona=persona;
 		
 		JButton btnPrestarLibro = new JButton("Prestar productos");
 		btnPrestarLibro.setBounds(36, 72, 161, 29);
 		btnPrestarLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(true);
+				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(true,persona);
 				usuarioAdmin.setVisible(true);
 				VentanaAdministrador.this.dispose();
 			}
@@ -34,7 +56,7 @@ public class VentanaAdministrador extends JFrame{
 		btnDevolverLibro.setBounds(36, 133, 161, 29);
 		btnDevolverLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(false);
+				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(false,persona);
 				usuarioAdmin.setVisible(true);
 				VentanaAdministrador.this.dispose();
 			}
@@ -45,7 +67,7 @@ public class VentanaAdministrador extends JFrame{
 		btnCrearUsuario.setBounds(233, 72, 161, 29);
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearUsuario crearUsuario=new CrearUsuario();
+				CrearUsuario crearUsuario=new CrearUsuario(persona);
 				crearUsuario.setVisible(true);
 				VentanaAdministrador.this.dispose();
 			}
@@ -63,15 +85,5 @@ public class VentanaAdministrador extends JFrame{
 		});
 		getContentPane().add(btnMirarMultas);
 		
-		JButton button = new JButton("Inicio");
-		button.setBounds(15, 16, 71, 29);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VentanaAdministrador v = new VentanaAdministrador();
-				v.setVisible(true);
-				VentanaAdministrador.this.dispose();
-			}
-		});
-		getContentPane().add(button);
 	}
 }

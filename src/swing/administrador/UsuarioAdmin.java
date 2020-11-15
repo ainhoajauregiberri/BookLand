@@ -6,7 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
 import personas.Usuario;
+import swing.ProductosPrestados;
 
 import java.awt.event.ActionListener;
 import java.awt.EventQueue;
@@ -18,22 +20,37 @@ import javax.swing.JPanel;
 
 public class UsuarioAdmin extends JFrame {
 	private JPanel contentPane;
-	private boolean prestar;
+	private static boolean prestar;
+	private static Persona persona;
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UsuarioAdmin frame = new UsuarioAdmin(UsuarioAdmin.prestar,UsuarioAdmin.persona);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	
-	public UsuarioAdmin(boolean prestar) {
+	public UsuarioAdmin(boolean prestar,Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 295);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.prestar=prestar;
+		this.persona=persona;
 		
 		
 		JButton button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdministrador ventanaAdministrador=new VentanaAdministrador();
+				VentanaAdministrador ventanaAdministrador=new VentanaAdministrador(UsuarioAdmin.persona);
 				ventanaAdministrador.setVisible(true);
 				UsuarioAdmin.this.dispose();
 			}
@@ -74,7 +91,7 @@ public class UsuarioAdmin extends JFrame {
 					devolverLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
 					}else{
-						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario no tiene ningún libro que devolver");
+						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario no tiene ningï¿½n libro que devolver");
 					}
 					
 				}

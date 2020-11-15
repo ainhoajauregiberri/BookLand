@@ -3,11 +3,13 @@ package swing.administrador;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
 
@@ -19,9 +21,23 @@ import javax.swing.JLabel;
 public class DevolverLibro extends JFrame {
 	
 	private JPanel contentPane;
-	private Usuario usuario;
-	public DevolverLibro(Usuario usuario) {
-		this.usuario=usuario;
+	private static Persona persona;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DevolverLibro frame = new DevolverLibro(DevolverLibro.persona);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public DevolverLibro(Persona persona) {
+		this.persona=persona;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 353);
 		contentPane = new JPanel();
@@ -33,7 +49,7 @@ public class DevolverLibro extends JFrame {
 		button.setBounds(15, 16, 87, 29);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdministrador v = new VentanaAdministrador();
+				VentanaAdministrador v = new VentanaAdministrador(persona);
 				v.setVisible(true);
 				DevolverLibro.this.dispose();
 			}
@@ -56,7 +72,7 @@ public class DevolverLibro extends JFrame {
 		btnDevolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Producto producto = (Producto) list.getSelectedValue();
-				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(usuario, producto);
+				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(persona, producto);
 				v.setVisible(true);
 				DevolverLibro.this.dispose();
 			}

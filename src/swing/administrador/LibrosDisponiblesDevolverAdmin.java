@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
 import productos.libros.Ejemplar;
@@ -21,8 +22,9 @@ import java.awt.event.ActionEvent;
 public class LibrosDisponiblesDevolverAdmin extends JFrame {
 
 	private JPanel contentPane;
-	private Usuario usuario;
+	private Persona persona;
 	private Producto producto;
+	
 
 	/**
 	 * Launch the application.
@@ -34,8 +36,8 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 	 * @param producto 
 	 * @param usuario 
 	 */
-	public LibrosDisponiblesDevolverAdmin(Usuario usuario, Producto producto) {
-		this.usuario=usuario;
+	public LibrosDisponiblesDevolverAdmin(Persona persona, Producto producto) {
+		this.persona=persona;
 		this.producto=producto;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 316);
@@ -59,7 +61,7 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 		JButton button_1 = new JButton("Devolver");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				devolverLibro((Ejemplar)list.getSelectedValue(), usuario);
+				devolverLibro((Ejemplar)list.getSelectedValue(), persona);
 				JOptionPane.showMessageDialog(LibrosDisponiblesDevolverAdmin.this, "El libro ha sido devuelto");
 			}
 		});

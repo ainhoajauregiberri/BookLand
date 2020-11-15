@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Calendar;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
 import personas.Usuario;
 import sqlite.GestionBD;
 import sun.util.calendar.CalendarDate;
@@ -28,19 +30,35 @@ public class CrearUsuario extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField passwordFieldClave;
 	private JTextField textField_dinero;
-	public CrearUsuario() {
+	private static Persona persona;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CrearUsuario frame = new CrearUsuario(CrearUsuario.persona);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public CrearUsuario(Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 434);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.persona=persona;
 		
 		
 		JButton button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdministrador v = new VentanaAdministrador();
+				VentanaAdministrador v = new VentanaAdministrador(persona);
 				v.setVisible(true);
 				CrearUsuario.this.dispose();
 			}
@@ -130,8 +148,8 @@ public class CrearUsuario extends JFrame {
 					boolean chica = rdbtnChica.isSelected();
 					int mes = Calendar.DAY_OF_MONTH;
 					int dia = Calendar.MONTH;
-					int año = Calendar.YEAR;
-					String fecha = año+"-"+mes+"-"+dia;
+					int anyo = Calendar.YEAR;
+					String fecha = anyo+"-"+mes+"-"+dia;
 					
 					int codPers = bd.codigoMaximo();
 					if (chica==true){
