@@ -18,7 +18,7 @@ public class DevolverLibro extends JFrame {
 	public DevolverLibro() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 299);
+		setBounds(100, 100, 450, 353);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -42,15 +42,15 @@ public class DevolverLibro extends JFrame {
 				JOptionPane.showMessageDialog(DevolverLibro.this, "El libro ha sido devuelto");
 			}
 		});
-		btnDevolver.setBounds(149, 199, 115, 29);
+		btnDevolver.setBounds(153, 240, 115, 29);
 		getContentPane().add(btnDevolver);
 		
 		JLabel lblDevolverLibro = new JLabel("Devolver libro");
-		lblDevolverLibro.setBounds(153, 44, 100, 20);
+		lblDevolverLibro.setBounds(153, 54, 100, 20);
 		getContentPane().add(lblDevolverLibro);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(39, 90, 357, 93);
+		scrollPane.setBounds(39, 90, 357, 116);
 		getContentPane().add(scrollPane);
 		
 		JList list = new JList();

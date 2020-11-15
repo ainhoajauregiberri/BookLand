@@ -47,11 +47,11 @@ public class UsuarioAdmin extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (prestar==true) {
-					PrestarLibro prestarLibro=new PrestarLibro();
+					PrestarLibro prestarLibro=new PrestarLibro(Usuario usuarioSeleccionado);
 					prestarLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
 				}else{
-					DevolverLibro devolverLibro=new DevolverLibro();
+					DevolverLibro devolverLibro=new DevolverLibro(Usuario usuarioSeleccionado);
 					devolverLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
 					

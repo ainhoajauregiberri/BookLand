@@ -31,17 +31,17 @@ public class PrestarLibro extends JFrame {
 				PrestarLibro.this.dispose();
 			}
 		});
-		btnInicio.setBounds(15, 16, 71, 29);
+		btnInicio.setBounds(15, 16, 86, 29);
 		getContentPane().add(btnInicio);
 		
 		JLabel lblPrestarLibro = new JLabel("Prestar libro");
 		lblPrestarLibro.setBounds(166, 57, 86, 20);
 		getContentPane().add(lblPrestarLibro);
 		
-		JButton btnPrestar = new JButton("Prestar");
+		JButton btnPrestar = new JButton("Buscar");
 		btnPrestar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(PrestarLibro.this, "El libro ha sido prestado");
+				
 			}
 		});
 		btnPrestar.setBounds(151, 247, 115, 29);
