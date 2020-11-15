@@ -4,10 +4,17 @@ package sqlite;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import personas.Persona;
+import personas.Usuario;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 
@@ -113,6 +120,34 @@ public class GestionBD {
 		 cerrarConexion(conn);
 		 System.out.println("Se ha ejecutado la accion en la tabla");
 		 
+	 }
+	 
+	 public HashMap<String,Persona> seleccionarDatosPersona() {
+		 HashMap<String,Persona>usuarios=null;
+		 establecerConexion();
+		 Statement stmt = null;
+		 String sql="SELECT codPers, nombre, usuario, contrasenya, fecNac, sexo FROM Persona";
+		 try {
+			stmt=conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			ResultSet rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				String str = rs.getString(5);
+				java.sql.Date sqlDate = java.sql.Date.valueOf(rs.getString(5));
+				Persona p=new Persona(rs.getString(2),rs.getString(3),rs.getString(4),sqlDate,rs.getString(6));
+				usuarios.put(rs.getString(3), p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 
+		 return usuarios;
 	 }
 	 
 	 public void insertarDatosPersona(int codPers, String nombre, String usuario, String contrasenya, String StringfecNac, String sexo){

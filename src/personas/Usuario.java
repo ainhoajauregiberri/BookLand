@@ -1,7 +1,10 @@
 package personas;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import servicios.ProductoUsuario;
+import sqlite.GestionBD;
 
 public class Usuario extends Persona {
 	
@@ -26,6 +29,8 @@ public class Usuario extends Persona {
 		fecAlta = fecAlta;
 		this.dinero = dinero;
 	}
+	
+
 	
 	
 	

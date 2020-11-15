@@ -1,5 +1,8 @@
 package personas;
 import java.sql.Date;
+import java.util.HashMap;
+
+import sqlite.GestionBD;
 
 public class Persona {
 	
@@ -47,7 +50,6 @@ public class Persona {
 		this.fecNac = fecNac;
 		this.sexo = sexo;
 	}
-	
 	
 
 }

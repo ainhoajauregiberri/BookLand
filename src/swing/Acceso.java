@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import personas.Persona;
 import personas.Usuario;
+import sqlite.GestionBD;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -36,7 +37,7 @@ public class Acceso extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Acceso frame = new Acceso(personas);
+					Acceso frame = new Acceso();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,14 +49,15 @@ public class Acceso extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Acceso(HashMap<String,Persona> usuarios) {
+	public Acceso() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 366, 189);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		this.personas=usuarios;
+		GestionBD bd=new GestionBD("BookLand.db");
+		this.personas=bd.seleccionarDatosPersona();
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -77,22 +79,24 @@ public class Acceso extends JFrame {
 		lblContrasenya.setBounds(66, 57, 90, 16);
 		panel_1.add(lblContrasenya);
 		
+		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String usuario=textFieldUsuario.getText();
 				String contrasenya=String.valueOf(passFieldContrasenya.getPassword());
-				if(usuarios.containsKey(usuario)) {
+				if(personas.containsKey(usuario)) {
 					Persona persona=(Persona) personas.get(usuario);
 					if(persona instanceof Usuario) {
-						VentanaUsuario ventanaUsuario=new VentanaUsuario();
+						if(persona.getContrasenya().equals(contrasenya)) {
+							VentanaUsuario ventanaUsuario=new VentanaUsuario();
+							
+						}else {
+							JOptionPane.showMessageDialog(Acceso.this, "Contraseña incorrecta");
+						}
+						
 					}else {
 						
-					}
-					if(persona.getContrasenya().equals(contrasenya)) {
-						
-					}else {
-						JOptionPane.showMessageDialog(Acceso.this, "Contraseña incorrecta");
 					}
 				}else {
 				JOptionPane.showMessageDialog(Acceso.this, "Usuario incorrecto");
