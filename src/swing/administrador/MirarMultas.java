@@ -20,7 +20,7 @@ public class MirarMultas extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton button = new JButton("Inicio");
+		JButton button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdministrador v = new VentanaAdministrador();
@@ -28,7 +28,7 @@ public class MirarMultas extends JFrame {
 				MirarMultas.this.dispose();
 			}
 		});
-		button.setBounds(15, 16, 71, 29);
+		button.setBounds(15, 16, 88, 29);
 		getContentPane().add(button);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -36,7 +36,7 @@ public class MirarMultas extends JFrame {
 		getContentPane().add(scrollPane);
 		
 		JList list = new JList();
-		scrollPane.setViewportView(list);
+		scrollPane.setColumnHeaderView(list);
 		
 		JLabel lblMultas = new JLabel("Multas");
 		lblMultas.setBounds(173, 39, 69, 20);

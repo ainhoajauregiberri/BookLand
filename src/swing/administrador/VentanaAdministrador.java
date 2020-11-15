@@ -12,14 +12,14 @@ public class VentanaAdministrador extends JFrame{
 	public VentanaAdministrador() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 348);
+		setBounds(100, 100, 450, 252);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnPrestarLibro = new JButton("Prestar libro");
-		btnPrestarLibro.setBounds(36, 72, 148, 29);
+		JButton btnPrestarLibro = new JButton("Prestar productos");
+		btnPrestarLibro.setBounds(36, 72, 161, 29);
 		btnPrestarLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(true);
@@ -30,8 +30,8 @@ public class VentanaAdministrador extends JFrame{
 		getContentPane().setLayout(null);
 		getContentPane().add(btnPrestarLibro);
 		
-		JButton btnDevolverLibro = new JButton("Devolver libro");
-		btnDevolverLibro.setBounds(36, 133, 148, 29);
+		JButton btnDevolverLibro = new JButton("Devolver producto");
+		btnDevolverLibro.setBounds(36, 133, 161, 29);
 		btnDevolverLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(false);
@@ -42,7 +42,7 @@ public class VentanaAdministrador extends JFrame{
 		getContentPane().add(btnDevolverLibro);
 		
 		JButton btnCrearUsuario = new JButton("Crear usuario");
-		btnCrearUsuario.setBounds(233, 72, 148, 29);
+		btnCrearUsuario.setBounds(233, 72, 161, 29);
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario crearUsuario=new CrearUsuario();
@@ -53,7 +53,7 @@ public class VentanaAdministrador extends JFrame{
 		getContentPane().add(btnCrearUsuario);
 		
 		JButton btnMirarMultas = new JButton("Mirar multas");
-		btnMirarMultas.setBounds(233, 133, 148, 29);
+		btnMirarMultas.setBounds(233, 133, 161, 29);
 		btnMirarMultas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MirarMultas mirarMultas=new MirarMultas();
@@ -73,28 +73,5 @@ public class VentanaAdministrador extends JFrame{
 			}
 		});
 		getContentPane().add(button);
-		
-		JButton btnNewButton = new JButton("Ordenador");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OrdenadorJAdmin v = new OrdenadorJAdmin();
-				v.setVisible(true);
-				VentanaAdministrador.this.dispose();
-			}
-		});
-		btnNewButton.setBounds(233, 188, 148, 29);
-		getContentPane().add(btnNewButton);
-		
-		JButton btnCuentacuentos = new JButton("Cuentacuentos");
-		btnCuentacuentos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CuentacuentosJAdmin v = new CuentacuentosJAdmin();
-				v.setVisible(true);
-				VentanaAdministrador.this.dispose();
-				
-			}
-		});
-		btnCuentacuentos.setBounds(36, 188, 148, 29);
-		getContentPane().add(btnCuentacuentos);
 	}
 }
