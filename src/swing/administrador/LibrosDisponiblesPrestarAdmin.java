@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import personas.Usuario;
+import productos.Producto;
+import productos.libros.Ejemplar;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -15,30 +20,24 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class LibrosDisponiblesAdmin extends JFrame {
+public class LibrosDisponiblesPrestarAdmin extends JFrame {
 
 	private JPanel contentPane;
+	private Usuario usuario;
+	private Producto producto;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LibrosDisponiblesAdmin frame = new LibrosDisponiblesAdmin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
+	 * @param producto 
 	 */
-	public LibrosDisponiblesAdmin() {
+	public LibrosDisponiblesPrestarAdmin(Usuario usuario, Producto producto) {
+		this.usuario=usuario;
+		this.producto=producto;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 320);
 		contentPane = new JPanel();
@@ -49,9 +48,9 @@ public class LibrosDisponiblesAdmin extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					PrestarLibro v = new PrestarLibro();
+					PrestarLibro v = new PrestarLibro(usuario);
 					v.setVisible(true);
-					LibrosDisponiblesAdmin.this.dispose();
+					LibrosDisponiblesPrestarAdmin.this.dispose();
 			}
 		});
 		btnVolver.setBounds(15, 16, 85, 29);
@@ -73,10 +72,16 @@ public class LibrosDisponiblesAdmin extends JFrame {
 		scrollPane_1.setViewportView(list);
 		
 		JButton btnPrestar = new JButton("Prestar");
+		btnPrestar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prestarLibro((Ejemplar)list.getSelectedValue(), usuario);
+				JOptionPane.showMessageDialog(LibrosDisponiblesPrestarAdmin.this, "El libro ha sido prestado");
+			}
+		});
 		btnPrestar.setBounds(159, 219, 115, 29);
 		contentPane.add(btnPrestar);
 		
-		JOptionPane.showMessageDialog(LibrosDisponiblesAdmin.this, "El libro ha sido prestado");
+		
 	}
 
 }

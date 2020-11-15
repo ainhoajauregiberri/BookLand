@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+import personas.Usuario;
+import productos.Producto;
+
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,8 +19,9 @@ import javax.swing.JLabel;
 public class DevolverLibro extends JFrame {
 	
 	private JPanel contentPane;
-	public DevolverLibro() {
-		
+	private Usuario usuario;
+	public DevolverLibro(Usuario usuario) {
+		this.usuario=usuario;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 353);
 		contentPane = new JPanel();
@@ -36,15 +41,6 @@ public class DevolverLibro extends JFrame {
 		getContentPane().setLayout(null);
 		getContentPane().add(button);
 		
-		JButton btnDevolver = new JButton("Devolver");
-		btnDevolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(DevolverLibro.this, "El libro ha sido devuelto");
-			}
-		});
-		btnDevolver.setBounds(153, 240, 115, 29);
-		getContentPane().add(btnDevolver);
-		
 		JLabel lblDevolverLibro = new JLabel("Devolver libro");
 		lblDevolverLibro.setBounds(153, 54, 100, 20);
 		getContentPane().add(lblDevolverLibro);
@@ -55,5 +51,19 @@ public class DevolverLibro extends JFrame {
 		
 		JList list = new JList();
 		scrollPane.setViewportView(list);
+		
+		JButton btnDevolver = new JButton("Buscar");
+		btnDevolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Producto producto = (Producto) list.getSelectedValue();
+				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(usuario, producto);
+				v.setVisible(true);
+				DevolverLibro.this.dispose();
+			}
+		});
+		btnDevolver.setBounds(153, 240, 115, 29);
+		getContentPane().add(btnDevolver);
+		
+		
 	}
 }
