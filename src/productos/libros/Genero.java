@@ -16,5 +16,11 @@ public class Genero {
 		this.nomGen = nomGen;
 	}
 
+	@Override
+	public String toString() {
+		return nomGen;
+	}
+	
+
 	
 }

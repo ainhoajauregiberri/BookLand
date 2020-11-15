@@ -14,7 +14,7 @@ public class Administrador extends Persona {
 		this.nivel = nivel;
 	}
 
-	public Administrador(String nombre, String usuario, String contrasenya, Date fecNac, String sexo, int nivel) {
+	public Administrador(String nombre, String usuario, String contrasenya, String fecNac, String sexo, int nivel) {
 		super(nombre, usuario, contrasenya, fecNac, sexo);
 		this.nivel = nivel;
 	}
