@@ -8,6 +8,7 @@ import javax.swing.JList;
 import personas.Persona;
 import personas.Usuario;
 import productos.libros.Autor;
+import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
 import sqlite.GestionBD;
 
@@ -79,6 +80,18 @@ public interface IListasProductos {
 		return titulosEjemplares;
 	}
 	
+	public static DefaultListModel<EjemplarLibro>cargarListaEjemplaresTotales(String titulo){
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<EjemplarLibro>ejemplaresTotales=bd.obtenerEjemplaresObjetos(titulo);
+		DefaultListModel<EjemplarLibro>titulosEjemplaresTotales=new DefaultListModel<EjemplarLibro>();
+			for(int i=0;i<ejemplaresTotales.size();i++){
+				EjemplarLibro tituloEjemplarLibro=ejemplaresTotales.get(i);
+				titulosEjemplaresTotales.addElement(tituloEjemplarLibro);
+			}
+		
+		return titulosEjemplaresTotales;
+	}
+	
 	public static DefaultListModel<String>cargarListaProductos(Persona persona){
 		GestionBD bd=new GestionBD("BookLand.db");
 		ArrayList<String>productos=bd.obtenerProductosUsuario(persona);
@@ -91,11 +104,11 @@ public interface IListasProductos {
 		return titulosProductos;
 	}
 	
-	public static DefaultListModel<Persona>cargarListaUsuarios(Persona persona){
+	public static DefaultListModel<Persona>cargarListaUsuarios(){
 		GestionBD bd=new GestionBD("BookLand.db");
 		ArrayList<Persona>todosUsuarios=bd.devolverUsuarios();
 		DefaultListModel<Persona>nombresPersonas=new DefaultListModel<Persona>();
-			for(int i=0;i<nombresPersonas.size();i++){
+			for(int i=0;i<todosUsuarios.size();i++){
 				Persona nombreUsuario=todosUsuarios.get(i);
 				nombresPersonas.addElement(nombreUsuario);
 			}

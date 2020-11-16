@@ -18,6 +18,7 @@ import personas.Usuario;
 import productos.Producto;
 import productos.libros.Autor;
 import productos.libros.Ejemplar;
+import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
 import servicios.ProductoUsuario;
 
@@ -40,6 +41,7 @@ public class GestionBD {
 	private ArrayList<String>ejemplares;
 	private ArrayList<String> productosUsuario;
 	private ArrayList<Persona>todosUsuarios;
+	private ArrayList<EjemplarLibro>ejemplaresTotales;
 	
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
@@ -54,6 +56,7 @@ public class GestionBD {
 		this.ejemplares=new ArrayList<String>();
 		this.productosUsuario=new ArrayList<String>();
 		this.todosUsuarios=new ArrayList<Persona>();
+		this.ejemplaresTotales=new ArrayList<EjemplarLibro>();
 	}
 
 	public String getNombreFichero() {
@@ -161,7 +164,6 @@ public class GestionBD {
 			while(rs.next()) {
 				
 				Persona p=new Persona(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
-				System.out.println(p.toString());
 				personas.put(rs.getString(3), p);
 			}
 		} catch (SQLException e) {
@@ -206,6 +208,57 @@ public class GestionBD {
 		}
 		 cerrarConexion(conn);
 		return codPers;
+	 }
+	 
+	 public void prestarLibro(EjemplarLibro ejemplarLibro, Persona persona){
+		 establecerConexion();
+		 PreparedStatement pstmt = null;
+		 String fecFin;
+		 
+		 String sql = "INSERT INTO ProductoUsuario(codPers, codEjem, fecIni,fecFin, prestado) VALUES(?,?,?,?,?)";
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 try {
+			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+			pstmt.setInt(2, ejemplarLibro.getCodEjem());
+			
+			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+			Date fecIni = new Date(System.currentTimeMillis());
+			String stringfecIni=fecIni.toString();
+			String[] arrayStringFecIni=stringfecIni.split("-");
+			if(Integer.parseInt(arrayStringFecIni[1])==12) {
+				fecFin=(arrayStringFecIni[0]+1).toString()+"-"+"01"+"-"+arrayStringFecIni[2].toString();
+			}else {
+				fecFin=arrayStringFecIni[0].toString()+"-"+(arrayStringFecIni[1]+1).toString()+"-"+arrayStringFecIni[2].toString();
+						
+			}
+			java.util.Date fecInisql = string2Date("yyyy-MM-dd", stringfecIni);
+			java.util.Date fecFinsql = string2Date("yyyy-MM-dd", fecFin);
+			
+			pstmt.setString(3, fecInisql.toString());
+			pstmt.setString(4, fecFinsql.toString());
+			pstmt.setBoolean(5, true);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 try {
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 System.out.println("Se ha ejecutado la acción en la tabla ProductoUsuario");
 	 }
 	 
 	
@@ -359,6 +412,57 @@ public class GestionBD {
 		 return generos;
 	 }
 	 
+	 public void devolverLibro(EjemplarLibro ejemplarLibro, Persona persona) {
+		 establecerConexion();
+		 PreparedStatement pstmt=null;
+		 String sql="UPDATE ProductoUsuario SET fecFin=?, prestado=? WHERE codPers=? AND codEjem=?";
+		 try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+		 Date date = new Date(System.currentTimeMillis());
+		 try {
+			pstmt.setString(1, date.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.setBoolean(2, false);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.setInt(3,obtenerCodigoDePersona(persona.getUsuario()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.setInt(4, ejemplarLibro.getCodEjem());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 cerrarConexion(conn);
+		 System.out.println("Se ha devuelto el libro");
+	 }
+	 
+	 public ArrayList<EjemplarLibro> devolverLibrosUsuario(){
+		 
+	 }
+	 
 	 public ArrayList<Autor> devolverAutores(){
 		 establecerConexion();
 		 Statement stmt=null;
@@ -416,6 +520,35 @@ public class GestionBD {
 		}
 		 cerrarConexion(conn);
 		 return ejemplares;
+	 }
+	 public ArrayList<EjemplarLibro> obtenerEjemplaresObjetos(String titulo){
+		 establecerConexion();
+		 PreparedStatement pstmt=null;
+		 String sql="SELECT codEjem, titulo FROM Ejemplar JOIN (SELECT codPro,titulo FROM Producto WHERE titulo=?)A ON A.codPro=Ejemplar.codPro";
+		 try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			pstmt.setString(1, titulo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				EjemplarLibro ejemplarLibro=new EjemplarLibro(rs.getInt(1),titulo);
+				ejemplaresTotales.add(ejemplarLibro);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return ejemplaresTotales;
 	 }
 	 
 	 public int codigoMaximo() {
@@ -477,7 +610,7 @@ public class GestionBD {
 		 establecerConexion();
 		 Statement stmt=null;
 		 ResultSet rs=null;
-		 String sql="SELECT codPers FROM Persona WHERE codPers IN (SELECT codPers FROM Usuario)";
+		 String sql="SELECT * FROM Persona WHERE codPers IN (SELECT codPers FROM Usuario)";
 		 try {
 			stmt=conn.createStatement();
 		} catch (SQLException e) {
@@ -499,7 +632,61 @@ public class GestionBD {
 	 }
 	 
 	 public boolean puedePrestar(Persona persona) {
-		 return false;
+		establecerConexion();
+		boolean puedePrestar=true;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="SELECT fecFin FROM ProductoUsuario WHERE codPers=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+			Date date = new Date(System.currentTimeMillis());
+			String fechaActual=date.toString();
+			String[]ArrayFechaActual=fechaActual.split("-");
+			int fecActualAnyo=Integer.parseInt(ArrayFechaActual[0]);
+			int fecActualMes=Integer.parseInt(ArrayFechaActual[1]);
+			int fecActualDia=Integer.parseInt(ArrayFechaActual[2]);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				String fecFin=devolverDate(rs.getString(1));
+				String[]ArrayFechaFinal=fecFin.split("-");
+				int fecFinAnyo=Integer.parseInt(ArrayFechaFinal[0]);
+				int fecFinMes=Integer.parseInt(ArrayFechaFinal[1]);
+				int fecFinDia=Integer.parseInt(ArrayFechaFinal[2]);
+				if(fecActualAnyo>fecFinAnyo) {
+					puedePrestar=false;
+				}else {
+					if(fecActualAnyo==fecFinAnyo) {
+						if(fecActualMes>fecFinMes) {
+							puedePrestar=false;
+						}else {
+							if(fecActualMes==fecFinMes) {
+								if(fecActualDia>fecFinDia) {
+									puedePrestar=false;
+								}
+							}
+						}
+					}
+				}	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cerrarConexion(conn);
+		 
+		 return puedePrestar;
 		 
 	 }
 	 public boolean existeUsuario(String usuario) {
@@ -528,6 +715,53 @@ public class GestionBD {
 		}
 		 cerrarConexion(conn);
 		 return existe;
+	 }
+	 
+	 public String devolverDate(String stringDate) {
+		 String fecha[]=stringDate.split(" ");
+		 int mes=0;
+		 int dia=0;
+		 int anyo=0;
+		 if(fecha[1].equals("Jan")) {
+			 mes=1;
+		 }
+		 if(fecha[1].equals("Feb")) {
+			 mes=2;
+		 }
+		 if(fecha[1].equals("Mar")) {
+			 mes=3;
+		 }
+		 if(fecha[1].equals("Apr")) {
+			 mes=4;
+		 }
+		 if(fecha[1].equals("May")) {
+			 mes=5;
+		 }
+		 if(fecha[1].equals("Jun")) {
+			 mes=6;
+		 }
+		 if(fecha[1].equals("Jul")) {
+			 mes=7;
+		 }
+		 if(fecha[1].equals("Aug")) {
+			 mes=8;
+		 }
+		 if(fecha[1].equals("Sep")) {
+			 mes=9;
+		 }
+		 if(fecha[1].equals("Oct")) {
+			 mes=10;
+		 }
+		 if(fecha[1].equals("Nov")) {
+			 mes=11;
+		 }
+		 if(fecha[1].equals("Dec")) {
+			 mes=12;
+		 }
+		 dia=Integer.parseInt(fecha[2]);
+		 anyo=Integer.parseInt(fecha[5]);
+		
+		 return anyo+"-"+mes+"-"+dia;
 	 }
 	 
 	 public void insertarDatosPersona(int codPers, String nombre, String usuario, String contrasenya, String StringfecNac, String sexo){
@@ -1188,7 +1422,6 @@ public static void main (String [ ] args) {
 	
 	GestionBD bd1=new GestionBD("BookLand.db");
 	
-
 	
 	
 }

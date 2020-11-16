@@ -1,6 +1,7 @@
 package swing.administrador;
 
 import javax.swing.JFrame;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.EventQueue;
@@ -12,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
+import swing.IListasProductos;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -22,12 +24,15 @@ public class DevolverLibro extends JFrame {
 	
 	private JPanel contentPane;
 	private static Persona persona;
+	private static Persona administrador;
+	private JList list;
+	private DefaultListModel dfmProductos;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DevolverLibro frame = new DevolverLibro(DevolverLibro.persona);
+					DevolverLibro frame = new DevolverLibro(DevolverLibro.persona,DevolverLibro.administrador);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +41,7 @@ public class DevolverLibro extends JFrame {
 		});
 	}
 	
-	public DevolverLibro(Persona persona) {
+	public DevolverLibro(Persona persona,Persona administrador) {
 		this.persona=persona;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 353);
@@ -44,6 +49,16 @@ public class DevolverLibro extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.dfmProductos=new DefaultListModel<String>();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(39, 90, 357, 116);
+		getContentPane().add(scrollPane);
+		
+		list = new JList();
+		scrollPane.setViewportView(list);
+		
+		cargarListaProductos(persona);
 		
 		JButton button = new JButton("Volver");
 		button.setBounds(15, 16, 87, 29);
@@ -61,17 +76,11 @@ public class DevolverLibro extends JFrame {
 		lblDevolverLibro.setBounds(153, 54, 100, 20);
 		getContentPane().add(lblDevolverLibro);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(39, 90, 357, 116);
-		getContentPane().add(scrollPane);
-		
-		JList list = new JList();
-		scrollPane.setViewportView(list);
 		
 		JButton btnDevolver = new JButton("Buscar");
 		btnDevolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Producto producto = (Producto) list.getSelectedValue();
+				String producto = (String) list.getSelectedValue();
 				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(persona, producto);
 				v.setVisible(true);
 				DevolverLibro.this.dispose();
@@ -81,5 +90,9 @@ public class DevolverLibro extends JFrame {
 		getContentPane().add(btnDevolver);
 		
 		
+	}
+	public void cargarListaProductos(Persona persona) {
+		dfmProductos=IListasProductos.cargarListaProductos(persona);
+		this.list.setModel(dfmProductos);
 	}
 }

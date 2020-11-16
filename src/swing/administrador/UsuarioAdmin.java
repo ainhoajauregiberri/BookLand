@@ -14,6 +14,7 @@ import swing.IListasProductos;
 import swing.ProductosPrestados;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -52,6 +53,14 @@ public class UsuarioAdmin extends JFrame {
 		this.persona=persona;
 		this.dfmUsuarios=new DefaultListModel<Persona>();
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(172, 58, 200, 110);
+		getContentPane().add(scrollPane);
+		
+		list = new JList();
+		scrollPane.setViewportView(list);
+		cargarListaUsuarios();
+		
 		
 		JButton button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
@@ -68,40 +77,33 @@ public class UsuarioAdmin extends JFrame {
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setBounds(31, 95, 121, 20);
 		getContentPane().add(lblUsuario);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(172, 58, 200, 110);
-		getContentPane().add(scrollPane);
-		
-		list = new JList();
-		scrollPane.setViewportView(list);
 	
 		
 		GestionBD bd = new GestionBD("BookLand.db");
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Persona p=(Persona) list.getSelectedValue();
 				if (prestar) {
-					Persona p=(Persona) list.getSelectedValue();
 					boolean puedePrestar = bd.puedePrestar(p);
 					if (puedePrestar){
-					PrestarLibro prestarLibro=new PrestarLibro();
+					PrestarLibro prestarLibro=new PrestarLibro(persona);
 					prestarLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
 					}else{
 						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario tiene una multa, no puede prestar libros");
 					}
 				}else{
-					boolean puedeDevolver = puedeDevolver (usuarioSeleccionado);
-					if (puedeDevolver){
-					DevolverLibro devolverLibro=new DevolverLibro(usuarioSeleccionado);
-					devolverLibro.setVisible(true);
-					UsuarioAdmin.this.dispose();
-					}else{
-						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario no tiene ning�n libro que devolver");
+					ArrayList<String>productosPrestados=new ArrayList<String>();
+					productosPrestados=bd.obtenerProductosUsuario(p);
+					if(!(productosPrestados.isEmpty())) {
+						DevolverLibro devolverLibro=new DevolverLibro(p,persona);
+						devolverLibro.setVisible(true);
+						UsuarioAdmin.this.dispose();
+					}else {
+						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario no tiene ningun libro que devolver");
+						}
 					}
-					
-				}
 			}
 		});
 		btnEntrar.setBounds(148, 199, 115, 29);
@@ -109,8 +111,8 @@ public class UsuarioAdmin extends JFrame {
 		
 		
 	}
-	public void cargarListaProductos(Persona persona) {
-		dfmUsuarios=IListasProductos.cargarListaProductos(persona);
+	public void cargarListaUsuarios() {
+		dfmUsuarios=IListasProductos.cargarListaUsuarios();
 		this.list.setModel(dfmUsuarios);
 	}
 
