@@ -80,7 +80,7 @@ public class VentanaAdministrador extends JFrame{
 		btnMirarMultas.setBounds(233, 133, 161, 29);
 		btnMirarMultas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MirarMultas mirarMultas=new MirarMultas();
+				MirarMultas mirarMultas=new MirarMultas(persona);
 				mirarMultas.setVisible(true);
 				VentanaAdministrador.this.dispose();
 			}

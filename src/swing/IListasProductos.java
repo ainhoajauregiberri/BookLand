@@ -10,6 +10,7 @@ import personas.Usuario;
 import productos.libros.Autor;
 import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
+import servicios.MultasPersona;
 import sqlite.GestionBD;
 
 public interface IListasProductos {
@@ -114,6 +115,18 @@ public interface IListasProductos {
 			}
 		
 		return nombresPersonas;
+	}
+	
+	public static DefaultListModel<MultasPersona>cargarListaMultas(){
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<MultasPersona>todasMultas=bd.devolverMultas();
+		DefaultListModel<MultasPersona>nombresMultas=new DefaultListModel<MultasPersona>();
+			for(int i=0;i<todasMultas.size();i++){
+				MultasPersona nombreMulta=todasMultas.get(i);
+				nombresMultas.addElement(nombreMulta);
+			}
+		
+		return nombresMultas;
 	}
 	
 	

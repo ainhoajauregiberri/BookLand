@@ -20,6 +20,7 @@ import productos.libros.Autor;
 import productos.libros.Ejemplar;
 import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
+import servicios.MultasPersona;
 import servicios.ProductoUsuario;
 
 import java.sql.Connection;
@@ -459,9 +460,6 @@ public class GestionBD {
 		 System.out.println("Se ha devuelto el libro");
 	 }
 	 
-	 public ArrayList<EjemplarLibro> devolverLibrosUsuario(){
-		 
-	 }
 	 
 	 public ArrayList<Autor> devolverAutores(){
 		 establecerConexion();
@@ -689,6 +687,62 @@ public class GestionBD {
 		 return puedePrestar;
 		 
 	 }
+	 
+	 public ArrayList<MultasPersona> devolverMultas() {
+			establecerConexion();
+			ArrayList<MultasPersona>multas=new ArrayList<MultasPersona>();
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String sql="SELECT codPers,codEjem,fecFin FROM ProductoUsuario";
+			try {
+				pstmt=conn.prepareStatement(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+				Date date = new Date(System.currentTimeMillis());
+				String fechaActual=date.toString();
+				String[]ArrayFechaActual=fechaActual.split("-");
+				int fecActualAnyo=Integer.parseInt(ArrayFechaActual[0]);
+				int fecActualMes=Integer.parseInt(ArrayFechaActual[1]);
+				int fecActualDia=Integer.parseInt(ArrayFechaActual[2]);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					String fecFin=devolverDate(rs.getString(1));
+					String[]ArrayFechaFinal=fecFin.split("-");
+					int fecFinAnyo=Integer.parseInt(ArrayFechaFinal[0]);
+					int fecFinMes=Integer.parseInt(ArrayFechaFinal[1]);
+					int fecFinDia=Integer.parseInt(ArrayFechaFinal[2]);
+					if(fecActualAnyo>fecFinAnyo) {
+						MultasPersona mp=new MultasPersona(rs.getInt(1),rs.getInt(2));
+						multas.add(mp);
+					}else {
+						if(fecActualAnyo==fecFinAnyo) {
+							if(fecActualMes>fecFinMes) {
+								MultasPersona mp=new MultasPersona(rs.getInt(1),rs.getInt(2));
+								multas.add(mp);
+							}else {
+								if(fecActualMes==fecFinMes) {
+									if(fecActualDia>fecFinDia) {
+										MultasPersona mp=new MultasPersona(rs.getInt(1),rs.getInt(2));
+										multas.add(mp);
+									}
+								}
+							}
+						}
+					}	
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			cerrarConexion(conn);
+			 
+			 return multas;
+			 
+		 }
 	 public boolean existeUsuario(String usuario) {
 		 boolean existe=false;
 		 establecerConexion();
