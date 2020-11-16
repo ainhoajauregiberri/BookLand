@@ -101,6 +101,8 @@ public class Acceso extends JFrame {
 						
 					}else {
 						VentanaAdministrador ventanaAdministrador=new VentanaAdministrador(persona);
+						ventanaAdministrador.setVisible(true);
+						Acceso.this.dispose();
 					}
 				}else {
 				JOptionPane.showMessageDialog(Acceso.this, "Usuario incorrecto");

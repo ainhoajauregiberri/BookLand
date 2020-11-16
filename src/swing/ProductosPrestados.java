@@ -102,5 +102,8 @@ public class ProductosPrestados extends JFrame {
 	public void cargarListaProductos(Persona persona) {
 		dfmTitulos=IListasProductos.cargarListaProductos(persona);
 		this.list.setModel(dfmTitulos);
+		if(dfmTitulos.isEmpty()) {
+			JOptionPane.showMessageDialog(ProductosPrestados.this, "No tiene ningún libro prestado");
+		}
 	}
 }

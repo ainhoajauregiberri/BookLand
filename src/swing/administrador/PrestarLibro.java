@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
 
@@ -20,7 +21,7 @@ import javax.swing.JScrollPane;
 public class PrestarLibro extends JFrame {
 	private JPanel contentPane;
 	private Usuario usuario;
-	public PrestarLibro(Usuario usuario) {
+	public PrestarLibro(Persona persona) {
 		this.usuario=usuario;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 348);
@@ -32,7 +33,7 @@ public class PrestarLibro extends JFrame {
 		JButton btnInicio = new JButton("Volver");
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdministrador v = new VentanaAdministrador();
+				VentanaAdministrador v = new VentanaAdministrador(persona);
 				v.setVisible(true);
 				PrestarLibro.this.dispose();
 			}

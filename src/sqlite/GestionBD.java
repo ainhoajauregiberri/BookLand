@@ -39,6 +39,7 @@ public class GestionBD {
 	private ArrayList<String>titulosPorAutor;
 	private ArrayList<String>ejemplares;
 	private ArrayList<String> productosUsuario;
+	private ArrayList<Persona>todosUsuarios;
 	
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
@@ -52,6 +53,7 @@ public class GestionBD {
 		this.titulosPorAutor=new ArrayList<String>();
 		this.ejemplares=new ArrayList<String>();
 		this.productosUsuario=new ArrayList<String>();
+		this.todosUsuarios=new ArrayList<Persona>();
 	}
 
 	public String getNombreFichero() {
@@ -445,7 +447,7 @@ public class GestionBD {
 	 public ArrayList<String> obtenerProductosUsuario(Persona persona){
 		establecerConexion();
 		PreparedStatement pstmt=null;
-		String sql="SELECT titulo FROM Producto WHERE codPro IN (SELECT codPro FROM ProductoUsuario WHERE (codPers=? and prestado))";
+		String sql="SELECT titulo FROM Producto WHERE codPro IN (SELECT codPro FROM Ejemplar WHERE codEjem IN(SELECT codEjem FROM ProductoUsuario WHERE codPers=? AND prestado))";
 		try {
 			pstmt=conn.prepareStatement(sql);
 		} catch (SQLException e) {
@@ -471,11 +473,41 @@ public class GestionBD {
 		 return productosUsuario;
 	 }
 	 
+	 public ArrayList<Persona> devolverUsuarios(){
+		 establecerConexion();
+		 Statement stmt=null;
+		 ResultSet rs=null;
+		 String sql="SELECT codPers FROM Persona WHERE codPers IN (SELECT codPers FROM Usuario)";
+		 try {
+			stmt=conn.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+			rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				Persona persona=new Persona(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+				todosUsuarios.add(persona);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return todosUsuarios;
+	 }
+	 
+	 public boolean puedePrestar(Persona persona) {
+		 return false;
+		 
+	 }
 	 public boolean existeUsuario(String usuario) {
 		 boolean existe=false;
 		 establecerConexion();
 		 PreparedStatement pstmt=null;
-		 String sql="SELECT FROM Persona WHERE usuario=?";
+		 String sql="SELECT codPers FROM Persona WHERE usuario=?";
+		 ResultSet rs=null;
 		 try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, usuario);
@@ -484,7 +516,7 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 		 try {
-			ResultSet rs=pstmt.executeQuery();
+			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				existe=true;
 			}else {

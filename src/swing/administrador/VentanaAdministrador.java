@@ -5,7 +5,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import personas.Persona;
+import swing.Acceso;
 import swing.ProductosPrestados;
+import swing.VentanaUsuario;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -84,6 +86,17 @@ public class VentanaAdministrador extends JFrame{
 			}
 		});
 		getContentPane().add(btnMirarMultas);
+		
+		JButton btnInicio = new JButton("Inicio");
+		btnInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Acceso v = new Acceso();
+				v.setVisible(true);
+				VentanaAdministrador.this.dispose();
+			}
+		});
+		btnInicio.setBounds(6, 6, 87, 29);
+		contentPane.add(btnInicio);
 		
 	}
 }

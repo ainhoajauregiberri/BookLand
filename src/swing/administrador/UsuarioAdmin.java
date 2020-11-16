@@ -1,6 +1,7 @@
 package swing.administrador;
 
 import javax.swing.JFrame;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -8,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 
 import personas.Persona;
 import personas.Usuario;
+import sqlite.GestionBD;
+import swing.IListasProductos;
 import swing.ProductosPrestados;
 
 import java.awt.event.ActionListener;
@@ -22,6 +25,8 @@ public class UsuarioAdmin extends JFrame {
 	private JPanel contentPane;
 	private static boolean prestar;
 	private static Persona persona;
+	private DefaultListModel dfmUsuarios;
+	private JList list;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,6 +50,7 @@ public class UsuarioAdmin extends JFrame {
 		contentPane.setLayout(null);
 		this.prestar=prestar;
 		this.persona=persona;
+		this.dfmUsuarios=new DefaultListModel<Persona>();
 		
 		
 		JButton button = new JButton("Volver");
@@ -67,18 +73,19 @@ public class UsuarioAdmin extends JFrame {
 		scrollPane.setBounds(172, 58, 200, 110);
 		getContentPane().add(scrollPane);
 		
-		JList list = new JList();
+		list = new JList();
 		scrollPane.setViewportView(list);
 	
 		
+		GestionBD bd = new GestionBD("BookLand.db");
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario usuarioSeleccionado = (Usuario) list.getSelectedValue();
 				if (prestar) {
-					boolean puedePrestar = puedePrestar(usuarioSeleccionado);
+					Persona p=(Persona) list.getSelectedValue();
+					boolean puedePrestar = bd.puedePrestar(p);
 					if (puedePrestar){
-					PrestarLibro prestarLibro=new PrestarLibro(usuarioSeleccionado);
+					PrestarLibro prestarLibro=new PrestarLibro();
 					prestarLibro.setVisible(true);
 					UsuarioAdmin.this.dispose();
 					}else{
@@ -101,6 +108,10 @@ public class UsuarioAdmin extends JFrame {
 		getContentPane().add(btnEntrar);
 		
 		
+	}
+	public void cargarListaProductos(Persona persona) {
+		dfmUsuarios=IListasProductos.cargarListaProductos(persona);
+		this.list.setModel(dfmUsuarios);
 	}
 
 }

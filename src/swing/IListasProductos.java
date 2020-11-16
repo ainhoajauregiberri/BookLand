@@ -81,7 +81,6 @@ public interface IListasProductos {
 	
 	public static DefaultListModel<String>cargarListaProductos(Persona persona){
 		GestionBD bd=new GestionBD("BookLand.db");
-		System.out.println("He entrado en la interfaz");
 		ArrayList<String>productos=bd.obtenerProductosUsuario(persona);
 		DefaultListModel<String>titulosProductos=new DefaultListModel<String>();
 			for(int i=0;i<productos.size();i++){
@@ -90,6 +89,18 @@ public interface IListasProductos {
 			}
 		
 		return titulosProductos;
+	}
+	
+	public static DefaultListModel<Persona>cargarListaUsuarios(Persona persona){
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<Persona>todosUsuarios=bd.devolverUsuarios();
+		DefaultListModel<Persona>nombresPersonas=new DefaultListModel<Persona>();
+			for(int i=0;i<nombresPersonas.size();i++){
+				Persona nombreUsuario=todosUsuarios.get(i);
+				nombresPersonas.addElement(nombreUsuario);
+			}
+		
+		return nombresPersonas;
 	}
 	
 	

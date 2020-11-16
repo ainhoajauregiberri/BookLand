@@ -16,9 +16,7 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 import sqlite.GestionBD;
-import sun.util.calendar.CalendarDate;
-import sun.util.resources.CalendarData;
-import sun.util.resources.es.CalendarData_es;
+
 
 import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
@@ -105,16 +103,16 @@ public class CrearUsuario extends JFrame {
 		lblCrearUsuario.setBounds(161, 38, 116, 20);
 		getContentPane().add(lblCrearUsuario);
 		
+		JRadioButton rdbtnChico = new JRadioButton("Chico");
 		JRadioButton rdbtnChica = new JRadioButton("Chica");
 		rdbtnChica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rdbtnChica.setSelected(false);
+				rdbtnChico.setSelected(false);
 			}
 		});
 		rdbtnChica.setBounds(201, 262, 76, 29);
 		contentPane.add(rdbtnChica);
 		
-		JRadioButton rdbtnChico = new JRadioButton("Chico");
 		rdbtnChico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnChica.setSelected(false);
@@ -151,7 +149,7 @@ public class CrearUsuario extends JFrame {
 					int anyo = Calendar.YEAR;
 					String fecha = anyo+"-"+mes+"-"+dia;
 					
-					int codPers = bd.codigoMaximo();
+					int codPers = bd.codigoMaximo()+1;
 					if (chica==true){
 						bd.insertarDatosPersona(codPers, nombre, usuario, contrasenya, nacimiento, "chica");
 						bd.insertarDatosUsuario(codPers, fecha, dinero);

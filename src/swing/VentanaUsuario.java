@@ -75,5 +75,16 @@ public class VentanaUsuario extends JFrame {
 		lblProductos.setBounds(206, 24, 82, 16);
 		contentPane.add(lblProductos);
 		
+		JButton button = new JButton("Inicio");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Acceso v = new Acceso();
+				v.setVisible(true);
+				VentanaUsuario.this.dispose();
+			}
+		});
+		button.setBounds(6, 6, 87, 29);
+		contentPane.add(button);
+		
 	}
 }
