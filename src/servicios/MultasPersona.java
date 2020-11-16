@@ -29,7 +29,7 @@ public class MultasPersona {
 
 	@Override
 	public String toString() {
-		return "Codigo usuario: "+usuarioPersona + " Codigo ejemplar: "+codEjem;
+		return usuarioPersona +"   "+codEjem;
 	}
 	
 	

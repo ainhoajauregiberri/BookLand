@@ -120,13 +120,13 @@ public interface IListasProductos {
 	public static DefaultListModel<MultasPersona>cargarListaMultas(){
 		GestionBD bd=new GestionBD("BookLand.db");
 		ArrayList<MultasPersona>todasMultas=bd.devolverMultas();
-		DefaultListModel<MultasPersona>nombresMultas=new DefaultListModel<MultasPersona>();
+		DefaultListModel<MultasPersona>multas=new DefaultListModel<MultasPersona>();
 			for(int i=0;i<todasMultas.size();i++){
-				MultasPersona nombreMulta=todasMultas.get(i);
-				nombresMultas.addElement(nombreMulta);
+				MultasPersona multa=todasMultas.get(i);
+				multas.addElement(multa);
 			}
 		
-		return nombresMultas;
+		return multas;
 	}
 	
 	

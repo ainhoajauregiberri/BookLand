@@ -43,6 +43,7 @@ public class GestionBD {
 	private ArrayList<String> productosUsuario;
 	private ArrayList<Persona>todosUsuarios;
 	private ArrayList<EjemplarLibro>ejemplaresTotales;
+	private ArrayList<MultasPersona>todasMultas;
 	
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
@@ -58,6 +59,7 @@ public class GestionBD {
 		this.productosUsuario=new ArrayList<String>();
 		this.todosUsuarios=new ArrayList<Persona>();
 		this.ejemplaresTotales=new ArrayList<EjemplarLibro>();
+		this.todasMultas=new ArrayList<MultasPersona>();
 	}
 
 	public String getNombreFichero() {
@@ -690,7 +692,7 @@ public class GestionBD {
 	 
 	 public ArrayList<MultasPersona> devolverMultas() {
 			establecerConexion();
-			ArrayList<MultasPersona>multas=new ArrayList<MultasPersona>();
+			todasMultas=new ArrayList<MultasPersona>();
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			String sql="SELECT codPers,codEjem,fecFin FROM ProductoUsuario";
@@ -710,24 +712,24 @@ public class GestionBD {
 				int fecActualDia=Integer.parseInt(ArrayFechaActual[2]);
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
-					String fecFin=devolverDate(rs.getString(1));
+					String fecFin=devolverDate(rs.getString(3));
 					String[]ArrayFechaFinal=fecFin.split("-");
 					int fecFinAnyo=Integer.parseInt(ArrayFechaFinal[0]);
 					int fecFinMes=Integer.parseInt(ArrayFechaFinal[1]);
 					int fecFinDia=Integer.parseInt(ArrayFechaFinal[2]);
 					if(fecActualAnyo>fecFinAnyo) {
 						MultasPersona mp=new MultasPersona(rs.getInt(1),rs.getInt(2));
-						multas.add(mp);
+						todasMultas.add(mp);
 					}else {
 						if(fecActualAnyo==fecFinAnyo) {
 							if(fecActualMes>fecFinMes) {
 								MultasPersona mp=new MultasPersona(rs.getInt(1),rs.getInt(2));
-								multas.add(mp);
+								todasMultas.add(mp);
 							}else {
 								if(fecActualMes==fecFinMes) {
 									if(fecActualDia>fecFinDia) {
 										MultasPersona mp=new MultasPersona(rs.getInt(1),rs.getInt(2));
-										multas.add(mp);
+										todasMultas.add(mp);
 									}
 								}
 							}
@@ -740,7 +742,7 @@ public class GestionBD {
 			}
 			cerrarConexion(conn);
 			 
-			 return multas;
+			 return todasMultas;
 			 
 		 }
 	 public boolean existeUsuario(String usuario) {
