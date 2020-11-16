@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 import productos.libros.Autor;
+import swing.administrador.CrearUsuario;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 
@@ -52,16 +54,32 @@ public class ProductosPrestados extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		this.persona=persona;
-		JButton btnProlongar = new JButton("Prolongar");
-		btnProlongar.setBounds(160, 213, 117, 29);
-		getContentPane().add(btnProlongar);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(62, 105, 329, 96);
 		contentPane.add(scrollPane);
 		
+		//ScrollPane.setViewportView hemen sartu det Ainho, cargarLista baino lehen
 		list = new JList();
 		scrollPane.setViewportView(list);
 		cargarListaProductos(persona);
+		list.setVisible(true);
+		scrollPane.setVisible(true);
+		
+		
+		//Hengo funtzioa ere egin behar da. Titulo izanda ProductosUsuarios-etan 3 aste gehitu behar dira.
+		JButton btnProlongar = new JButton("Prolongar");
+		btnProlongar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String titulo = (String) list.getSelectedValue();
+				JOptionPane.showMessageDialog(ProductosPrestados.this, "El libro se ha prolongado 3 semanas");
+			}
+		});
+		btnProlongar.setBounds(160, 213, 117, 29);
+		getContentPane().add(btnProlongar);
+		
+		
+		
 		
 		JLabel lblProductosPrestados = new JLabel("Productos prestados");
 		lblProductosPrestados.setBounds(157, 57, 141, 38);

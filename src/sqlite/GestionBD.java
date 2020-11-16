@@ -445,7 +445,7 @@ public class GestionBD {
 	 public ArrayList<String> obtenerProductosUsuario(Persona persona){
 		establecerConexion();
 		PreparedStatement pstmt=null;
-		String sql="SELECT titulo FROM Producto WHERE codPro IN(SELECT codPro FROM ProductoUsuario WHERE (codPers=? and prestado))";
+		String sql="SELECT titulo FROM Producto WHERE codPro IN (SELECT codPro FROM ProductoUsuario WHERE (codPers=? and prestado))";
 		try {
 			pstmt=conn.prepareStatement(sql);
 		} catch (SQLException e) {
