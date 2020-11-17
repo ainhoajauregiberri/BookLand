@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.beans.Statement;
 import java.io.File;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.jdi.connect.spi.Connection;
+import com.sun.corba.se.pept.transport.Connection;
 
 import personas.Persona;
 import productos.libros.Autor;
@@ -32,28 +33,53 @@ public class TestGestionBD {
 	private Autor a;
 	private EjemplarLibro ej;
 	private Persona p;
-	
-	private static PreparedStatement pstmt;
+	private Connection conn;
+	private String url;
+	private DatabaseMetaData meta;
 	private Statement stmt;
-	
+	private Statement stmt2;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private ResultSet rs2;
 
 	
 	@Before
 	public void setUp(){
-		Connection conn=new Connection();
-		conn=DriverManager.getConnection(url);
+		url = "jdbc:sqlite:BookLand.db";
+		try {
+			conn=(Connection) DriverManager.getConnection(url);
+			meta= ((java.sql.Connection) conn).getMetaData();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			stmt=(Statement) ((java.sql.Connection) conn).createStatement();
+			stmt2=(Statement) ((java.sql.Connection) conn).createStatement();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		
+		pstmt=null;
+		rs=null;
+		rs2=null;
 		bd = new GestionBD("BookLand.db");
 		g = new Genero("Comedia");
 		a = new Autor("Roald Dahl");
 		ej = new EjemplarLibro(24, "Nur 3");
 		p = new Persona("Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica");
-		
-		
-		
 	}
 	
 	@After
 	public void tearDown(){
+		
+		conn.close();
+		stmt=null;
+		pstmt=null;
+		rs=null;
 		
 	}
 	@Test
@@ -61,6 +87,7 @@ public class TestGestionBD {
 		bd.establecerConexion();
 		assertNotNull(bd.getConn());
 	}
+	
 	@Test
 	public void testCreateDB(){
 		bd.createDB();
@@ -75,22 +102,13 @@ public class TestGestionBD {
 					+"codPrueba integer PRIMARY KEY,\n"
 					+ ");";
 		bd.crearModificarBorrarTabla(sql);
-		bd.establecerConexion();
-		ResultSet rs=null;
 		
 		String sql2 = "SELECT name FROM sqlite_master WHERE type='table' AND name='Prueba'";
-		Statement stmt=null;
-		try {
-			stmt=(Statement) (bd.getConn()).createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		try {
 			rs=((java.sql.Statement) stmt).executeQuery(sql2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			assertTrue(false);
 			e.printStackTrace();
 		}
 		String nombre="";
@@ -98,46 +116,34 @@ public class TestGestionBD {
 			nombre = rs.getString(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			assertTrue(false);
 			e.printStackTrace();
 		}
 		
+		//Hau da konprobatu beharreko lehengoa, si ha creado la tabla
 		assertEquals(nombre, "Prueba");
 		
 		String sql3= "DELETE TABLE IF EXISTS Prueba";
 		bd.crearModificarBorrarTabla(sql3);
 		
-		ResultSet rs2 = null;
 		String sql4 = "SELECT name FROM sqlite_master WHERE type='table' AND name='Prueba'";
-		Statement stmt2=null;
 		
 		
-		try {
-			stmt2=(Statement) (bd.getConn()).createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		nombre="";
 		try {
 			rs2=((java.sql.Statement) stmt2).executeQuery(sql4);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			assertTrue(false);
 			e.printStackTrace();
 		}
 		
 		try {
-			nombre=rs.getString(1);
+			nombre=rs2.getString(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			assertTrue(false);
 			e.printStackTrace();
 		}
 		
 		assertEquals(nombre, "");
-		
-		bd.cerrarConexion(bd.getConn());
 				
 	}
 	@Test
@@ -154,17 +160,9 @@ public class TestGestionBD {
 	public void testPrestarLibro(){
 		
 		bd.prestarLibro(ej, p);
-		bd.establecerConexion();
 		
 		String sql = "SELECT prestado FROM ProductoUsuario WHERE codEjem=24";
-		Statement stmt=null;
-		ResultSet rs = null;
-		try {
-			stmt=(Statement) (bd.getConn()).createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		try {
 			rs=((java.sql.Statement) stmt).executeQuery(sql);
 		} catch (SQLException e) {
@@ -173,7 +171,7 @@ public class TestGestionBD {
 		}
 		
 		try {
-			assertEquals(rs.getBoolean(1), true);
+			assertTrue(rs.getBoolean(1));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,66 +180,46 @@ public class TestGestionBD {
 		
 		String sql2 = "DELETE FROM ProductoUsuario WHERE codEjem=24";
 		
-		Statement stmt2=null;
-		try {
-			stmt2=(Statement) (bd.getConn()).createStatement();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		try {
 			stmt2.execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
-		 bd.cerrarConexion(bd.getConn());
 		
 	}
 	@Test
 	public void testObtenerTitulos(){
 		
-		
 		ArrayList<String> titulos = bd.obtenerTitulos();
 
 		int tamanyoDeseado=0;
-		
-		bd.establecerConexion();
-		
-		 Statement stmt=null;
-		 ResultSet rs=null;
 		 String sql="SELECT titulo FROM Producto";
-		 try {
-			stmt=(Statement) bd.getConn().createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 try {
-			rs=((java.sql.Statement) stmt).executeQuery(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 try {
-			while(rs.next()) {
-				 tamanyoDeseado+=1;
-				 if (rs.getString(1).equals("Nur 3")){
-					 assertTrue(true);
-				 } 
-				 
-			 }
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		 
-		 assertEquals(tamanyoDeseado, titulos.size());
-		 bd.cerrarConexion(bd.getConn());
+		
+		 try {
+			 rs=((java.sql.Statement) stmt).executeQuery(sql);
+			 int i =0;
+			while(rs.next()) {
+				 if ((titulos.get(i).equals(rs.getString(1)))){
+					 assertTrue(true);
+				 }else{
+					 assertTrue(false);
+					 break;
+				 }
+				 i++;
+			}	
+			}
+		 catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
+	
+	//Honaino ondo zuzenduta
+	
 	@Test
 	public void testObtenerTitulosPorGenero(){
 		
