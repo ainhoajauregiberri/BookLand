@@ -2,8 +2,10 @@ package JUnit;
 
 import static org.junit.Assert.*;
 
+
 import java.beans.Statement;
 import java.io.File;
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,11 +15,11 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.Action;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.corba.se.pept.transport.Connection;
 
 import personas.Persona;
 import productos.libros.Autor;
@@ -31,9 +33,9 @@ public class TestGestionBD {
 	private GestionBD bd;
 	private Genero g;
 	private Autor a;
+	private Connection conn;
 	private EjemplarLibro ej;
 	private Persona p;
-	private Connection conn;
 	private String url;
 	private DatabaseMetaData meta;
 	private Statement stmt;
@@ -63,6 +65,7 @@ public class TestGestionBD {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		
+		}
 		pstmt=null;
 		rs=null;
 		rs2=null;
@@ -76,7 +79,12 @@ public class TestGestionBD {
 	@After
 	public void tearDown(){
 		
-		conn.close();
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		stmt=null;
 		pstmt=null;
 		rs=null;

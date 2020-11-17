@@ -29,6 +29,7 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 	private JPanel contentPane;
 	private Persona persona;
 	private Producto producto;
+	private Persona administrador;
 	private DefaultListModel dfmEjemplares;
 	private JList list;
 	
@@ -43,7 +44,7 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 	 * @param producto 
 	 * @param usuario 
 	 */
-	public LibrosDisponiblesDevolverAdmin(Persona persona, String titulo) {
+	public LibrosDisponiblesDevolverAdmin(Persona persona, String titulo, Persona administrador) {
 		this.persona=persona;
 		this.producto=producto;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +64,13 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 		cargarListaEjemplares(titulo);
 		
 		JButton button = new JButton("Volver");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DevolverLibro v =new DevolverLibro(persona,administrador);
+				v.setVisible(true);
+				LibrosDisponiblesDevolverAdmin.this.dispose();
+			}
+		});
 		button.setBounds(15, 16, 85, 29);
 		contentPane.add(button);
 		

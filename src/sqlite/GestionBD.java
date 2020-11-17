@@ -669,6 +669,28 @@ public class GestionBD {
 		 
 	 }
 	 
+	 public String devolverUsuario(int codPersona) {
+		 establecerConexion();
+		 String usuario="";
+		 PreparedStatement pstmt=null;
+		 ResultSet rs=null;
+		 String sql="SELECT usuario FROM Persona WHERE codPers=?";
+		 try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, codPersona);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				usuario=rs.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 cerrarConexion(conn);
+		 return usuario;
+	 }
+	 
 	 public ArrayList<MultasPersona> devolverMultas() {
 			establecerConexion();
 			todasMultas=new ArrayList<MultasPersona>();

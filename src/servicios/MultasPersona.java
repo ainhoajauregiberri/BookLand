@@ -1,5 +1,7 @@
 package servicios;
 
+import sqlite.GestionBD;
+
 public class MultasPersona {
 
 	private int usuarioPersona;
@@ -29,7 +31,8 @@ public class MultasPersona {
 
 	@Override
 	public String toString() {
-		return usuarioPersona +"   "+codEjem;
+		GestionBD bd = new GestionBD("BookLand.db");
+		return "Usuario: "+bd.devolverUsuario(usuarioPersona) +" Ejemplar: "+codEjem;
 	}
 	
 	

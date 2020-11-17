@@ -81,7 +81,7 @@ public class DevolverLibro extends JFrame {
 		btnDevolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String producto = (String) list.getSelectedValue();
-				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(persona, producto);
+				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(persona, producto,administrador);
 				v.setVisible(true);
 				DevolverLibro.this.dispose();
 			}
