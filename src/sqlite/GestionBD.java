@@ -420,46 +420,25 @@ public class GestionBD {
 		 PreparedStatement pstmt=null;
 		 String sql="UPDATE ProductoUsuario SET fecFin=?, prestado=? WHERE codPers=? AND codEjem=?";
 		 try {
-			pstmt=conn.prepareStatement(sql);
+			 pstmt=conn.prepareStatement(sql);
+			 SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+			 Date date = new Date(System.currentTimeMillis());
+			 java.util.Date fecFinActualizado = string2Date("yyyy-MM-dd", date.toString());
+			 pstmt.setString(1, fecFinActualizado.toString());
+			 pstmt.setBoolean(2, false);
+			 pstmt.setInt(3,obtenerCodigoDePersona(persona.getUsuario()));
+			 pstmt.setInt(4, ejemplarLibro.getCodEjem());
+			 pstmt.executeUpdate();
+			 cerrarConexion(conn);
+			 System.out.println("Se ha devuelto el libro");
+			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-		 Date date = new Date(System.currentTimeMillis());
-		 try {
-			pstmt.setString(1, date.toString());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 try {
-			pstmt.setBoolean(2, false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 try {
-			pstmt.setInt(3,obtenerCodigoDePersona(persona.getUsuario()));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 try {
-			pstmt.setInt(4, ejemplarLibro.getCodEjem());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 try {
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
 		 cerrarConexion(conn);
-		 System.out.println("Se ha devuelto el libro");
+		 
+		
 	 }
 	 
 	 
