@@ -15,9 +15,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.corba.se.pept.transport.Connection;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
 import personas.Persona;
 import productos.libros.Autor;
 import productos.libros.Ejemplar;
@@ -33,10 +30,6 @@ public class TestGestionBD {
 	private EjemplarLibro ej;
 	private Persona p;
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 	
 	@Before
 	public void setUp(){
@@ -53,12 +46,12 @@ public class TestGestionBD {
 	public void tearDown(){
 		
 	}
-	
+	@Test
 	public void testEstablecerConexion() {
 		bd.establecerConexion();
 		assertNotNull(bd.getConn());
 	}
-	
+	@Test
 	public void testCreateDB(){
 		bd.createDB();
 		String url = bd.getUrl();
@@ -66,7 +59,7 @@ public class TestGestionBD {
 		assertTrue(aFile.exists());
 		
 	}
-	
+	@Test
 	public void testCrearModificarBorrarTabla (){
 		String sql = "CREATE TABLE IF NOT EXISTS Prueba (\n"
 					+"codPrueba integer PRIMARY KEY,\n"
@@ -137,17 +130,17 @@ public class TestGestionBD {
 		bd.cerrarConexion(bd.getConn());
 				
 	}
-	
+	@Test
 	public void testSeleccionarDatosPersona(){
 		HashMap<String, Persona>personas = bd.seleccionarDatosPersona();
 		assertEquals(personas.get("ainhoa10").toString(), "ainhoa10");
 	}
-	
+	@Test
 	public void testObtenerCodigoDePersona(){
 		int codPers = bd.obtenerCodigoDePersona("unai10");
 		assertEquals(16, codPers);
 	}
-	
+	@Test
 	public void testPrestarLibro(){
 		
 		bd.prestarLibro(ej, p);
@@ -197,7 +190,7 @@ public class TestGestionBD {
 		 bd.cerrarConexion(bd.getConn());
 		
 	}
-	
+	@Test
 	public void testObtenerTitulos(){
 		
 		
@@ -239,7 +232,7 @@ public class TestGestionBD {
 		 bd.cerrarConexion(bd.getConn());
 		
 	}
-	
+	@Test
 	public void testObtenerTitulosPorGenero(){
 		
 		ArrayList<String> titulosPorGenero = bd.obtenerTitulosPorGenero(g);
@@ -281,7 +274,7 @@ public class TestGestionBD {
 		
 		 }
 		
-		
+	@Test
 		public void testObtenerTitulosPorAutor(){
 			
 			ArrayList<String> titulosPorAutor = bd.obtenerTitulosPorAutor(a);
@@ -322,14 +315,14 @@ public class TestGestionBD {
 			 bd.cerrarConexion(bd.getConn());
 			
 			 }
-
+	@Test
 		public void testComprobarUsuarioAdminitrador(){
 			boolean esUsuario = bd.comprobarUsuarioAdminitrador(10);
 			assertTrue(esUsuario);
 			boolean esAdmin = bd.comprobarUsuarioAdminitrador(1);
 			assertFalse(esAdmin);
 	}
-		
+	@Test
 		public void testDevolverGeneros() {
 			ArrayList<Genero> generos = bd.devolverGeneros();
 			
@@ -366,7 +359,7 @@ public class TestGestionBD {
 				e.printStackTrace();
 			}
 			 
-			 assertEquals(tamanyoDeseado, titulosPorAutor.size());
+			 assertEquals(tamanyoDeseado, generos.size());
 			 bd.cerrarConexion(bd.getConn());
 			
 			 
