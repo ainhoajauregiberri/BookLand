@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.beans.Statement;
 import java.io.File;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,8 @@ import java.util.HashMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.sun.jdi.connect.spi.Connection;
 
 import personas.Persona;
 import productos.libros.Autor;
@@ -29,16 +32,23 @@ public class TestGestionBD {
 	private Autor a;
 	private EjemplarLibro ej;
 	private Persona p;
+	
+	private static PreparedStatement pstmt;
+	private Statement stmt;
+	
 
 	
 	@Before
 	public void setUp(){
-		
+		Connection conn=new Connection();
+		conn=DriverManager.getConnection(url);
 		bd = new GestionBD("BookLand.db");
 		g = new Genero("Comedia");
 		a = new Autor("Roald Dahl");
 		ej = new EjemplarLibro(24, "Nur 3");
 		p = new Persona("Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica");
+		
+		
 		
 	}
 	
