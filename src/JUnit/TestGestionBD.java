@@ -7,6 +7,7 @@ import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sun.corba.se.pept.transport.Connection;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import personas.Persona;
 import productos.libros.Autor;
@@ -26,6 +28,10 @@ import sqlite.GestionBD;
 public class TestGestionBD {
 	
 	private GestionBD bd;
+	private Genero g;
+	private Autor a;
+	private EjemplarLibro ej;
+	private Persona p;
 
 	@Test
 	public void test() {
@@ -36,6 +42,10 @@ public class TestGestionBD {
 	public void setUp(){
 		
 		bd = new GestionBD("BookLand.db");
+		g = new Genero("Comedia");
+		a = new Autor("Roald Dahl");
+		ej = new EjemplarLibro(24, "Nur 3");
+		p = new Persona("Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica");
 		
 	}
 	
@@ -140,9 +150,6 @@ public class TestGestionBD {
 	
 	public void testPrestarLibro(){
 		
-		
-		EjemplarLibro ej = new EjemplarLibro(24, "Nur 3");
-		Persona p = new Persona("Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica");
 		bd.prestarLibro(ej, p);
 		bd.establecerConexion();
 		
@@ -169,6 +176,24 @@ public class TestGestionBD {
 			e.printStackTrace();
 		}
 		
+		
+		String sql2 = "DELETE FROM ProductoUsuario WHERE codEjem=24";
+		
+		Statement stmt2=null;
+		try {
+			stmt2=(Statement) (bd.getConn()).createStatement();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			stmt2.execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		 bd.cerrarConexion(bd.getConn());
 		
 	}
@@ -216,7 +241,7 @@ public class TestGestionBD {
 	}
 	
 	public void testObtenerTitulosPorGenero(){
-		Genero g = new Genero("Comedia");
+		
 		ArrayList<String> titulosPorGenero = bd.obtenerTitulosPorGenero(g);
 		bd.establecerConexion();
 		
@@ -258,7 +283,7 @@ public class TestGestionBD {
 		
 		
 		public void testObtenerTitulosPorAutor(){
-			Autor a = new Autor("Roald Dahl");
+			
 			ArrayList<String> titulosPorAutor = bd.obtenerTitulosPorAutor(a);
 			bd.establecerConexion();
 			
@@ -299,8 +324,54 @@ public class TestGestionBD {
 			 }
 
 		public void testComprobarUsuarioAdminitrador(){
-			
+			boolean esUsuario = bd.comprobarUsuarioAdminitrador(10);
+			assertTrue(esUsuario);
+			boolean esAdmin = bd.comprobarUsuarioAdminitrador(1);
+			assertFalse(esAdmin);
 	}
+		
+		public void testDevolverGeneros() {
+			ArrayList<Genero> generos = bd.devolverGeneros();
+			
+			bd.establecerConexion();
+			
+			int tamanyoDeseado=0;
+			
+			bd.establecerConexion();
+			
+			 Statement stmt=null;
+			 ResultSet rs=null;
+			 String sql="SELECT codGenero,nomGenero FROM Genero WHERE codGenero=1";
+			 try {
+				stmt=(Statement) bd.getConn().createStatement();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 try {
+				rs=((java.sql.Statement) stmt).executeQuery(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 try {
+				while(rs.next()) {
+					 tamanyoDeseado+=1;
+					 if (rs.getString(1).equals("Comedia")){
+						 assertTrue(true);
+				 }
+			}
+			 }catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			 assertEquals(tamanyoDeseado, titulosPorAutor.size());
+			 bd.cerrarConexion(bd.getConn());
+			
+			 
+			
+		}
 	
 	
 }
