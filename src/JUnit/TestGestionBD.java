@@ -22,10 +22,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import personas.Persona;
+import personas.Usuario;
+import productos.Libro;
+import productos.Producto;
 import productos.libros.Autor;
 import productos.libros.Ejemplar;
 import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
+import servicios.MultasPersona;
 import sqlite.GestionBD;
 
 public class TestGestionBD {
@@ -35,7 +39,9 @@ public class TestGestionBD {
 	private Autor a;
 	private Connection conn;
 	private EjemplarLibro ej;
+	private EjemplarLibro ej2;
 	private Persona p;
+	private Persona p2;
 	private String url;
 	private DatabaseMetaData meta;
 	private Statement stmt;
@@ -43,6 +49,8 @@ public class TestGestionBD {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private ResultSet rs2;
+	private Libro libro;
+	private MultasPersona m;
 
 	
 	@Before
@@ -71,9 +79,14 @@ public class TestGestionBD {
 		rs2=null;
 		bd = new GestionBD("BookLand.db");
 		g = new Genero("Comedia");
-		a = new Autor("Roald Dahl");
-		ej = new EjemplarLibro(24, "Nur 3");
+		a = new Autor("J. K. Rowling");
+		ej = new EjemplarLibro(1, "Harry Potter y la piedra filosofal");
+		ej2 = new EjemplarLibro(18, "Harry Potter y la cámara secreto");
 		p = new Persona("Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica");
+		p2 = new Persona ("Jon", "jon10", "kaixo1234", "2000-07-15", "chico");
+		libro = new Libro(true, "Harry Potter y la piedra filosofal", a, g, null, 8); 
+		m= new MultasPersona(5, 18);
+		
 	}
 	
 	@After
@@ -113,7 +126,7 @@ public class TestGestionBD {
 		
 		String sql2 = "SELECT name FROM sqlite_master WHERE type='table' AND name='Prueba'";
 		
-		try {
+		try {		
 			rs=((java.sql.Statement) stmt).executeQuery(sql2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -138,6 +151,7 @@ public class TestGestionBD {
 		
 		nombre="";
 		try {
+		
 			rs2=((java.sql.Statement) stmt2).executeQuery(sql4);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -169,10 +183,11 @@ public class TestGestionBD {
 		
 		bd.prestarLibro(ej, p);
 		
-		String sql = "SELECT prestado FROM ProductoUsuario WHERE codEjem=24";
+		String sql = "SELECT prestado FROM ProductoUsuario WHERE codEjem=1";
 		
 		try {
 			rs=((java.sql.Statement) stmt).executeQuery(sql);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -186,7 +201,7 @@ public class TestGestionBD {
 		}
 		
 		
-		String sql2 = "DELETE FROM ProductoUsuario WHERE codEjem=24";
+		String sql2 = "DELETE FROM ProductoUsuario WHERE codEjem=1";
 		
 		
 		try {
@@ -201,8 +216,6 @@ public class TestGestionBD {
 	public void testObtenerTitulos(){
 		
 		ArrayList<String> titulos = bd.obtenerTitulos();
-
-		int tamanyoDeseado=0;
 		 String sql="SELECT titulo FROM Producto";
 		 
 		
@@ -210,15 +223,10 @@ public class TestGestionBD {
 			 rs=((java.sql.Statement) stmt).executeQuery(sql);
 			 int i =0;
 			while(rs.next()) {
-				 if ((titulos.get(i).equals(rs.getString(1)))){
-					 assertTrue(true);
-				 }else{
-					 assertTrue(false);
-					 break;
-				 }
-				 i++;
-			}	
+				assertEquals(titulos.get(i), rs.getString(1));
+				i++;
 			}
+		 }
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,69 +234,39 @@ public class TestGestionBD {
 		
 	}
 	
-	//Honaino ondo zuzenduta
+
 	
 	@Test
 	public void testObtenerTitulosPorGenero(){
 		
 		ArrayList<String> titulosPorGenero = bd.obtenerTitulosPorGenero(g);
-		bd.establecerConexion();
 		
-		int tamanyoDeseado=0;
-		
-		bd.establecerConexion();
-		
-		 Statement stmt=null;
-		 ResultSet rs=null;
 		 String sql="SELECT titulo FROM Producto WHERE codGenero=1";
-		 try {
-			stmt=(Statement) bd.getConn().createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		 try {
 			rs=((java.sql.Statement) stmt).executeQuery(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		 try {
-			while(rs.next()) {
-				 tamanyoDeseado+=1;
-				 if (rs.getString(1).equals("Los 5")){
-					 assertTrue(true);
-			 }
-		}
-		 }catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
-		 assertEquals(tamanyoDeseado, titulosPorGenero.size());
-		 bd.cerrarConexion(bd.getConn());
 		
+			 int i =0;
+				try {
+					while(rs.next()) {
+						assertEquals(titulosPorGenero.get(i),rs.getString(1));
+						i++;
+				}
+				}catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 		 }
+	}
 		
 	@Test
 		public void testObtenerTitulosPorAutor(){
 			
 			ArrayList<String> titulosPorAutor = bd.obtenerTitulosPorAutor(a);
-			bd.establecerConexion();
 			
-			int tamanyoDeseado=0;
-			
-			bd.establecerConexion();
-			
-			 Statement stmt=null;
-			 ResultSet rs=null;
-			 String sql="SELECT titulo FROM Producto WHERE codAutor=3";
-			 try {
-				stmt=(Statement) bd.getConn().createStatement();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			 String sql="SELECT titulo FROM Producto WHERE codAutor=1";
 			 try {
 				rs=((java.sql.Statement) stmt).executeQuery(sql);
 			} catch (SQLException e) {
@@ -296,19 +274,16 @@ public class TestGestionBD {
 				e.printStackTrace();
 			}
 			 try {
+				int i=0;
 				while(rs.next()) {
-					 tamanyoDeseado+=1;
-					 if (rs.getString(1).equals("Matilda")){
-						 assertTrue(true);
-				 }
+					assertEquals(titulosPorAutor.get(i),rs.getString(1));
+					i++;
 			}
 			 }catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			 
-			 assertEquals(tamanyoDeseado, titulosPorAutor.size());
-			 bd.cerrarConexion(bd.getConn());
 			
 			 }
 	@Test
@@ -322,45 +297,161 @@ public class TestGestionBD {
 		public void testDevolverGeneros() {
 			ArrayList<Genero> generos = bd.devolverGeneros();
 			
-			bd.establecerConexion();
-			
-			int tamanyoDeseado=0;
-			
-			bd.establecerConexion();
-			
-			 Statement stmt=null;
-			 ResultSet rs=null;
-			 String sql="SELECT codGenero,nomGenero FROM Genero WHERE codGenero=1";
-			 try {
-				stmt=(Statement) bd.getConn().createStatement();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			 String sql="SELECT nomGenero FROM Genero";
 			 try {
 				rs=((java.sql.Statement) stmt).executeQuery(sql);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			 try {
+				 int i=0;
 				while(rs.next()) {
-					 tamanyoDeseado+=1;
-					 if (rs.getString(1).equals("Comedia")){
-						 assertTrue(true);
+					assertEquals(rs.getString(1), generos.get(i).getNomGen());
 				 }
 			}
-			 }catch (SQLException e) {
+			 catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			 }
+		}
+	
+		public void testDevolverLibro(){
+			bd.devolverLibro(ej2, p2);
+			String sql = "SELECT prestado FROM ProductoUsuario WHERE codEjem=18";
+			try {
+				((java.sql.Statement) stmt).executeQuery(sql);
+				assertFalse(rs.getBoolean(1));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			String sql2 = "UPDATE prestado SET prestado=false FROM ProductoUSuario WHERE codEjem=18";
+			try {
+				((java.sql.Statement) stmt2).executeQuery(sql2);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		public void testObtenerEjemplares(){
+			ArrayList<String> ejemplares = bd.obtenerEjemplares(libro.getTiutlo());
+			String sql="SELECT codEjem FROM Ejemplar WHERE codPro=1";
+			
+			try {
+				rs = ((java.sql.Statement) stmt).executeQuery(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			int i = 0;
+			try {
+				while (rs.next()){
+					i++;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			assertEquals(ejemplares.size(), i);
+		}
+		
+		// Se puede public void testObtenerEjemplaresObjetos(){
+	
+		public void testCodigoMaximo(){
+			int codMax = bd.codigoMaximo();
+			
+			String sql="SELECT MAX(codPers) FROM Persona";
+			
+			try {
+				rs=((java.sql.Statement) stmt).executeQuery(sql);
+				assertEquals(rs.getInt(1), codMax);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		public void testobtenerProductosUsuario(){
+			bd.prestarLibro(ej, p2);
+			ArrayList<String> titulos = bd.obtenerProductosUsuario(p2);
+			assertEquals("Harry Potter y la piedra filosofal", titulos.get(1));
+			String sql2 = "DELETE FROM ProductoUsuario WHERE codEjem=1";
+			try {
+				stmt2.execute();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		public void testDevolverUsuarios(){
+			ArrayList<Persona> usuarios = bd.devolverUsuarios();
+			 String sql="SELECT * FROM Persona WHERE codPers IN (SELECT codPers FROM Usuario)";
+			 int i = 0;
+			 try {
+				rs=((java.sql.Statement) stmt).executeQuery(sql);
+				while (rs.next()){
+					Persona persona=new Persona(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+					assertEquals(persona, usuarios.get(i));
+					i++;
+				}
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			 
-			 assertEquals(tamanyoDeseado, generos.size());
-			 bd.cerrarConexion(bd.getConn());
-			
-			 
-			
 		}
-	
-	
+		
+		public void testPuedePrestar(){
+			boolean prestar = bd.puedePrestar(p2);
+			assertFalse(prestar);
+		}
+		
+		public void testDevolverUsuario(){
+			String usuario = bd.devolverUsuario(5);
+			assertEquals("jon10", usuario);
+		}
+		
+		public void testDevolverMultas(){
+			ArrayList<MultasPersona> multas = bd.devolverMultas();
+			for (MultasPersona multasPersona : multas) {
+				if (multasPersona.getcodEjem()==18){
+				if (multasPersona.getUsuarioPersona()==5){
+					assertTrue(true);
+				}
+			}
+		}
+		}
+		
+		public void testExisteUsuario(){
+			boolean existe = bd.existeUsuario("jon10");
+			assertTrue(true);
+		}
+		
+		public void testDevolverDate(){
+			//Ez dakit nola daukan fecha sqlitek, hor sartu behiko fecha atributo horrekin.
+			String fecha = bd.devolverDate();
+			assertEquals(fecha, "2020-09-13");
+		}
+		
+		public void testInsertarDatosPersona(){
+			bd.insertarDatosPersona(21, "Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica");
+			String sql = "SELECT usuario FROM Persona WHERE codPers=21";
+			rs = stmt.execute(sql);
+			
+			assertEquals(rs.getString(1), "nerea10");
+		}
+		
 }
+			
+			
+		
+
+		
+		

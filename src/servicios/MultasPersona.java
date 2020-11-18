@@ -21,11 +21,11 @@ public class MultasPersona {
 		this.usuarioPersona = usuarioPersona;
 	}
 
-	public int getTitulo() {
+	public int getcodEjem() {
 		return codEjem;
 	}
 
-	public void setTitulo(int codEjem) {
+	public void setcodEjem(int codEjem) {
 		this.codEjem = codEjem;
 	}
 
