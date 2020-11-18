@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import personas.Persona;
@@ -23,11 +24,7 @@ public class TestUsuario {
 	
 	private Usuario usuario;
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-	
+	@Before
 	public void setUp(){
 		
 		usuario = new Usuario("Nerea", "nerea10", "kaixo1234", "1998-06-18", "chica", "2020-09-13", 20.0);
@@ -37,13 +34,13 @@ public class TestUsuario {
 	@After
 	public void tearDown(){
 		
-		
+		usuario=null;
 		
 	}
 	
 	public void testGetDinero(){
 		usuario.setDinero(30.0);
-		assertEquals(30.0, usuario.getDinero());
+		assertEquals(30,0, usuario.getDinero());
 		
 		//Beste aukera bat
 		//if((30.0).equals(usuarios.getDinero())){
