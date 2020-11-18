@@ -19,7 +19,11 @@ import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
 import servicios.MultasPersona;
 import sqlite.GestionBD;
-
+/**
+ * Para testear los metodos de la clase de Usuario
+ * @author ainhoa
+ *
+ */
 public class UsuarioTest {
 	
 	private Usuario usuario;

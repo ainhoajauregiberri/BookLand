@@ -12,6 +12,11 @@ import personas.Persona;
 import productos.libros.EjemplarLibro;
 import sqlite.GestionBD;
 
+/**
+ * Para testear los metodos de la clase GestionBD
+ * @author ainhoa y lorea
+ *
+ */
 public class GestionBDTest {
 
 	private GestionBD bd;

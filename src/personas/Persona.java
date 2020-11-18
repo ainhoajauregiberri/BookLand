@@ -4,6 +4,12 @@ import java.util.HashMap;
 
 import sqlite.GestionBD;
 
+/**
+ * Clase que representa a las personas. Esta clase tiene
+ * los atributos que comparten tanto los usuarios como los administradores.
+ * @author ainhoa y lorea
+ *
+ */
 public class Persona {
 	
 	private String nombre;

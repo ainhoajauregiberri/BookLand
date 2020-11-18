@@ -4,6 +4,11 @@ import productos.libros.Autor;
 import productos.libros.Genero;
 import servicios.ProductoUsuario;
 
+/**
+ * Representa los atributos que tienen los libros.
+ * @author ainhoa y lorea
+ *
+ */
 public class Libro extends Producto {
 	
 	private int edadRecLibro;

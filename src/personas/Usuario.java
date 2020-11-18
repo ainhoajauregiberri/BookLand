@@ -6,6 +6,11 @@ import java.util.HashMap;
 import servicios.ProductoUsuario;
 import sqlite.GestionBD;
 
+/**
+ * Clase que representa a los usuarios. Tambien son personas.
+ * @author ainhoa y lorea
+ *
+ */
 public class Usuario extends Persona {
 	
 	private String fecAlta;

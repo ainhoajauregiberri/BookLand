@@ -7,7 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import personas.Persona;
-
+/**
+ * Para testear los metodos de la clase de Persona
+ * @author ainhoa y lorea
+ *
+ */
 public class PersonaTest {
 	
 	private Persona persona;

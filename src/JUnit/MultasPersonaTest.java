@@ -7,7 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import servicios.MultasPersona;
-
+/**
+ * Para testear los metodos de la clase MultasPersonas
+ * @author ainhoa y lorea
+ *
+ */
 public class MultasPersonaTest {
 
 	private MultasPersona mp;

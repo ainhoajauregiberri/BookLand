@@ -5,12 +5,27 @@ import java.sql.Date;
 import personas.Usuario;
 import productos.Producto;
 
+/**
+ * Realciona el usuario con los productos que tiene o ha tenido prestados
+ * @author ainhoa
+ *
+ */
 public class ProductoUsuario {
 
 	private Usuario usuario;
 	private Producto producto;
+	/**
+	 * La fecha en la que presto el libro
+	 */
 	private String fecIni;
+	/**
+	 * La fecha en la que tiene que devolver o devolvio el libro
+	 */
 	private String fecFin;
+	/**
+	 * Indica si el libro esta prestado o no. Sirve para tener un
+	 * historial de los libros que se prestan a cada usuario
+	 */
 	private boolean prestado;
 	
 	public Usuario getUsuario() {

@@ -3,6 +3,12 @@ import servicios.ProductoUsuario;
 import productos.libros.Autor;
 import productos.libros.Genero;
 
+/**
+ * Representa los atributos que tienen en comun todos los productos
+ * de la biblioteca
+ * @author ainhoa y lorea
+ *
+ */
 public abstract class Producto {
 	private boolean disponible;
 	private String titulo;

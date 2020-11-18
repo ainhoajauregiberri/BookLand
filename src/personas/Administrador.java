@@ -2,6 +2,11 @@ package personas;
 
 import java.sql.Date;
 
+/**
+ * Clase que representa a los administradores. También son personas.
+ * @author ainhoa y lorea
+ *
+ */
 public class Administrador extends Persona {
 	
 	private int nivel;
