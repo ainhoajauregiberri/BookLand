@@ -20,6 +20,13 @@ import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Esta es la clase LibrosDisponibles que será la ventana que se abrirá si el usuario 
+ * selecciona un título de un libro. Aquí aparecerán todos los ejemplares disponibles 
+ * que hay de ese libro
+ * @author Ainhoa y Lorea
+ */
+
 public class LibrosDisponibles extends JFrame implements IListasProductos {
 
 	private JPanel contentPane;
@@ -30,7 +37,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 
 
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -46,7 +53,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 	}
 
 	/**
-	 * Create the frame.
+	 * Este es el constructor para crear el frame
 	 */
 	public LibrosDisponibles(String titulo,Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +84,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 		contentPane.add(btnVolver);
 		
 		JLabel lblEjemplaresDisponibles = new JLabel("Ejemplares disponibles");
-		lblEjemplaresDisponibles.setBounds(142, 50, 155, 16);
+		lblEjemplaresDisponibles.setBounds(142, 50, 178, 16);
 		contentPane.add(lblEjemplaresDisponibles);
 		
 		

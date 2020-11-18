@@ -1,5 +1,11 @@
 package productos.libros;
 
+/**
+ * Clase que representa los idiomas de los libros de la biblioteca.
+ * @author ainhoa y lorea
+ *
+ */
+
 public class Idioma {
 
 	private String idioma;

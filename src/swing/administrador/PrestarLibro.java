@@ -21,6 +21,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+
+/**
+ * Esta es la clase acceso para que el administrador pueda registrar que un usuario se 
+ * ha llevado un libro de la biblioteca. En esta ventana le aparecerán los títulos de los
+ * libros que hay actualmente
+ * @author Ainhoa y Lorea
+ */
 public class PrestarLibro extends JFrame {
 	private JPanel contentPane;
 	private Usuario usuario;

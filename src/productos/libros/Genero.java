@@ -1,5 +1,11 @@
 package productos.libros;
 
+/**
+ * Clase que representa los géneros de los libros de la biblioteca.
+ * @author ainhoa y lorea
+ *
+ */
+
 public class Genero {
 
 	private String nomGen;

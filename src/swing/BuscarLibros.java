@@ -25,6 +25,12 @@ import productos.libros.Genero;
 
 import javax.swing.event.ListSelectionEvent;
 
+/**
+ * Esta es la clase buscarLibros que será la clase a la que accederá el usuario si selecciona
+ * la opcion buscarlibros. Podrá buscar libros por genero, por autor o por título directamente
+ * @author Ainhoa y Lorea
+ */
+
 public class BuscarLibros extends JFrame implements IListasProductos{
 	private JPanel contentPane;
 	private DefaultListModel dfmTitulos;
@@ -34,7 +40,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 	private static Persona persona;
 
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -48,10 +54,13 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 			}
 		});
 	}
+	/**
+	 * Este es el constructor para crear el frame
+	 */
 	public BuscarLibros(Persona persona) {
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 319);
+		setBounds(100, 100, 450, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

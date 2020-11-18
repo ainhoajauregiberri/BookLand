@@ -20,6 +20,10 @@ import sqlite.GestionBD;
 
 import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
+/**
+ * Con esta ventana el administrador puede crear un nuevo usuario
+ * @author Ainhoa y Lorea
+ */
 
 public class CrearUsuario extends JFrame {
 	private JTextField textField_nacimiento;

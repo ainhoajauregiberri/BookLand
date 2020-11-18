@@ -2,6 +2,12 @@ package productos.libros;
 import productos.Libro;
 import servicios.ProductoUsuario;
 
+/**
+ * Clase que representa a los ejemplares. Puede haber más de un ejemplar del mismo libro,
+ * pero con distinta editorial o edición.
+ * @author ainhoa y lorea
+ *
+ */
 public class Ejemplar extends Libro {
 	
 	private int codEjem;

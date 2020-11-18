@@ -26,6 +26,9 @@ import servicios.ProductoUsuario;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 
+/**
+ * Esta es la clase que gestiona todo lo relativo a sqlite
+ */
 
 public class GestionBD {
 	
@@ -45,6 +48,10 @@ public class GestionBD {
 	private ArrayList<EjemplarLibro>ejemplaresTotales;
 	private ArrayList<MultasPersona>todasMultas;
 	
+	
+	/**
+	 * Este es el constructior de la clase
+	 */
 	public GestionBD(String nombreFichero) {
 		this.nombreFichero = nombreFichero;
 		this.url = "jdbc:sqlite:" + nombreFichero;

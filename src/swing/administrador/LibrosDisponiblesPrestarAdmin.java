@@ -25,6 +25,10 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * En esta clase aparecen los ejemplares del título que se ha seleccionado en la ventana anterior
+ * @author Ainhoa y Lorea
+ */
 public class LibrosDisponiblesPrestarAdmin extends JFrame {
 
 	private JPanel contentPane;
@@ -32,15 +36,15 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 	private Producto producto;
 	private DefaultListModel dfmEjemplares;
 	private JList list;
-
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	
-
 	/**
-	 * Create the frame.
+	 * Crear el frame
 	 * @param producto 
+	 * @param persona
+	 * @param libro
 	 */
 	public LibrosDisponiblesPrestarAdmin(Persona persona, String libro) {
 		this.usuario=usuario;

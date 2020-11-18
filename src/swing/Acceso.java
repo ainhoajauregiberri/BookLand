@@ -24,6 +24,12 @@ import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
+/**
+ * Esta es la clase acceso que será la primera ventana de nuestro programa
+ * en la que la persona introducirá su nombre de usuario y su contraseña
+ * @author Ainhoa y Lorea
+ */
+
 public class Acceso extends JFrame {
 
 	private JPanel contentPane;
@@ -32,7 +38,7 @@ public class Acceso extends JFrame {
 	private HashMap <String,Persona>personas;
 
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -48,7 +54,7 @@ public class Acceso extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Este es el constructor para crear el frame
 	 */
 	public Acceso() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,8 +87,14 @@ public class Acceso extends JFrame {
 		panel_1.add(lblContrasenya);
 		
 		
+		
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
+			/**
+			 * Al clicar en el botón entrar se ejecuta este método
+			 * Entra a la ventana VentanaUsuario si la persona es usuario y entra 
+			 * en VentanaAdministrador si es administrador
+			 */
 			public void actionPerformed(ActionEvent e) {
 				String usuario=textFieldUsuario.getText();
 				String contrasenya=String.valueOf(passFieldContrasenya.getPassword());

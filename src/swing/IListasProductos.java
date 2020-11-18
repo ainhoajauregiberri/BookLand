@@ -13,6 +13,12 @@ import productos.libros.Genero;
 import servicios.MultasPersona;
 import sqlite.GestionBD;
 
+/**
+ * Esta es la interfaz que tiene los métodos que acceden a la clase GestionBD para
+ * obtener datos de la base de datos, procesa los datos y los prepara para que luego
+ * las diferentes ventanas puedan acceder a ellos
+ * @author Ainhoa y Lorea
+ */
 public interface IListasProductos {
 
 	public static DefaultListModel<Genero> cargarListaGenero() {

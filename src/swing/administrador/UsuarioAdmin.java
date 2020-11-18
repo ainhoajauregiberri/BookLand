@@ -22,6 +22,13 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * Esta es la clase a la que se accede si el administrador elige la opción devolverlibro
+ * o prestar libro. El administrador seleccionará el usuario en el que tiene que hacer 
+ * los cambios.
+ * @author Ainhoa y Lorea
+ */
+
 public class UsuarioAdmin extends JFrame {
 	private JPanel contentPane;
 	private static boolean prestar;

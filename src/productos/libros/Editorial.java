@@ -1,5 +1,11 @@
 package productos.libros;
 
+/**
+ * Clase que representa a las editoriales de los libros que están en la biblioteca.
+ * @author ainhoa y lorea
+ *
+ */
+
 public class Editorial {
 
 	private String nomEditorial;

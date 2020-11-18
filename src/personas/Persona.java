@@ -56,6 +56,13 @@ public class Persona {
 		this.fecNac = fecNac;
 		this.sexo = sexo;
 	}
+	
+	
+	/**
+	 *En este método se devulve el usuario como String. Cuando pidamos al programa
+	 *que nos muestre una persona en una lista aparecerá su nombre de usuario
+	 *@return el String del usuario de la persona
+	 */
 	@Override
 	public String toString() {
 		return usuario ;

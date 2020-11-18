@@ -24,6 +24,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
+/**
+ * En esta clase apareceran los ejemplares del titulo que le pasemos
+ * @author Ainhoa y Lorea
+ */
 public class LibrosDisponiblesDevolverAdmin extends JFrame {
 
 	private JPanel contentPane;
@@ -33,16 +37,16 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 	private DefaultListModel dfmEjemplares;
 	private JList list;
 	
-
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 
 
 	/**
-	 * Create the frame.
-	 * @param producto 
-	 * @param usuario 
+	 * Crear el frame
+	 * @param persona
+	 * @paran titulo
+	 * @param administrador
 	 */
 	public LibrosDisponiblesDevolverAdmin(Persona persona, String titulo, Persona administrador) {
 		this.persona=persona;

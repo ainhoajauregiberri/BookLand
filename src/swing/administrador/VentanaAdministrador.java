@@ -14,11 +14,17 @@ import java.awt.event.ActionListener;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
+/**
+ * Esta es la clase a la que accederán los administradores después de meter su nombre
+ * de usuario y contraseña correctos
+ * @author Ainhoa y Lorea
+ */
+
 public class VentanaAdministrador extends JFrame{
 	private JPanel contentPane;
 	private static Persona persona;
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -32,6 +38,9 @@ public class VentanaAdministrador extends JFrame{
 			}
 		});
 	}
+	/**
+	 * Este es el constructor para crear el frame
+	 */
 	public VentanaAdministrador(Persona persona) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +52,7 @@ public class VentanaAdministrador extends JFrame{
 		this.persona=persona;
 		
 		JButton btnPrestarLibro = new JButton("Prestar productos");
-		btnPrestarLibro.setBounds(36, 72, 161, 29);
+		btnPrestarLibro.setBounds(36, 72, 167, 29);
 		btnPrestarLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(true,persona);
@@ -55,7 +64,7 @@ public class VentanaAdministrador extends JFrame{
 		getContentPane().add(btnPrestarLibro);
 		
 		JButton btnDevolverLibro = new JButton("Devolver producto");
-		btnDevolverLibro.setBounds(36, 133, 161, 29);
+		btnDevolverLibro.setBounds(36, 133, 167, 29);
 		btnDevolverLibro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsuarioAdmin usuarioAdmin=new UsuarioAdmin(false,persona);

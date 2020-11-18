@@ -15,13 +15,20 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/**
+ * Esta es la clase ventana usuario que será la primera pestaña que vea el usuario
+ * después de haber introducido su usuario y contraseña correctos. Esta ventana lleva a
+ * otras dos ventanas, BuscarLibros y LibrosDisponibles.
+ * @author Ainhoa y Lorea
+ */
 public class VentanaUsuario extends JFrame {
 
 	private JPanel contentPane;
 	private static Persona persona;
 
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -37,7 +44,7 @@ public class VentanaUsuario extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Este es el constructor para crear el frame
 	 */
 	public VentanaUsuario(Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

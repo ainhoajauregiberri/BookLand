@@ -22,6 +22,10 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
+/**
+ * Esta es la ventana en la que aparecen los productos prestados que tiene el usuario
+ * @author Ainhoa y Lorea
+ */
 
 public class ProductosPrestados extends JFrame {
 	private JPanel contentPane;
@@ -30,7 +34,7 @@ public class ProductosPrestados extends JFrame {
 	private JList list;
 
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicación
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,6 +48,9 @@ public class ProductosPrestados extends JFrame {
 			}
 		});
 	}
+	/**
+	 * Este es el constructor para crear el frame
+	 */
 	public ProductosPrestados(Persona persona) {
 		dfmTitulos=new DefaultListModel<String>();
 		getContentPane().setLayout(null);
@@ -82,7 +89,7 @@ public class ProductosPrestados extends JFrame {
 		
 		
 		JLabel lblProductosPrestados = new JLabel("Productos prestados");
-		lblProductosPrestados.setBounds(157, 57, 141, 38);
+		lblProductosPrestados.setBounds(130, 59, 176, 38);
 		getContentPane().add(lblProductosPrestados);
 		
 		JButton button = new JButton("Inicio");
