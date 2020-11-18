@@ -20,7 +20,7 @@ import productos.libros.Genero;
 import servicios.MultasPersona;
 import sqlite.GestionBD;
 
-public class TestUsuario {
+public class UsuarioTest {
 	
 	private Usuario usuario;
 
@@ -43,7 +43,7 @@ public class TestUsuario {
 		assertEquals(30,0, usuario.getDinero());
 		
 		//Beste aukera bat
-		//if((30.0).equals(usuarios.getDinero())){
+		//if((30.0==usuarios.getDinero())){
 		//assertTrue(true);
 	//}
 		
