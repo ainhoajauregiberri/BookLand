@@ -23,8 +23,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * Esta es la clase a la que se accede si el administrador elige la opci�n devolverlibro
- * o prestar libro. El administrador seleccionar� el usuario en el que tiene que hacer 
+ * Esta es la clase a la que se accede si el administrador elige la opcion devolverlibro
+ * o prestar libro. El administrador seleccionar el usuario en el que tiene que hacer 
  * los cambios.
  * @author Ainhoa y Lorea
  */
@@ -35,6 +35,7 @@ public class UsuarioAdmin extends JFrame {
 	private static Persona persona;
 	private DefaultListModel dfmUsuarios;
 	private JList list;
+	private DefaultListModel dfmTitulos;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,6 +60,7 @@ public class UsuarioAdmin extends JFrame {
 		this.prestar=prestar;
 		this.persona=persona;
 		this.dfmUsuarios=new DefaultListModel<Persona>();
+		this.dfmTitulos=new DefaultListModel<String>();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(172, 58, 200, 110);
@@ -100,14 +102,15 @@ public class UsuarioAdmin extends JFrame {
 					}else{
 						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario tiene una multa, no puede prestar libros");
 					}
-				}else{
-					ArrayList<String>productosPrestados=new ArrayList<String>();
-					productosPrestados=bd.obtenerProductosUsuario(p);
-					if(!(productosPrestados.isEmpty())) {
+				}
+				if(!prestar){
+					dfmTitulos=IListasProductos.cargarListaProductos(p);
+					if(!dfmTitulos.isEmpty()) {
 						DevolverLibro devolverLibro=new DevolverLibro(p,persona);
 						devolverLibro.setVisible(true);
 						UsuarioAdmin.this.dispose();
-					}else {
+					}
+					else {
 						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario no tiene ningun libro que devolver");
 						}
 					}

@@ -674,7 +674,6 @@ public class GestionBD {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(productosUsuario);
 		cerrarConexion(conn);
 		return productosUsuario;
 	 }

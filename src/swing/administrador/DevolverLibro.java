@@ -21,9 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 /**
- * El administrador puede devolver un libro de un usuario. Esta clase se usar� cuando
- * un usuario vaya a la biblioteca a devovler un libro. El administrador acceder� 
- * al programa en ese momento y marcar� que el libro ha sido devuelto.
+ * El administrador puede devolver un libro de un usuario. Esta clase se usara cuando
+ * un usuario vaya a la biblioteca a devovler un libro. El administrador accedera 
+ * al programa en ese momento y marcara que el libro ha sido devuelto.
  * @author Ainhoa y Lorea
  */
 public class DevolverLibro extends JFrame {

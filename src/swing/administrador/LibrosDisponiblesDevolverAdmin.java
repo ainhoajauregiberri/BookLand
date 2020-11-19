@@ -38,7 +38,7 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 	private JList list;
 	
 	/**
-	 * Este es el main para lanzar la aplicaci�n
+	 * Este es el main para lanzar la aplicacion
 	 */
 
 

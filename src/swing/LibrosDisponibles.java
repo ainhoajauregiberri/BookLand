@@ -21,8 +21,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * Esta es la clase LibrosDisponibles que será la ventana que se abrirá si el usuario 
- * selecciona un título de un libro. Aquí aparecerán todos los ejemplares disponibles 
+ * Esta es la clase LibrosDisponibles que sera la ventana que se abrira si el usuario 
+ * selecciona un titulo de un libro. Aqui apareceran todos los ejemplares disponibles 
  * que hay de ese libro
  * @author Ainhoa y Lorea
  */
@@ -37,7 +37,7 @@ public class LibrosDisponibles extends JFrame implements IListasProductos {
 
 
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicaciï¿½n
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

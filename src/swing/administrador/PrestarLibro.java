@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 
 /**
  * Esta es la clase acceso para que el administrador pueda registrar que un usuario se 
- * ha llevado un libro de la biblioteca. En esta ventana le aparecer�n los t�tulos de los
+ * ha llevado un libro de la biblioteca. En esta ventana le apareceran los titulos de los
  * libros que hay actualmente
  * @author Ainhoa y Lorea
  */

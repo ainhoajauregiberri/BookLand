@@ -26,8 +26,8 @@ import productos.libros.Genero;
 import javax.swing.event.ListSelectionEvent;
 
 /**
- * Esta es la clase buscarLibros que será la clase a la que accederá el usuario si selecciona
- * la opcion buscarlibros. Podrá buscar libros por genero, por autor o por título directamente
+ * Esta es la clase buscarLibros que sera la clase a la que accedera el usuario si selecciona
+ * la opcion buscarlibros. Podra buscar libros por genero, por autor o por titulo directamente
  * @author Ainhoa y Lorea
  */
 
@@ -40,7 +40,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 	private static Persona persona;
 
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicacion
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

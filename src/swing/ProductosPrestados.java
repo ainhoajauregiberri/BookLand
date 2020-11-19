@@ -34,7 +34,7 @@ public class ProductosPrestados extends JFrame {
 	private JList list;
 
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicacion
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

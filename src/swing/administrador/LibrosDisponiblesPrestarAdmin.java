@@ -26,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * En esta clase aparecen los ejemplares del t�tulo que se ha seleccionado en la ventana anterior
+ * En esta clase aparecen los ejemplares del titulo que se ha seleccionado en la ventana anterior
  * @author Ainhoa y Lorea
  */
 public class LibrosDisponiblesPrestarAdmin extends JFrame {
@@ -38,7 +38,7 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 	private DefaultListModel dfmEjemplares;
 	private JList list;
 	/**
-	 * Este es el main para lanzar la aplicaci�n
+	 * Este es el main para lanzar la aplicacion
 	 */
 	
 	/**

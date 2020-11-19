@@ -1,8 +1,8 @@
 package productos.libros;
 
 /**
- * Esta es la clase de los autores de los libros que está en la biblioteca
- * En ella aparecen los atributos que tienen en común las clases
+ * Esta es la clase de los autores de los libros que esta en la biblioteca
+ * En ella aparecen los atributos que tienen en comun las clases
  * @author ainhoa y lorea
  *
  */

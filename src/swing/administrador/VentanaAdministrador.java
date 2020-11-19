@@ -15,8 +15,8 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
 /**
- * Esta es la clase a la que accederán los administradores después de meter su nombre
- * de usuario y contraseña correctos
+ * Esta es la clase a la que accederan los administradores despues de meter su nombre
+ * de usuario y contrasenya correctos
  * @author Ainhoa y Lorea
  */
 
@@ -24,7 +24,7 @@ public class VentanaAdministrador extends JFrame{
 	private JPanel contentPane;
 	private static Persona persona;
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicacion
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

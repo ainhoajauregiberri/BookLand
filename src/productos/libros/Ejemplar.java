@@ -3,8 +3,8 @@ import productos.Libro;
 import servicios.ProductoUsuario;
 
 /**
- * Clase que representa a los ejemplares. Puede haber más de un ejemplar del mismo libro,
- * pero con distinta editorial o edición.
+ * Clase que representa a los ejemplares. Puede haber mas de un ejemplar del mismo libro,
+ * pero con distinta editorial o edicion.
  * @author ainhoa y lorea
  *
  */

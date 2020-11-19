@@ -17,8 +17,8 @@ import java.awt.event.ActionEvent;
 
 
 /**
- * Esta es la clase ventana usuario que será la primera pestaña que vea el usuario
- * después de haber introducido su usuario y contraseña correctos. Esta ventana lleva a
+ * Esta es la clase ventana usuario que sera la primera pestanyaa que vea el usuario
+ * despues de haber introducido su usuario y contrasenya correctos. Esta ventana lleva a
  * otras dos ventanas, BuscarLibros y LibrosDisponibles.
  * @author Ainhoa y Lorea
  */
@@ -28,7 +28,7 @@ public class VentanaUsuario extends JFrame {
 	private static Persona persona;
 
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicaciï¿½n
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

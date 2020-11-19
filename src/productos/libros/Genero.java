@@ -1,7 +1,7 @@
 package productos.libros;
 
 /**
- * Clase que representa los géneros de los libros de la biblioteca.
+ * Clase que representa los generos de los libros de la biblioteca.
  * @author ainhoa y lorea
  *
  */

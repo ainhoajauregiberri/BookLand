@@ -17,8 +17,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 /**
- * En esta ventana aparecerá la lista de los usuarios que tienen multas por retrasar
- * la devolución del producto. Aparecerá el nombre del usuario y el ejemplar retrasado.
+ * En esta ventana aparecera la lista de los usuarios que tienen multas por retrasar
+ * la devolucion del producto. Aparecera el nombre del usuario y el ejemplar retrasado.
  * @author Ainhoa y Lorea
  */
 public class MirarMultas extends JFrame {
