@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
+import sqlite.GestionBD;
 import swing.IListasProductos;
 import swing.ProductosPrestados;
 
@@ -24,18 +25,20 @@ import javax.swing.JScrollPane;
 
 /**
  * Esta es la clase acceso para que el administrador pueda registrar que un usuario se 
- * ha llevado un libro de la biblioteca. En esta ventana le aparecerán los títulos de los
+ * ha llevado un libro de la biblioteca. En esta ventana le aparecerï¿½n los tï¿½tulos de los
  * libros que hay actualmente
  * @author Ainhoa y Lorea
  */
 public class PrestarLibro extends JFrame {
 	private JPanel contentPane;
-	private Usuario usuario;
+	private Persona persona;
+	private Persona p;
 	private DefaultListModel titulosLibros;
 	private JList list;
 	
-	public PrestarLibro(Persona persona) {
-		this.usuario=usuario;
+	public PrestarLibro(Persona persona,Persona p) {
+		this.persona=persona;
+		this.p=p;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 348);
 		contentPane = new JPanel();
@@ -67,13 +70,20 @@ public class PrestarLibro extends JFrame {
 		lblPrestarLibro.setBounds(166, 57, 86, 20);
 		getContentPane().add(lblPrestarLibro);
 		
+		
+		GestionBD bd=new GestionBD("BookLand.db");
 		JButton btnPrestar = new JButton("Buscar");
 		btnPrestar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String libro =(String) list.getSelectedValue();
-				LibrosDisponiblesPrestarAdmin v =new LibrosDisponiblesPrestarAdmin(persona, libro);
-				v.setVisible(true);
-				PrestarLibro.this.dispose();
+				if(bd.libroDisponible(bd.obtenerCodigoEjemplares(libro), bd.obtenerCodigoEjemplaresDisponiblesTotales())) {
+					LibrosDisponiblesPrestarAdmin v =new LibrosDisponiblesPrestarAdmin(persona, libro,p);
+					v.setVisible(true);
+					PrestarLibro.this.dispose();
+				}else {
+					JOptionPane.showMessageDialog(PrestarLibro.this, "No tenemos ningun ejemplar disponible en este momento");
+				}
+				
 				
 			}
 		});

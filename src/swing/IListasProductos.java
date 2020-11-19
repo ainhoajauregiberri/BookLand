@@ -14,7 +14,7 @@ import servicios.MultasPersona;
 import sqlite.GestionBD;
 
 /**
- * Esta es la interfaz que tiene los métodos que acceden a la clase GestionBD para
+ * Esta es la interfaz que tiene los mï¿½todos que acceden a la clase GestionBD para
  * obtener datos de la base de datos, procesa los datos y los prepara para que luego
  * las diferentes ventanas puedan acceder a ellos
  * @author Ainhoa y Lorea
@@ -134,6 +134,16 @@ public interface IListasProductos {
 		
 		return multas;
 	}
-	
+	public static DefaultListModel<Integer>cargarListaEjemplaresDisponibles(String titulo){
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<Integer>ejemplaresDisponibles=bd.obtenerEjemplaresDisponibles(bd.obtenerCodigoEjemplares(titulo),bd.obtenerCodigoEjemplaresDisponiblesTotales());
+		DefaultListModel<Integer>titulosEjemplaresDisponibles=new DefaultListModel<Integer>();
+			for(int i=0;i<ejemplaresDisponibles.size();i++){
+				int tituloEjemplarDisponible=ejemplaresDisponibles.get(i);
+				titulosEjemplaresDisponibles.addElement(tituloEjemplarDisponible);
+			}
+		
+		return titulosEjemplaresDisponibles;
+	}
 	
 }

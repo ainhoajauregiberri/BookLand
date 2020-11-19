@@ -23,8 +23,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * Esta es la clase a la que se accede si el administrador elige la opción devolverlibro
- * o prestar libro. El administrador seleccionará el usuario en el que tiene que hacer 
+ * Esta es la clase a la que se accede si el administrador elige la opciï¿½n devolverlibro
+ * o prestar libro. El administrador seleccionarï¿½ el usuario en el que tiene que hacer 
  * los cambios.
  * @author Ainhoa y Lorea
  */
@@ -72,7 +72,7 @@ public class UsuarioAdmin extends JFrame {
 		JButton button = new JButton("Volver");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdministrador ventanaAdministrador=new VentanaAdministrador(UsuarioAdmin.persona);
+				VentanaAdministrador ventanaAdministrador=new VentanaAdministrador(persona);
 				ventanaAdministrador.setVisible(true);
 				UsuarioAdmin.this.dispose();
 			}
@@ -94,9 +94,9 @@ public class UsuarioAdmin extends JFrame {
 				if (prestar) {
 					boolean puedePrestar = bd.puedePrestar(p);
 					if (puedePrestar){
-					PrestarLibro prestarLibro=new PrestarLibro(persona);
-					prestarLibro.setVisible(true);
-					UsuarioAdmin.this.dispose();
+						PrestarLibro prestarLibro=new PrestarLibro(persona,p);
+						prestarLibro.setVisible(true);
+						UsuarioAdmin.this.dispose();
 					}else{
 						JOptionPane.showMessageDialog(UsuarioAdmin.this, "El usuario tiene una multa, no puede prestar libros");
 					}

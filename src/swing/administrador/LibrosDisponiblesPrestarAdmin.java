@@ -26,18 +26,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * En esta clase aparecen los ejemplares del título que se ha seleccionado en la ventana anterior
+ * En esta clase aparecen los ejemplares del tï¿½tulo que se ha seleccionado en la ventana anterior
  * @author Ainhoa y Lorea
  */
 public class LibrosDisponiblesPrestarAdmin extends JFrame {
 
 	private JPanel contentPane;
-	private Usuario usuario;
-	private Producto producto;
+	private Persona persona;
+	private Persona p;
+	private String libro;
 	private DefaultListModel dfmEjemplares;
 	private JList list;
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicaciï¿½n
 	 */
 	
 	/**
@@ -46,15 +47,17 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 	 * @param persona
 	 * @param libro
 	 */
-	public LibrosDisponiblesPrestarAdmin(Persona persona, String libro) {
-		this.usuario=usuario;
-		this.producto=producto;
+	public LibrosDisponiblesPrestarAdmin(Persona persona, String libro,Persona p) {
+		this.persona=persona;
+		this.p=p;
+		this.libro=libro;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 320);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		dfmEjemplares=new DefaultListModel<Integer>();
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(50, 87, 335, 118);
@@ -68,7 +71,7 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					PrestarLibro v = new PrestarLibro(usuario);
+					PrestarLibro v = new PrestarLibro(persona,p);
 					v.setVisible(true);
 					LibrosDisponiblesPrestarAdmin.this.dispose();
 			}
@@ -76,7 +79,7 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 		btnVolver.setBounds(15, 16, 85, 29);
 		contentPane.add(btnVolver);
 		
-		JLabel lblEjemplaresPrestados = new JLabel("Ejemplares prestados");
+		JLabel lblEjemplaresPrestados = new JLabel("Prestar");
 		lblEjemplaresPrestados.setBounds(130, 51, 178, 20);
 		contentPane.add(lblEjemplaresPrestados);
 		
@@ -86,11 +89,11 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 		
 		GestionBD bd=new GestionBD("BookLand.db");
 		
-		JButton btnDevolver = new JButton("Devolver");
+		JButton btnDevolver = new JButton("Prestar");
 		btnDevolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EjemplarLibro ejemplarLibro=(EjemplarLibro)list.getSelectedValue();
-				bd.prestarLibro(ejemplarLibro, persona);
+				int ejemplarLibro=(int)list.getSelectedValue();
+				bd.prestarLibro(ejemplarLibro, p);
 				JOptionPane.showMessageDialog(LibrosDisponiblesPrestarAdmin.this, "El libro ha sido prestado");
 			}
 		});
@@ -100,7 +103,7 @@ public class LibrosDisponiblesPrestarAdmin extends JFrame {
 		
 	}
 	public void cargarListaEjemplares(String libro) {
-		dfmEjemplares=IListasProductos.cargarListaEjemplaresTotales(libro);
+		dfmEjemplares=IListasProductos.cargarListaEjemplaresDisponibles(libro);
 		this.list.setModel(dfmEjemplares);
 	}
 

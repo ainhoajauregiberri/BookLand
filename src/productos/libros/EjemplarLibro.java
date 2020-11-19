@@ -2,8 +2,8 @@ package productos.libros;
 
 
 /**
- * Clase que relaciona el código de un ejemplar y el título. Es una clase que creamos 
- * para poder insertar ciertos métodos.
+ * Clase que relaciona el codigo de un ejemplar y el titulo. Es una clase que creamos 
+ * para poder insertar ciertos metodos.
  * @author ainhoa y lorea
  *
  */
@@ -36,7 +36,7 @@ public class EjemplarLibro {
 
 	
 	/**
-	 * Método que devulve el título como String, lo usaremos para sacarlo en una lista
+	 * Mï¿½todo que devulve el tï¿½tulo como String, lo usaremos para sacarlo en una lista
 	 * @return titulo del ejemplar
 	 *
 	 */

@@ -38,7 +38,7 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 	private JList list;
 	
 	/**
-	 * Este es el main para lanzar la aplicación
+	 * Este es el main para lanzar la aplicaciï¿½n
 	 */
 
 
@@ -82,7 +82,7 @@ public class LibrosDisponiblesDevolverAdmin extends JFrame {
 		lblLibrosPrestados.setBounds(149, 52, 130, 20);
 		contentPane.add(lblLibrosPrestados);
 		
-		GestionBD bd=new GestionBD("BookLand");
+		GestionBD bd=new GestionBD("BookLand.db");
 		JButton button_1 = new JButton("Devolver");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

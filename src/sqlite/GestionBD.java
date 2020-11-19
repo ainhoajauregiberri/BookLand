@@ -22,6 +22,7 @@ import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
 import servicios.MultasPersona;
 import servicios.ProductoUsuario;
+import swing.LibrosDisponibles;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -220,7 +221,8 @@ public class GestionBD {
 		return codPers;
 	 }
 	 
-	 public void prestarLibro(EjemplarLibro ejemplarLibro, Persona persona){
+	 
+	 public void prestarLibro(int ejemplarLibro, Persona persona){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
 		 String fecFin;
@@ -236,7 +238,7 @@ public class GestionBD {
 		 
 		 try {
 			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
-			pstmt.setInt(2, ejemplarLibro.getCodEjem());
+			pstmt.setInt(2, ejemplarLibro);
 			
 			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 			Date fecIni = new Date(System.currentTimeMillis());
@@ -479,6 +481,85 @@ public class GestionBD {
 		 return autores;
 	 }
 	 
+	 public ArrayList<Integer> obtenerCodigoEjemplares(String titulo){
+		 ArrayList<Integer>codEjemplares=new ArrayList<Integer>();
+		 establecerConexion();
+		 PreparedStatement pstmt = null;
+		 ResultSet rs= null;
+		 String sql="SELECT codEjem FROM Ejemplar WHERE codPro IN(SELECT codPro from Producto WHERE titulo=?)";
+		 try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, titulo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				codEjemplares.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return codEjemplares;
+	 }
+	 
+	 public ArrayList<Integer> obtenerCodigoEjemplaresDisponiblesTotales(){
+		ArrayList<Integer>codEjemplaresDisponibles=new ArrayList<Integer>();
+		establecerConexion();
+		PreparedStatement pstmt= null;
+		String sql="SELECT codEjem FROM ProductoUsuario WHERE prestado=?";
+		ResultSet rs=null;
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setBoolean(1, true);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				codEjemplaresDisponibles.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 cerrarConexion(conn);
+		 return codEjemplaresDisponibles;
+	 }
+	 
+	 public boolean libroDisponible(ArrayList<Integer>todosLosEjemplares,ArrayList<Integer>ejemplaresNoDisponibles) {
+		 boolean libroDisponible=true;
+		 int numerosRepetidos=0;
+		 for(int i=0;i<=todosLosEjemplares.size()-1;i++) {
+			 for(int j=0;j<=ejemplaresNoDisponibles.size()-1;j++) {
+				 if(todosLosEjemplares.get(i)==ejemplaresNoDisponibles.get(j)) {
+					numerosRepetidos+=1;
+					 break;
+				 }
+			 }
+		 }
+		 if(todosLosEjemplares.size()==numerosRepetidos) {
+			 libroDisponible=false;
+		 }
+		 
+		 return libroDisponible;
+	 }
+	 public ArrayList<Integer>obtenerEjemplaresDisponibles(ArrayList<Integer>todosLosEjemplares,ArrayList<Integer>ejemplaresNoDisponibles){
+		ArrayList<Integer>ejemplaresDisponibles=new ArrayList<Integer>();
+		boolean disponible=true;
+		 for(int i=0;i<=todosLosEjemplares.size()-1;i++) {
+			 for(int j=0;j<=ejemplaresNoDisponibles.size()-1;j++) {
+				 if(todosLosEjemplares.get(i)==ejemplaresNoDisponibles.get(j)) {
+					 disponible=false;
+				 }
+				 if(j==todosLosEjemplares.size()-1) {
+					 if(disponible) {
+						 ejemplaresDisponibles.add(todosLosEjemplares.get(i));
+					 }
+					 disponible=true;
+				 }
+			 }
+		 }
+		 return ejemplaresDisponibles;
+	 }
+	 
+	 
 	 public ArrayList<String> obtenerEjemplares(String titulo){
 		 establecerConexion();
 		 PreparedStatement pstmt=null;
@@ -537,6 +618,9 @@ public class GestionBD {
 		 return ejemplaresTotales;
 	 }
 	 
+	 
+	 
+	 
 	 public int codigoMaximo() {
 		 int max=0;
 		 establecerConexion();
@@ -566,7 +650,7 @@ public class GestionBD {
 	 public ArrayList<String> obtenerProductosUsuario(Persona persona){
 		establecerConexion();
 		PreparedStatement pstmt=null;
-		String sql="SELECT titulo FROM Producto WHERE codPro IN (SELECT codPro FROM Ejemplar WHERE codEjem IN(SELECT codEjem FROM ProductoUsuario WHERE codPers=? AND prestado))";
+		String sql="SELECT titulo FROM Producto WHERE codPro IN (SELECT codPro FROM Ejemplar WHERE codEjem IN(SELECT codEjem FROM ProductoUsuario WHERE codPers=? AND prestado=?))";
 		try {
 			pstmt=conn.prepareStatement(sql);
 		} catch (SQLException e) {
@@ -575,6 +659,7 @@ public class GestionBD {
 		}
 		try {
 			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+			pstmt.setBoolean(2, true);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -582,14 +667,16 @@ public class GestionBD {
 		try {
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
+				System.out.println(rs.getString(1));
 				productosUsuario.add(rs.getString(1));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(productosUsuario);
 		cerrarConexion(conn);
-		 return productosUsuario;
+		return productosUsuario;
 	 }
 	 
 	 public ArrayList<Persona> devolverUsuarios(){
@@ -1485,7 +1572,9 @@ public class GestionBD {
 public static void main (String [ ] args) {
 	
 	GestionBD bd1=new GestionBD("BookLand.db");
-	bd1.createDB();
+	
+	
+	
 
 	
 	
