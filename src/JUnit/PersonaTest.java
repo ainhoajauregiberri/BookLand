@@ -27,8 +27,30 @@ public class PersonaTest {
 	}
 
 	@Test
-	public void testComprobarUsuario() {
+	public void getNombreTest() {
 		assertEquals(persona.getNombre(), "lourdes");
+	}
+	
+	@Test
+	public void setNombreTest() {
+		persona.setNombre("Miren");
+		assertEquals(persona.getNombre(), "Miren");
+	}
+	
+	@Test
+	public void getUsuarioTest() {
+		assertEquals(persona.getUsuario(), "lourdes10");
+	}
+	
+	@Test
+	public void setUsuarioTest() {
+		persona.setUsuario("miren10");
+		assertEquals(persona.getUsuario(), "miren10");
+	}
+	
+	@Test
+	public void toStringTest() {
+		assertEquals(persona.toString(), "lourdes10");
 	}
 
 }
