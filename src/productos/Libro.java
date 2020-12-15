@@ -21,9 +21,9 @@ public class Libro extends Producto {
 		this.edadRecLibro = edadRecLibro;
 	}
 
-	public Libro(boolean disponible, String tiutlo, Autor autor, Genero genero, ProductoUsuario usuario,
+	public Libro(boolean disponible, String titulo, Autor autor, Genero genero, ProductoUsuario usuario,
 			int edadRecLibro) {
-		super(disponible, tiutlo, autor, genero, usuario);
+		super(disponible, titulo, autor, genero, usuario);
 		this.edadRecLibro = edadRecLibro;
 	}
 

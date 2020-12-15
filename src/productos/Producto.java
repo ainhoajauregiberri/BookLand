@@ -17,10 +17,9 @@ public abstract class Producto {
 	private ProductoUsuario usuario;
 	
 	
-	public Producto(boolean disponible, String tiutlo, Autor autor, Genero genero, ProductoUsuario usuario) {
-		super();
+	public Producto(boolean disponible, String titulo, Autor autor, Genero genero, ProductoUsuario usuario) {
 		this.disponible = disponible;
-		this.titulo = tiutlo;
+		this.titulo = titulo;
 		this.autor = autor;
 		this.genero = genero;
 		this.usuario = usuario;
@@ -35,12 +34,12 @@ public abstract class Producto {
 		this.disponible = disponible;
 	}
 
-	public String getTiutlo() {
+	public String getTitulo() {
 		return titulo;
 	}
 
-	public void setTiutlo(String tiutlo) {
-		this.titulo = tiutlo;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public Autor getAutor() {

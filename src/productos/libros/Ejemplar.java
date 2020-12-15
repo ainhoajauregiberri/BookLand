@@ -32,14 +32,14 @@ public class Ejemplar extends Libro {
 	public int getEdicion() {
 		return edicion;
 	}
+	public void setEdicion(int edicion) {
+		this.edicion = edicion;
+	}
 	public void setLibro(Libro libro) {
 		this.libro = libro;
 	}
 	public Libro getLibro() {
 		return libro;
-	}
-	public void setEdicion(int edicion) {
-		this.edicion = edicion;
 	}
 	public Idioma getIdioma() {
 		return idioma;
