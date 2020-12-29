@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import personas.Persona;
 import premios.EditorialLibros;
 import premios.IPremios;
 import premios.MergeSortGenerico;
@@ -27,6 +28,9 @@ public class Ranking extends JFrame implements IPremios {
 
 	private JPanel contentPane;
 	private PersonaPagina[] personasPaginas;
+	private PersonaPaginaEuskera[] personasPaginasEuskera;
+	private EditorialLibros[] editorialLibros;
+	private static Persona persona;
 
 	/**
 	 * Launch the application.
@@ -35,7 +39,7 @@ public class Ranking extends JFrame implements IPremios {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ranking frame = new Ranking();
+					Ranking frame = new Ranking(Ranking.persona);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,13 +51,14 @@ public class Ranking extends JFrame implements IPremios {
 	/**
 	 * Create the frame.
 	 */
-	public Ranking() {
+	public Ranking(Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.persona=persona;
 		
 		JLabel lblGanador = new JLabel("");
 		lblGanador.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,7 +81,7 @@ public class Ranking extends JFrame implements IPremios {
 		JButton btnMejorLector = new JButton("Mejor lector");
 		btnMejorLector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PersonaPagina[]personasPaginas=IPremios.cargarPersonasPaginas();
+				personasPaginas=IPremios.cargarPersonasPaginas();
 				MergeSortGenerico ms = new MergeSortGenerico<PersonaPagina>();
 				ms.mergeSort(personasPaginas, 0, personasPaginas.length-1);
 				String nombreUsuario=personasPaginas[0].getPersona().getUsuario();
@@ -91,7 +96,7 @@ public class Ranking extends JFrame implements IPremios {
 		JButton btnMejorVasco = new JButton("Euskal saria");
 		btnMejorVasco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PersonaPaginaEuskera[]personasPaginasEuskera=IPremios.cargarPersonasPaginasEuskera();
+				personasPaginasEuskera=IPremios.cargarPersonasPaginasEuskera();
 				MergeSortGenerico ms = new MergeSortGenerico<PersonaPaginaEuskera>();
 				ms.mergeSort(personasPaginasEuskera, 0, personasPaginasEuskera.length-1);
 				String nombreUsuarioEuskaldun=personasPaginasEuskera[0].getPersona().getUsuario();
@@ -105,7 +110,7 @@ public class Ranking extends JFrame implements IPremios {
 		JButton btnResponsable = new JButton("Mejor editorial");
 		btnResponsable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditorialLibros[]editorialLibros=IPremios.cargarEditorialLibros();
+				editorialLibros=IPremios.cargarEditorialLibros();
 				MergeSortGenerico ms = new MergeSortGenerico<EditorialLibros>();
 				ms.mergeSort(editorialLibros, 0, editorialLibros.length-1);
 				String nombreEditorial=editorialLibros[0].getEditorial().getNomEditorial();
@@ -115,6 +120,17 @@ public class Ranking extends JFrame implements IPremios {
 		});
 		btnResponsable.setBounds(301, 66, 117, 29);
 		contentPane.add(btnResponsable);
+		
+		JButton button = new JButton("Volver");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdministrador v = new VentanaAdministrador(persona);
+				v.setVisible(true);
+				Ranking.this.dispose();
+			}
+		});
+		button.setBounds(15, 11, 78, 29);
+		contentPane.add(button);
 		
 		
 		

@@ -110,7 +110,7 @@ public class VentanaAdministrador extends JFrame{
 		JButton btnNewButton = new JButton("Premios");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Ranking v = new Ranking();
+				Ranking v = new Ranking(persona);
 				v.setVisible(true);
 				VentanaAdministrador.this.dispose();
 			}
