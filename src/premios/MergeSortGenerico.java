@@ -1,6 +1,8 @@
 package premios;
 
-public class MergeSortGenerico<T extends Comparable<? super T>> {
+import java.util.Comparator;
+
+public class MergeSortGenerico<T extends Comparator<? super T>> {
 
 	public void mergeSort(T[]array, int inicio, int fin) {
 		if(inicio<fin) {
@@ -12,8 +14,8 @@ public class MergeSortGenerico<T extends Comparable<? super T>> {
 	}
 	
 	public void merge(T[]array, int inicio, int mitadArray, int fin) {
-		T[] arrayIzquierda = (T[]) new Comparable[mitadArray-inicio+1];
-		T[] arrayDerecha = (T[]) new Comparable[fin-mitadArray];
+		T[] arrayIzquierda = (T[]) new Comparator[mitadArray-inicio+1];
+		T[] arrayDerecha = (T[]) new Comparator[fin-mitadArray];
 		
 		for (int i = 0; i < arrayIzquierda.length; i++) {
 			arrayIzquierda[i] = array[inicio + i];
@@ -27,7 +29,7 @@ public class MergeSortGenerico<T extends Comparable<? super T>> {
 		int valorActual = inicio;
 		
 		while(valorIzquierda < arrayIzquierda.length && valorDerecha < arrayDerecha.length) {
-			if(arrayIzquierda[valorIzquierda].compareTo(arrayDerecha[valorDerecha])<= 0) {
+			if(compare(arrayIzquierda[valorIzquierda],arrayDerecha[valorDerecha])<= 0) {
 				array[valorActual] = arrayIzquierda[valorIzquierda];
 				valorIzquierda++;
 			}else {
@@ -46,11 +48,9 @@ public class MergeSortGenerico<T extends Comparable<? super T>> {
 		}
 	}
 	
-	public static void main(String[]args) {
-		Integer[]array = {1,2,7,6,4,5,0,8};
-		MergeSortGenerico<Integer> msrg = new MergeSortGenerico<>();
-		msrg.mergeSort(array, 0, array.length-1);
-		System.out.println(java.util.Arrays.toString(array));
-		
+	private int compare(T t, T t2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+	
 }

@@ -17,6 +17,7 @@ import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
 import productos.libros.Autor;
+import productos.libros.Editorial;
 import productos.libros.Ejemplar;
 import productos.libros.EjemplarLibro;
 import productos.libros.Genero;
@@ -452,6 +453,86 @@ public class GestionBD {
 		
 	 }
 	 
+	 public int devolverNumPagTotal(Persona persona) {
+		 establecerConexion();
+		 int numPag=0;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT numPag FROM Ejemplar WHERE codEjem IN(SELECT codEjem FROM ProductoUsuario WHERE codPers=?)";
+		 try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				numPag= numPag+rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return numPag;
+	 }
+	 
+	 public int devolverNumPagTotalEuskera(Persona persona) {
+		 establecerConexion();
+		 int numPagEuskera=0;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT numPag FROM Ejemplar WHERE codEjem IN(SELECT codEjem FROM ProductoUsuario WHERE codPers=?)AND codIdioma=?";
+		 try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+			pstmt.setInt(2, 1);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				numPagEuskera= numPagEuskera+rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return numPagEuskera;
+	 }
+	 
+	 public int devolverLibrosEditorial(Editorial editorial) {
+		 establecerConexion();
+		 int numLibros=0;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT codEjem FROM ProductoUsuario WHERE codEjem IN(SELECT codEjem FROM Ejemplar WHERE codEditorial=?)";
+		 try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1,obtenerCodigoEditorial(editorial));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				numLibros+=1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return numLibros;
+	 }
+	 
+	 public int obtenerCodigoEditorial(Editorial editorial) {
+		 establecerConexion();
+		 int codEditorial=0;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT codEditorial FROM Editorial WHERE nomEditorial=?";
+		 try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, editorial.getNomEditorial());
+			rs= pstmt.executeQuery();
+			while(rs.next()) {
+				codEditorial=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return codEditorial;
+	 }
 	 
 	 public ArrayList<Autor> devolverAutores(){
 		 establecerConexion();
