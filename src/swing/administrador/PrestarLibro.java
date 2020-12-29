@@ -77,7 +77,7 @@ public class PrestarLibro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String libro =(String) list.getSelectedValue();
 				if(bd.libroDisponible(bd.obtenerCodigoEjemplares(libro), bd.obtenerCodigoEjemplaresDisponiblesTotales())) {
-					LibrosDisponiblesPrestarAdmin v =new LibrosDisponiblesPrestarAdmin(persona, libro,p);
+					LibrosDisponiblesPrestarAdmin v =new LibrosDisponiblesPrestarAdmin(persona, libro, p);
 					v.setVisible(true);
 					PrestarLibro.this.dispose();
 				}else {

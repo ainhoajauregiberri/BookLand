@@ -503,7 +503,7 @@ public class GestionBD {
 		 cerrarConexion(conn);
 		 return codEjemplares;
 	 }
-	 
+	 //Saca los NO DISPONIBLES
 	 public ArrayList<Integer> obtenerCodigoEjemplaresDisponiblesTotales(){
 		ArrayList<Integer>codEjemplaresDisponibles=new ArrayList<Integer>();
 		establecerConexion();
@@ -522,6 +522,7 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 		 cerrarConexion(conn);
+		 //Saca los NO DISPONIBLES
 		 return codEjemplaresDisponibles;
 	 }
 	 
