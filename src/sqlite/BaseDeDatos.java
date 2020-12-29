@@ -287,6 +287,7 @@ public class BaseDeDatos {
 		bd1.insertarDatosProductoUsuario(14, 15, "2020-11-01", "2020-12-01",
 
 		true);
+		
 	}
 
 }
