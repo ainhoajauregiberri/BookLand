@@ -744,7 +744,7 @@ public class GestionBD {
 		boolean puedePrestar=true;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql="SELECT fecFin FROM ProductoUsuario WHERE codPers=?";
+		String sql="SELECT fecFin, prestado FROM ProductoUsuario WHERE codPers=?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 		} catch (SQLException e) {
@@ -766,27 +766,28 @@ public class GestionBD {
 			int fecActualMes=Integer.parseInt(ArrayFechaActual[1]);
 			int fecActualDia=Integer.parseInt(ArrayFechaActual[2]);
 			rs=pstmt.executeQuery();
-			while(rs.next()) {
+			while(rs.next()&&puedePrestar) {
 				String fecFin=devolverDate(rs.getString(1));
 				String[]ArrayFechaFinal=fecFin.split("-");
 				int fecFinAnyo=Integer.parseInt(ArrayFechaFinal[0]);
 				int fecFinMes=Integer.parseInt(ArrayFechaFinal[1]);
 				int fecFinDia=Integer.parseInt(ArrayFechaFinal[2]);
 				if(fecActualAnyo>fecFinAnyo) {
-					puedePrestar=false;
+					puedePrestar=true;
 				}else {
 					if(fecActualAnyo==fecFinAnyo) {
 						if(fecActualMes>fecFinMes) {
-							puedePrestar=false;
+							puedePrestar=true;
 						}else {
 							if(fecActualMes==fecFinMes) {
 								if(fecActualDia>fecFinDia) {
-									puedePrestar=false;
+									puedePrestar=true;
 								}
 							}
 						}
 					}
-				}	
+				}
+			puedePrestar = puedePrestar && (!rs.getBoolean(2));	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
