@@ -34,12 +34,13 @@ public class MirarMultas extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		this.dfmMultas=new DefaultListModel<MultasPersona>();
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(58, 75, 292, 116);
-		getContentPane().add(scrollPane);
+		scrollPane.setBounds(38, 76, 340, 105);
+		contentPane.add(scrollPane);
 		
 		list = new JList();
-		scrollPane.setColumnHeaderView(list);
+		scrollPane.setViewportView(list);
 		
 		cargarListaMultas();
 		
@@ -58,6 +59,8 @@ public class MirarMultas extends JFrame {
 		JLabel lblMultas = new JLabel("Multas");
 		lblMultas.setBounds(173, 39, 69, 20);
 		getContentPane().add(lblMultas);
+		
+		
 	}
 	public void cargarListaMultas() {
 		dfmMultas=IListasProductos.cargarListaMultas();

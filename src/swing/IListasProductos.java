@@ -146,4 +146,16 @@ public interface IListasProductos {
 		return titulosEjemplaresDisponibles;
 	}
 	
+	public static DefaultListModel<EjemplarLibro>cargarListaEjemplarLibro(Persona persona){
+		GestionBD bd=new GestionBD("BookLand.db");
+		ArrayList<EjemplarLibro>ejemplarLibros=bd.obtenerEjemplarLibro(persona);
+		DefaultListModel<EjemplarLibro>ejemplarLibro=new DefaultListModel<EjemplarLibro>();
+			for(int i=0;i<ejemplarLibros.size();i++){
+				EjemplarLibro tituloEjemplarLibros=ejemplarLibros.get(i);
+				ejemplarLibro.addElement(tituloEjemplarLibros);
+			}
+		
+		return ejemplarLibro;
+	}
+	
 }

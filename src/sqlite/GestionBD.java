@@ -48,7 +48,8 @@ public class GestionBD {
 	private ArrayList<Persona>todosUsuarios;
 	private ArrayList<EjemplarLibro>ejemplaresTotales;
 	private ArrayList<MultasPersona>todasMultas;
-	
+	private ArrayList<EjemplarLibro>ejemplarUsuario;
+
 	
 	/**
 	 * Este es el constructior de la clase
@@ -68,6 +69,7 @@ public class GestionBD {
 		this.todosUsuarios=new ArrayList<Persona>();
 		this.ejemplaresTotales=new ArrayList<EjemplarLibro>();
 		this.todasMultas=new ArrayList<MultasPersona>();
+		this.ejemplarUsuario=new ArrayList<EjemplarLibro>();
 	}
 
 	public String getNombreFichero() {
@@ -677,6 +679,40 @@ public class GestionBD {
 		cerrarConexion(conn);
 		return productosUsuario;
 	 }
+	 
+	 public ArrayList<EjemplarLibro> obtenerEjemplarLibro(Persona persona){
+			establecerConexion();
+			PreparedStatement pstmt=null;
+			String sql="SELECT Producto.titulo, BB.codEjem FROM Producto JOIN (SELECT Ejemplar.codPro, AA.codEjem FROM Ejemplar JOIN (SELECT codEjem FROM ProductoUsuario WHERE codPers=? AND prestado=?)AA ON AA.codEjem=Ejemplar.codEjem) BB ON BB.codPro=Producto.codPro";
+			try {
+				pstmt=conn.prepareStatement(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				pstmt.setInt(1, obtenerCodigoDePersona(persona.getUsuario()));
+				pstmt.setBoolean(2, true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				ResultSet rs=pstmt.executeQuery();
+				while(rs.next()) {
+					System.out.println(rs.getString(1));
+					EjemplarLibro ej = new EjemplarLibro(rs.getInt(2), rs.getString(1));
+					ejemplarUsuario.add(ej);
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			cerrarConexion(conn);
+			return ejemplarUsuario;
+		 }
+	 
 	 
 	 public ArrayList<Persona> devolverUsuarios(){
 		 establecerConexion();

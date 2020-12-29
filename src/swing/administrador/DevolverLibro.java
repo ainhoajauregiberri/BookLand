@@ -13,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 import productos.Producto;
+import productos.libros.EjemplarLibro;
+import sqlite.GestionBD;
 import swing.IListasProductos;
 
 import javax.swing.JList;
@@ -32,7 +34,7 @@ public class DevolverLibro extends JFrame {
 	private static Persona persona;
 	private static Persona administrador;
 	private JList list;
-	private DefaultListModel dfmProductos;
+	private DefaultListModel dfmEjemplarLibros;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,7 +58,7 @@ public class DevolverLibro extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		this.dfmProductos=new DefaultListModel<String>();
+		this.dfmEjemplarLibros=new DefaultListModel<EjemplarLibro>();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(39, 90, 357, 116);
@@ -83,14 +85,19 @@ public class DevolverLibro extends JFrame {
 		lblDevolverLibro.setBounds(153, 54, 100, 20);
 		getContentPane().add(lblDevolverLibro);
 		
+		GestionBD bd = new GestionBD("BookLand.db");
 		
-		JButton btnDevolver = new JButton("Buscar");
+		JButton btnDevolver = new JButton("Devolver");
 		btnDevolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String producto = (String) list.getSelectedValue();
-				LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(persona, producto,administrador);
-				v.setVisible(true);
-				DevolverLibro.this.dispose();
+				EjemplarLibro ejemplarLibro=(EjemplarLibro) list.getSelectedValue();
+				bd.devolverLibro(ejemplarLibro, persona);
+				JOptionPane.showMessageDialog(DevolverLibro.this, "El libro ha sido devuelto");
+				
+			//	String producto = (String) list.getSelectedValue();
+			//	LibrosDisponiblesDevolverAdmin v =new LibrosDisponiblesDevolverAdmin(persona, producto,administrador);
+			//	v.setVisible(true);
+			//	DevolverLibro.this.dispose();
 			}
 		});
 		btnDevolver.setBounds(153, 240, 115, 29);
@@ -99,7 +106,7 @@ public class DevolverLibro extends JFrame {
 		
 	}
 	public void cargarListaProductos(Persona persona) {
-		dfmProductos=IListasProductos.cargarListaProductos(persona);
-		this.list.setModel(dfmProductos);
+		dfmEjemplarLibros=IListasProductos.cargarListaEjemplarLibro(persona);
+		this.list.setModel(dfmEjemplarLibros);
 	}
 }
