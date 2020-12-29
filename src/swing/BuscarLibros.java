@@ -93,6 +93,7 @@ public class BuscarLibros extends JFrame implements IListasProductos{
 				if(opcionFiltro.equals("Titulo")) {
 					cargarListaTitulos();
 					dfm.clear();
+					
 				}
 			}
 		});

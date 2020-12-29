@@ -10,8 +10,11 @@ import javax.swing.border.EmptyBorder;
 import personas.Persona;
 import personas.Usuario;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -26,6 +29,7 @@ public class VentanaUsuario extends JFrame {
 
 	private JPanel contentPane;
 	private static Persona persona;
+	private DefaultListModel dfmTitulos;
 
 	/**
 	 * Este es el main para lanzar la aplicaci�n
@@ -54,13 +58,17 @@ public class VentanaUsuario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		this.persona=persona;
+		this.dfmTitulos = new DefaultListModel<String>();
 		
 		JButton btnproductosPrestados = new JButton("Productos prestados");
 		btnproductosPrestados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProductosPrestados productosPrestados =new ProductosPrestados(VentanaUsuario.persona);
-				productosPrestados.setVisible(true);
-				VentanaUsuario.this.dispose();
+				boolean tieneLibros= mirarSiProductos(persona);
+				if (tieneLibros) {
+					ProductosPrestados productosPrestados =new ProductosPrestados(VentanaUsuario.persona);
+					productosPrestados.setVisible(true);
+					VentanaUsuario.this.dispose();
+				}
 			}
 		});
 		btnproductosPrestados.setBounds(146, 53, 183, 29);
@@ -94,4 +102,13 @@ public class VentanaUsuario extends JFrame {
 		contentPane.add(button);
 		
 	}
+	
+	public boolean mirarSiProductos(Persona persona) {
+		boolean tiene=true;
+		dfmTitulos=IListasProductos.cargarListaProductos(persona);
+		if(dfmTitulos.isEmpty()) {
+			JOptionPane.showMessageDialog(VentanaUsuario.this, "No tiene ningun libro prestado");
+			tiene=false;
+		}return tiene;
+	}	
 }
