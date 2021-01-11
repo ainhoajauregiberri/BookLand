@@ -6,7 +6,19 @@ import personas.Persona;
 import productos.libros.Editorial;
 import sqlite.GestionBD;
 
+/**
+ * Esta es la interfaz con los métodos para crear los arrays que luego deberán ser ordenados para hacer el ranking
+ * @author Ainhoa y Lorea
+ */
+
 public interface IPremios {
+	
+	/**
+	 * Este método creará el array con el objeto PersonaPagina
+	 * Este objeto contiene el la persona y el número de páginas que ha leído
+	 * @param bd La clase de gestión BD, para poder acceder a la base de datos
+	 * @return devuelve el array de tipo PersonaPagina
+	 */
 
 	public static PersonaPagina[] cargarPersonasPaginas() {
 		GestionBD bd = new GestionBD("BookLand.db");
@@ -19,6 +31,13 @@ public interface IPremios {
 		return personaPagina;
 	}
 	
+	/**
+	 * Este método creará el array con el objeto PersonaPaginaEuskera
+	 * Este objeto contiene el la persona y el número de páginas que ha leído en euskera
+	 * @param bd La clase de gestión BD, para poder acceder a la base de datos
+	 * @return devuelve el array de tipo PersonaPaginaEuskera
+	 */
+	
 	public static PersonaPaginaEuskera[] cargarPersonasPaginasEuskera() {
 		GestionBD bd = new GestionBD("BookLand.db");
 		PersonaPaginaEuskera[] personaPaginaEuskera = new PersonaPaginaEuskera[bd.codigoMaximo()-4];
@@ -29,6 +48,13 @@ public interface IPremios {
 		}
 		return personaPaginaEuskera;
 	}
+	
+	/**
+	 * Este método creará el array con el objeto EditorialLibros
+	 * Este objeto contiene la editorial y las veces que libros de esa editorial que han sido prestados
+	 * @param bd La clase de gestión BD, para poder acceder a la base de datos
+	 * @return devuelve el array de tipo EditorialLibros
+	 */
 	
 	public static EditorialLibros[] cargarEditorialLibros() {
 		GestionBD bd = new GestionBD("BookLand.db");

@@ -24,6 +24,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+/**
+ * Esta es la clase Ranking. Solo el administrador tendrá acceso
+ * Accederá si desea obtener los ganadores de las 3 competiciones anuales
+ * Las competiciones son: mejor lector, euskal saria, mejor editorial
+ * @author Ainhoa y Lorea
+ */
+
 public class Ranking extends JFrame implements IPremios {
 
 	private JPanel contentPane;
@@ -33,7 +40,7 @@ public class Ranking extends JFrame implements IPremios {
 	private static Persona persona;
 
 	/**
-	 * Launch the application.
+	 * Este es el main para lanzar la aplicacion
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -49,7 +56,7 @@ public class Ranking extends JFrame implements IPremios {
 	}
 
 	/**
-	 * Create the frame.
+	 * Este es el constructor para crear el frame
 	 */
 	public Ranking(Persona persona) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
