@@ -6,8 +6,8 @@ import personas.Persona;
 import sqlite.GestionBD;
 
 /**
- * Este es el objeto PersonaPagina que contiene las personas y el número de páginas que ha leído cada una
- * Será empleado para crear un array de este tipo y luego ordenarlo por el número de páginas leídas
+ * Este es el objeto PersonaPagina que contiene las personas y el nï¿½mero de pï¿½ginas que ha leï¿½do cada una
+ * Serï¿½ empleado para crear un array de este tipo y luego ordenarlo por el nï¿½mero de pï¿½ginas leï¿½das
  * @author Ainhoa y Lorea
  */
 
@@ -21,22 +21,27 @@ public class PersonaPagina implements Comparator <PersonaPagina>{
 	private Persona persona;
 	
 	/**
-	 * El número de páginas que ha leído esa persona
-	 * Se calculará sumando el número de páginas de cada libro que ha leído
+	 * El nï¿½mero de pï¿½ginas que ha leï¿½do esa persona
+	 * Se calcularï¿½ sumando el nï¿½mero de pï¿½ginas de cada libro que ha leï¿½do
 	 */
 	
 	private int numPagTotal;
 	
 	/**
 	 * Este es el constructor del objeto
-	 * Pasandole la persona que crearemos con la información de la bd,
-	 * Obtendremos el número de páginas totales leídas aquí, haciendo una llamada a la clase GestionBD
+	 * Pasandole la persona que crearemos con la informaciï¿½n de la bd,
+	 * Obtendremos el nï¿½mero de pï¿½ginas totales leï¿½das aquï¿½, haciendo una llamada a la clase GestionBD
 	 */
 	
 	public PersonaPagina(Persona persona) {
 		this.persona = persona;
 		GestionBD bd = new GestionBD("BookLand.db");
 		this.numPagTotal=bd.devolverNumPagTotal(persona);
+	}
+	
+	public PersonaPagina(String nombrePersona,int numPag) {
+		this.persona=persona;
+		this.numPagTotal=numPag;
 	}
 
 	public Persona getPersona() {
@@ -57,9 +62,9 @@ public class PersonaPagina implements Comparator <PersonaPagina>{
 
 	
 	/**
-	 * Haciendo @override de este método, 
+	 * Haciendo @override de este mï¿½todo, 
 	 * le indicamos el criterio con el que queremos que ordene el array
-	 * En este caso el criterio es ordenarnos por el número de páginas leídas de mayor a menor
+	 * En este caso el criterio es ordenarnos por el nï¿½mero de pï¿½ginas leï¿½das de mayor a menor
 	 */
 	
 	
