@@ -25,8 +25,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 /**
- * Esta es la clase Ranking. Solo el administrador tendrá acceso
- * Accederá si desea obtener los ganadores de las 3 competiciones anuales
+ * Esta es la clase Ranking. Solo el administrador tendrï¿½ acceso
+ * Accederï¿½ si desea obtener los ganadores de las 3 competiciones anuales
  * Las competiciones son: mejor lector, euskal saria, mejor editorial
  * @author Ainhoa y Lorea
  */
@@ -90,7 +90,7 @@ public class Ranking extends JFrame implements IPremios {
 			public void actionPerformed(ActionEvent e) {
 				personasPaginas=IPremios.cargarPersonasPaginas();
 				MergeSortGenerico ms = new MergeSortGenerico<PersonaPagina>();
-				ms.mergeSort(personasPaginas, 0, personasPaginas.length-1);
+				ms.mergeSort(personasPaginas);
 				String nombreUsuario=personasPaginas[0].getPersona().getUsuario();
 				lblGanador.setText(nombreUsuario);
 				lblCantidad.setText(personasPaginas[0].getNumPagTotal()+" paginas leidas");
@@ -105,7 +105,7 @@ public class Ranking extends JFrame implements IPremios {
 			public void actionPerformed(ActionEvent e) {
 				personasPaginasEuskera=IPremios.cargarPersonasPaginasEuskera();
 				MergeSortGenerico ms = new MergeSortGenerico<PersonaPaginaEuskera>();
-				ms.mergeSort(personasPaginasEuskera, 0, personasPaginasEuskera.length-1);
+				ms.mergeSort(personasPaginasEuskera);
 				String nombreUsuarioEuskaldun=personasPaginasEuskera[0].getPersona().getUsuario();
 				lblGanador.setText(nombreUsuarioEuskaldun);
 				lblCantidad.setText(personasPaginasEuskera[0].getNumPagTotalEuskera()+" paginas leidas en euskera");
@@ -119,7 +119,7 @@ public class Ranking extends JFrame implements IPremios {
 			public void actionPerformed(ActionEvent e) {
 				editorialLibros=IPremios.cargarEditorialLibros();
 				MergeSortGenerico ms = new MergeSortGenerico<EditorialLibros>();
-				ms.mergeSort(editorialLibros, 0, editorialLibros.length-1);
+				ms.mergeSort(editorialLibros);
 				String nombreEditorial=editorialLibros[0].getEditorial().getNomEditorial();
 				lblGanador.setText(nombreEditorial);
 				lblCantidad.setText(editorialLibros[0].getNumLibros()+" libros prestados");

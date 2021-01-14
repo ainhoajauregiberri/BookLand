@@ -61,9 +61,11 @@ public class MergeSortGenericoTest {
 		PersonaPagina[] personasPaginasOrdenados= {personaPagina2, personaPagina1};
 		
 		MergeSortGenerico msg = new MergeSortGenerico<PersonaPagina>();
-		msg.mergeSort(personasPaginas);
-	
+		personasPaginas=(PersonaPagina[]) msg.mergeSort(personasPaginas);
+		
 		System.out.println(personasPaginas[0].toString());
+		System.out.println(personasPaginas[1].toString());
+	
 		
 		for(int i=0; i<personasPaginas.length;i++) {
 			assertEquals(personasPaginas[i].getNumPagTotal(),personasPaginasOrdenados[i].getNumPagTotal());

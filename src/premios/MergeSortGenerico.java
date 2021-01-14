@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Esta es la clase para ordenar un array genérico con el método mergeSort
- * Después se instanciará con 3 tipos de variables distintas para conseguir arrays ordenados
+ * Esta es la clase para ordenar un array genï¿½rico con el mï¿½todo mergeSort
+ * Despuï¿½s se instanciarï¿½ con 3 tipos de variables distintas para conseguir arrays ordenados
  * @author ainhoa y lorea
  *
  */
@@ -16,17 +16,16 @@ public class MergeSortGenerico<T extends Comparator<? super T>> {
 	private T[] arrayDos;
 	private T[] arrayDefinitivo;
 	/**
-	 * Este método dividirá el array y hará una llamdas recursivas a este mismo método
-	 * Cuando llegue al caso base hará llamada a la función merge, para ir ordenando partes pequeñas
-	 * Así, irá hacia atrás en el árbol dividido hasta conseguir el array completamente ordenado
-	 * @param array es el array genérico que queremos ordenar
-	 * @param inicio es la posición de inicio
-	 * @param fin es la posición del final
-	 * @param mitadArry es la posición de la mitad del array
+	 * Este mï¿½todo dividirï¿½ el array y harï¿½ una llamdas recursivas a este mismo mï¿½todo
+	 * Cuando llegue al caso base harï¿½ llamada a la funciï¿½n merge, para ir ordenando partes pequeï¿½as
+	 * Asï¿½, irï¿½ hacia atrï¿½s en el ï¿½rbol dividido hasta conseguir el array completamente ordenado
+	 * @param array es el array genï¿½rico que queremos ordenar
+	 * @param inicio es la posiciï¿½n de inicio
+	 * @param fin es la posiciï¿½n del final
+	 * @param mitadArry es la posiciï¿½n de la mitad del array
 	 */
 	public T[] mergeSort(T[]array) {
 		if (array.length==1){
-			System.out.println("a");
 			return array;
 		}
 		else {
@@ -40,14 +39,24 @@ public class MergeSortGenerico<T extends Comparator<? super T>> {
 	}
 	
 	/**
-	 * Este método ordenará el array genérico recibido
-	 * @param array es el array genérico que queremos ordenar
-	 * @param inicio es la posición de inicio
-	 * @param fin es la posición del final
-	 * @param mitadArry es la posición de la mitad del array
+	 * Este mï¿½todo ordenarï¿½ el array genï¿½rico recibido
+	 * @param array es el array genï¿½rico que queremos ordenar
+	 * @param inicio es la posiciï¿½n de inicio
+	 * @param fin es la posiciï¿½n del final
+	 * @param mitadArry es la posiciï¿½n de la mitad del array
 	 */
 	public T[] merge(T[]arrayIzquierda, T[]arrayDerecha) {
 
+		if(arrayIzquierda[0] instanceof PersonaPagina) {
+			arrayDefinitivo=(T[]) new PersonaPagina[arrayIzquierda.length+arrayDerecha.length];
+		}
+		if(arrayIzquierda[0] instanceof PersonaPaginaEuskera) {
+			arrayDefinitivo=(T[]) new PersonaPaginaEuskera[arrayIzquierda.length+arrayDerecha.length];
+		}
+		if(arrayIzquierda[0] instanceof EditorialLibros) {
+			arrayDefinitivo=(T[]) new EditorialLibros[arrayIzquierda.length+arrayDerecha.length];
+		}
+		
 		int valorIzquierda = 0;
 		int valorDerecha = 0;
 		int valorActual = 0;
@@ -75,8 +84,8 @@ public class MergeSortGenerico<T extends Comparator<? super T>> {
 	}
 	
 	/**
-	 * Este método establecerá el criterio con el que queremos comparar el array
-	 * Se hará un @override de este método en cada uno de los tipos de variable por los que sustituirá la T.
+	 * Este mï¿½todo establecerï¿½ el criterio con el que queremos comparar el array
+	 * Se harï¿½ un @override de este mï¿½todo en cada uno de los tipos de variable por los que sustituirï¿½ la T.
 	 */
 	private int compare(T t, T t2) {
 		// TODO Auto-generated method stub
