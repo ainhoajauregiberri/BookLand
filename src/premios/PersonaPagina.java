@@ -39,7 +39,7 @@ public class PersonaPagina implements Comparator <PersonaPagina>{
 		this.numPagTotal=bd.devolverNumPagTotal(persona);
 	}
 	
-	public PersonaPagina(String nombrePersona,int numPag) {
+	public PersonaPagina(Persona persona,int numPag) {
 		this.persona=persona;
 		this.numPagTotal=numPag;
 	}
@@ -78,4 +78,11 @@ public class PersonaPagina implements Comparator <PersonaPagina>{
 					return 1;
 	}
 	}
+
+	@Override
+	public String toString() {
+		return "PersonaPagina [persona=" + persona.getNombre() + ", numPagTotal=" + numPagTotal + "]";
+	}
+	
+	
 	}

@@ -25,6 +25,8 @@ public class MergeSortGenericoTest {
 	 * Har� lo mismo con los char
 	 */
 	
+	private Persona p1;
+	private Persona p2;
 	private PersonaPagina personaPagina1;
 	private PersonaPagina personaPagina2;
 	private PersonaPagina[] personasPaginas;
@@ -32,11 +34,7 @@ public class MergeSortGenericoTest {
 	@Before
 	public void setUp() {
 		
-		personaPagina1 = new PersonaPagina("Ainhoa Jauregiberri",130);
-		personaPagina2 = new PersonaPagina("Lorea Intxausti",140);
-		personasPaginas= new PersonaPagina[2];
-		personasPaginas[0]= personaPagina1;
-		personasPaginas[1]= personaPagina2;
+		
 		
 	}
 	
@@ -51,15 +49,23 @@ public class MergeSortGenericoTest {
 	@Test
 	public void test() {
 		
-		PersonaPagina[] personasPaginasOrdenados= new PersonaPagina[2];
-		personasPaginasOrdenados[0]=personaPagina2;
-		personasPaginasOrdenados[1]=personaPagina1;
+		p1 = new Persona("Ainhoa Jauregiberri", "ainhoa1","a", "", "");
+		p2 = new Persona("Lorea Intxausti", "lorea1", "a", "", "");
+		
+		personaPagina1 = new PersonaPagina(p1,130);
+		personaPagina2 = new PersonaPagina(p2,140);
+		personasPaginas= new PersonaPagina[2];
+		personasPaginas[0]= personaPagina1;
+		personasPaginas[1]= personaPagina2;
+		
+		PersonaPagina[] personasPaginasOrdenados= {personaPagina2, personaPagina1};
 		
 		MergeSortGenerico msg = new MergeSortGenerico<PersonaPagina>();
-		msg.mergeSort(personasPaginas, 0, personasPaginas.length-1);
+		msg.mergeSort(personasPaginas);
 	
+		System.out.println(personasPaginas[0].toString());
 		
-		for(int i=0; i<=personasPaginas.length;i++) {
+		for(int i=0; i<personasPaginas.length;i++) {
 			assertEquals(personasPaginas[i].getNumPagTotal(),personasPaginasOrdenados[i].getNumPagTotal());
 		}
 		

@@ -1,5 +1,6 @@
 package premios;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -11,7 +12,9 @@ import java.util.Comparator;
 
 public class MergeSortGenerico<T extends Comparator<? super T>> {
 
-	
+	private T[] arrayUno;
+	private T[] arrayDos;
+	private T[] arrayDefinitivo;
 	/**
 	 * Este método dividirá el array y hará una llamdas recursivas a este mismo método
 	 * Cuando llegue al caso base hará llamada a la función merge, para ir ordenando partes pequeñas
@@ -21,12 +24,18 @@ public class MergeSortGenerico<T extends Comparator<? super T>> {
 	 * @param fin es la posición del final
 	 * @param mitadArry es la posición de la mitad del array
 	 */
-	public void mergeSort(T[]array, int inicio, int fin) {
-		if(inicio<fin) {
-			int mitadArray=(inicio+fin)/2;
-			mergeSort(array,inicio,mitadArray);
-			mergeSort(array,mitadArray+1,fin);
-			merge(array,inicio,mitadArray,fin);
+	public T[] mergeSort(T[]array) {
+		if (array.length==1){
+			System.out.println("a");
+			return array;
+		}
+		else {
+			arrayUno = Arrays.copyOfRange(array, 0, (array.length)/2);
+			arrayDos = Arrays.copyOfRange(array, (array.length)/2, array.length);
+			arrayUno = mergeSort(arrayUno);
+			arrayDos = mergeSort(arrayDos);
+					
+			return merge(arrayUno, arrayDos);
 		}
 	}
 	
@@ -37,39 +46,32 @@ public class MergeSortGenerico<T extends Comparator<? super T>> {
 	 * @param fin es la posición del final
 	 * @param mitadArry es la posición de la mitad del array
 	 */
-	public void merge(T[]array, int inicio, int mitadArray, int fin) {
-		T[] arrayIzquierda = (T[]) new Comparator[mitadArray-inicio+1];
-		T[] arrayDerecha = (T[]) new Comparator[fin-mitadArray];
-		
-		for (int i = 0; i < arrayIzquierda.length; i++) {
-			arrayIzquierda[i] = array[inicio + i];
-		}
-		for (int i = 0; i < arrayDerecha.length; i++) {
-			arrayDerecha[i] = array[mitadArray + 1 + i];
-		}
-		
+	public T[] merge(T[]arrayIzquierda, T[]arrayDerecha) {
+
 		int valorIzquierda = 0;
 		int valorDerecha = 0;
-		int valorActual = inicio;
+		int valorActual = 0;
 		
 		while(valorIzquierda < arrayIzquierda.length && valorDerecha < arrayDerecha.length) {
 			if(compare(arrayIzquierda[valorIzquierda],arrayDerecha[valorDerecha])<= 0) {
-				array[valorActual] = arrayIzquierda[valorIzquierda];
+				arrayDefinitivo[valorActual] = arrayIzquierda[valorIzquierda];
 				valorIzquierda++;
 			}else {
-				array[valorActual] = arrayDerecha[valorDerecha];
+				arrayDefinitivo[valorActual] = arrayDerecha[valorDerecha];
 				valorDerecha++;
 			}
 			valorActual++;
 		}
 		
 		while(valorIzquierda < arrayIzquierda.length) {
-			array[valorActual++] = arrayIzquierda[valorIzquierda++];
+			arrayDefinitivo[valorActual++] = arrayIzquierda[valorIzquierda++];
 		}
 		
 		while(valorDerecha < arrayDerecha.length) {
-			array[valorActual++] = arrayDerecha[valorDerecha++];
+			arrayDefinitivo[valorActual++] = arrayDerecha[valorDerecha++];
 		}
+		
+		return arrayDefinitivo;
 	}
 	
 	/**
