@@ -1171,11 +1171,11 @@ public class GestionBD {
 		 cerrarConexion(conn);
 		 System.out.println("Se ha ejecutado la acción en la tabla Producto");
 	 }
-	 public void insertarDatosProductoUsuario(int codPers, int codEjem,String StringFecIni, String StringFecFin, int prestado){
+	 public void insertarDatosProductoUsuario(int codPers, int codEjem,String StringFecIni, String StringFecFin, int prestado, int fechaPasada){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
 		 
-		 String sql = "INSERT INTO ProductoUsuario(codPers, codEjem, fecIni,fecFin, prestado) VALUES(?,?,?,?,?)";
+		 String sql = "INSERT INTO ProductoUsuario(codPers, codEjem, fecIni,fecFin, prestado, fechaPasada) VALUES(?,?,?,?,?,?)";
 		 
 		 try {
 			pstmt = conn.prepareStatement(sql);
@@ -1197,6 +1197,7 @@ public class GestionBD {
 				pstmt.setString(4, fecFin.toString());
 			}
 			pstmt.setInt(5, prestado);
+			pstmt.setInt(6, fechaPasada);
 			
 			
 		} catch (SQLException e) {
