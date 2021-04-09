@@ -1171,7 +1171,7 @@ public class GestionBD {
 		 cerrarConexion(conn);
 		 System.out.println("Se ha ejecutado la acción en la tabla Producto");
 	 }
-	 public void insertarDatosProductoUsuario(int codPers, int codEjem,String StringFecIni, String StringFecFin, boolean prestado){
+	 public void insertarDatosProductoUsuario(int codPers, int codEjem,String StringFecIni, String StringFecFin, int prestado){
 		 establecerConexion();
 		 PreparedStatement pstmt = null;
 		 
@@ -1196,7 +1196,7 @@ public class GestionBD {
 				java.util.Date fecFin = string2Date("yyyy-MM-dd", StringFecFin);
 				pstmt.setString(4, fecFin.toString());
 			}
-			pstmt.setBoolean(5, prestado);
+			pstmt.setInt(5, prestado);
 			
 			
 		} catch (SQLException e) {

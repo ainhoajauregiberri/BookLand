@@ -45,7 +45,7 @@ public class BaseDeDatos {
 		+"codEjem integer NOT NULL,\n"
 		+"fecIni DATETIME NOT NULL,\n"
 		+"fecFin DATETIME,\n"
-		+"prestado boolean,\n"
+		+"prestado integer,\n"
 
 		+"PRIMARY KEY(codPers, codEjem, fecIni),\n"
 		+"FOREIGN KEY (codPers) REFERENCES Persona(codPers),\n"
@@ -211,82 +211,82 @@ public class BaseDeDatos {
 		bd1.insertarDatosEjemplar(24, 20, 2, 3, 1, 630, false);
 
 		//true si todavía no se ha devuelto
-		bd1.insertarDatosProductoUsuario(5, 1, "2020-06-10", "2020-07-27", false);
+		bd1.insertarDatosProductoUsuario(5, 1, "2020-06-10", "2020-07-27", 0);
 		bd1.insertarDatosProductoUsuario(5, 18, "2020-06-10", "2020-07-27",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(5, 19, "2020-11-10", "2020-11-20",
 
-		false);
+		0);
 
 		bd1.insertarDatosProductoUsuario(6, 2, "2020-09-10", "2020-09-20",
 
-		false);
+		0);
 
 		bd1.insertarDatosProductoUsuario(15, 23, "2020-09-10", "2020-09-20",
 
-		false);
+		0);
 
 		bd1.insertarDatosProductoUsuario(16, 22, "2020-09-10", "2020-09-20",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(17, 21, "2020-09-10", "2020-09-20",
 
-		false);
+		0);
 
 		bd1.insertarDatosProductoUsuario(18, 24, "2020-11-12", "2020-11-30",
 
-		false);
+		0);
 
 		bd1.insertarDatosProductoUsuario(19, 21, "2020-10-12", "2020-11-20",
 
-		false);
+		0);
 
 		bd1.insertarDatosProductoUsuario(7, 4, "2020-11-12", "2020-12-01",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(8, 5, "2020-11-01", "2020-11-23",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(9, 3, "2020-11-01", "2020-11-31",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(9, 6, "2020-11-11", "2020-12-01",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(10, 7, "2020-11-13", "2020-12-01",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(11, 8, "2020-11-05", "2020-12-02",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(12, 10, "2020-11-04", "2020-12-03",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(12, 11, "2020-11-03", "2020-12-19",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(12, 12, "2020-11-02", "2020-11-23",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(14, 14, "2020-11-01", "2020-11-31",
 
-		true);
+		1);
 
 		bd1.insertarDatosProductoUsuario(14, 15, "2020-11-01", "2020-12-01",
 
-		true);
+		1);
 		
 	}
 
